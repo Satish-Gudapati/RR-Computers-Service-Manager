@@ -460,6 +460,48 @@ body{background:var(--nv);color:#e8f0fe;font-family:var(--font);min-height:100vh
 </div>
 
 <!-- ══ MARKETING ══ -->
+<div class="pg" id="pg-crm">
+  <div class="pnl"><div class="ph"><div class="pt">👥 Customer Profiles</div><button class="bg" onclick="exportCRMCSV()" style="padding:8px 14px;font-size:12px;">⬇ Export</button></div>
+  <div class="pb">
+    <div style="display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap;">
+      <button class="bs" onclick="setCRMFilter('all',this)" style="font-size:12px;padding:6px 12px;">All</button>
+      <button class="bs" onclick="setCRMFilter('loyal',this)" style="font-size:12px;padding:6px 12px;">⭐ Loyal</button>
+      <button class="bs" onclick="setCRMFilter('new',this)" style="font-size:12px;padding:6px 12px;">🆕 New</button>
+      <button class="bs" onclick="setCRMFilter('inactive',this)" style="font-size:12px;padding:6px 12px;">😴 Inactive</button>
+    </div>
+    <div id="crm-list"></div>
+  </div></div>
+</div>
+
+<!-- ══ COUPONS ══ -->
+
+<div class="pg" id="pg-admin">
+  <div class="pnl"><div class="ph"><div class="pt">👥 Staff Management</div></div>
+  <div class="pb">
+    <div class="g2">
+      <div>
+        <div style="font-size:12px;font-weight:700;color:var(--gd);margin-bottom:10px;"></div>
+        <div id=""></div>
+        <button class="bs" onclick="addSt('fo')" style="font-size:12px;padding:6px 12px;margin-top:8px;">+ Add</button>
+      </div>
+      <div>
+        <div style="font-size:12px;font-weight:700;color:var(--bl);margin-bottom:10px;">💻 Operators</div>
+        <div id="op-list"></div>
+        <button class="bs" onclick="addSt('op')" style="font-size:12px;padding:6px 12px;margin-top:8px;">+ Add</button>
+      </div>
+    </div>
+    <button class="bg" onclick="saveStaff()" style="margin-top:12px;">💾 Save Staff</button>
+  </div></div>
+
+  <div class="pnl"><div class="ph"><div class="pt">🛠️ Services Management</div><button class="bg" onclick="opnAddSvc()" style="padding:8px 14px;font-size:12px;">+ Add Custom Service</button></div>
+  <div style="overflow-x:auto;"><table class="tbl" id="adm-svc-tbl"><thead><tr><th>Service</th><th>Govt Fee</th><th>Our Charge</th><th>Total</th><th>Actions</th></tr></thead><tbody id="adm-svc-body"></tbody></table></div></div>
+
+  <div class="pnl"><div class="ph"><div class="pt" style="color:var(--rd);">⚠️ Danger Zone</div></div>
+  <div class="pb"><button class="br2" onclick="clearAllData()">🗑️ Clear All Data</button></div></div>
+</div>
+
+<!-- ══ ATTENDANCE ══ -->
+
 <div class="pg" id="pg-mkt">
   <div class="pnl"><div class="ph"><div class="pt">📣 WhatsApp Marketing</div></div>
   <div class="pb">
@@ -1504,6 +1546,8 @@ function subSvc() {
 
   // Save offline-first (localStorage → queue → Supabase)
   smartSave(rec);
+  // Track review request for ₹100+ orders
+  trackReviewRequest(rec);
 
   // Sync to Sheets
   if (sheetsURL) syncOne(rec);
@@ -1809,11 +1853,23 @@ function buildMsg(type, rec) {
   var socBlock = '\n\n💬 WhatsApp Channel: https://whatsapp.com/channel/0029Va5hYKfCnA82GkcXcA2w\n▶️ YouTube: https://www.youtube.com/@rrcomputersgdv?sub_confirmation=1';
 
   if (type === 'submitted') {
-    return 'నమస్కారం *' + nm + '* గారూ! 🙏\n\n'
+    var base = 'నమస్కారం *' + nm + '* గారూ! 🙏\n\n'
       + '✅ *' + svcName + '* registered!\n'
       + '🎟 Token: *' + tok + '*\n\n'
-      + 'Complete అయినప్పుడు WA వస్తుంది.'
-      + socBlock + sig;
+      + 'Complete అయినప్పుడు WA వస్తుంది.';
+    // Append review request only for transactions above ₹100
+    var reviewBlock = '';
+    if ((rec.amount || 0) >= 100) {
+      reviewBlock = '\n\n━━━━━━━━━━━━━━━━━━━━\n'
+        + '🙏 నమస్కారం!\n'
+        + 'RR COMPUTERS Meeseva సేవలు ఉపయోగించినందుకు ధన్యవాదాలు 😊\n'
+        + 'మీ feedback మాకు చాలా ముఖ్యము.\n'
+        + 'ఇప్పుడే మీ అనుభవం share చేయండి 👇\n'
+        + '👉 https://g.page/r/CVD_Aqgk-swzEBE/review\n'
+        + '🎁 Next service లో *₹10 OFF* పొందండి (feedback ఇచ్చిన వెంటనే)\n'
+        + 'ధన్యవాదాలు 🙏';
+    }
+    return base + reviewBlock + socBlock + sig;
   }
   if (type === 'completed') {
     return 'నమస్కారం *' + nm + '* గారూ! 🙏\n\n'
@@ -3392,6 +3448,85 @@ function cpnTypeLabel(t){
 }
 
 
+
+// ════════════════════════════════════════════════════════════════
+// GOOGLE REVIEW REMINDER SYSTEM
+// Sends reminder to customers who haven't reviewed after registration
+// ════════════════════════════════════════════════════════════════
+
+var REVIEW_LOG = JSON.parse(localStorage.getItem('rr-review-log') || '{}');
+// { mobile: { token, name, sentAt, reviewed, reminderSent } }
+
+function saveReviewLog() {
+  try { localStorage.setItem('rr-review-log', JSON.stringify(REVIEW_LOG)); } catch(e) {}
+}
+
+// Mark review request sent on registration (called from subSvc for ₹100+ orders)
+function trackReviewRequest(rec) {
+  if ((rec.amount || 0) < 100) return;
+  REVIEW_LOG[rec.mobile] = {
+    token:   rec.token,
+    name:    rec.name,
+    mobile:  rec.mobile,
+    sentAt:  rec.createdAt,
+    reviewed: false,
+    reminderSent: false
+  };
+  saveReviewLog();
+}
+
+// Send review reminder WA to pending customers
+function sendReviewReminder(mobile, name) {
+  var msg = '🙏 చిన్న రిమైండర్\n\n'
+    + 'నమస్కారం *' + name + '* గారూ! 😊\n\n'
+    + 'మీరు ఇంకా review ఇవ్వకపోతే, దయచేసి ఒక చిన్న review ఇవ్వండి 🙏\n'
+    + 'మీ feedback మా కోసం చాలా ముఖ్యము 🌱\n'
+    + '👉 https://g.page/r/CVD_Aqgk-swzEBE/review\n\n'
+    + '🎁 Review ఇచ్చిన తర్వాత next service లో *₹10 OFF* పొందండి!\n\n'
+    + 'ధన్యవాదాలు 🙏\n'
+    + '📞 ' + PHONE_CALL;
+  window.open('https://api.whatsapp.com/send?phone=91' + cleanMobile(mobile) + '&text=' + encodeURIComponent(msg), '_blank');
+}
+
+// Check and send pending review reminders (call daily)
+function checkReviewReminders() {
+  var now     = new Date();
+  var pending = Object.values(REVIEW_LOG).filter(function(r) {
+    if (r.reviewed || r.reminderSent) return false;
+    // Send reminder if review not given within 2 days
+    var daysSince = Math.floor((now - new Date(r.sentAt)) / 86400000);
+    return daysSince >= 2;
+  });
+
+  if (!pending.length) return;
+
+  pending.forEach(function(r, i) {
+    setTimeout(function() {
+      sendReviewReminder(r.mobile, r.name);
+      r.reminderSent = true;
+      r.reminderAt   = now.toISOString();
+      saveReviewLog();
+    }, i * 3000);
+  });
+
+  if (pending.length) toast(pending.length + ' review reminders sent 📨', 'success');
+}
+
+// Mark customer as reviewed (call when they confirm review given)
+function markReviewed(mobile) {
+  if (REVIEW_LOG[mobile]) {
+    REVIEW_LOG[mobile].reviewed   = true;
+    REVIEW_LOG[mobile].reviewedAt = new Date().toISOString();
+    saveReviewLog();
+    toast('Marked as reviewed ✅ — ₹10 coupon will be issued', 'success');
+    // Issue ₹10 discount coupon for next service
+    var r = REVIEW_LOG[mobile];
+    if (typeof issueCoupon === 'function') {
+      issueCoupon(mobile, r.name, 'REVIEW', 10, 0, 30);
+    }
+  }
+}
+
 window.onload = function() {
   (async function init() {
     // Immediate sync setup
@@ -3422,6 +3557,7 @@ window.onload = function() {
 
     pingSupabase();
     setTimeout(checkCouponExpiries, 6000); // Check coupon expiries
+    setTimeout(checkReviewReminders, 8000); // Check review reminders
 
     // Auto performance reports
     setInterval(function() {
