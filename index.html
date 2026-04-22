@@ -1,0 +1,3579 @@
+<!DOCTYPE html>
+<html lang="te">
+<head>
+<meta charset="UTF-8">
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Expires" content="0">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>RR Service Manager v20260422-0655</title>
+<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&family=Noto+Sans+Telugu:wght@400;600&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+<!-- face-api removed -->
+<style>
+:root{--nv:#0A1628;--nv2:#112240;--nv3:#1a3050;--gd:#C9A84C;--gn:#00C48C;--rd:#FF4D6D;--or:#FF8C42;--bl:#4DA6FF;--sv:#8899aa;--br:rgba(255,255,255,0.08);--font:'Rajdhani',sans-serif;--mono:'IBM Plex Mono',monospace;}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:var(--nv);color:#e8f0fe;font-family:var(--font);min-height:100vh;}
+/* HEADER */
+.hdr{background:linear-gradient(135deg,#0d1f3c,#162a4a);border-bottom:1px solid rgba(201,168,76,.2);padding:10px 16px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;position:sticky;top:0;z-index:100;}
+.logo{display:flex;align-items:center;gap:12px;}
+.lic{background:linear-gradient(135deg,var(--gd),#a07820);color:#fff;width:44px;height:44px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:18px;}
+.lnm{font-size:16px;font-weight:700;color:var(--gd);letter-spacing:1px;}
+.ltg{font-size:11px;color:var(--sv);font-style:italic;}
+.hst{display:flex;gap:12px;align-items:center;flex-wrap:wrap;}
+.sp{display:flex;align-items:center;gap:5px;font-size:12px;}
+.sd{width:8px;height:8px;border-radius:50%;background:var(--sv);}
+.sd.g{background:var(--gn);box-shadow:0 0 6px var(--gn);}
+.sd.a{background:var(--or);}
+.sd.b{background:var(--bl);}
+.hbr{display:flex;gap:6px;align-items:center;}
+.bh{background:rgba(255,255,255,.06);border:1px solid var(--br);color:#e8f0fe;padding:6px 14px;border-radius:8px;font-family:var(--font);font-size:13px;font-weight:600;cursor:pointer;letter-spacing:.5px;}
+.bh:hover{background:rgba(255,255,255,.12);}
+.bh.g{background:rgba(0,196,140,.15);border-color:rgba(0,196,140,.3);color:var(--gn);}
+.sip{display:flex;align-items:center;gap:6px;padding:4px 12px;border-radius:20px;background:rgba(255,255,255,.05);border:1px solid var(--br);cursor:pointer;font-size:12px;}
+/* TABS */
+.tabs{background:var(--nv2);border-bottom:1px solid var(--br);display:flex;overflow-x:auto;scrollbar-width:none;padding:0 8px;position:sticky;top:64px;z-index:99;}
+.tabs::-webkit-scrollbar{display:none;}
+.tab{padding:12px 14px;font-size:12px;font-weight:600;letter-spacing:.5px;color:var(--sv);cursor:pointer;white-space:nowrap;border-bottom:2px solid transparent;transition:all .2s;display:flex;align-items:center;gap:5px;}
+.tab.active{color:var(--gd);border-bottom-color:var(--gd);}
+.tab:hover{color:#e8f0fe;}
+.tbg{background:var(--rd);color:#fff;font-size:10px;padding:1px 6px;border-radius:10px;min-width:18px;text-align:center;}
+.tbg.gr{background:var(--gn);}
+/* PAGES */
+.pg{display:none;padding:16px;max-width:900px;margin:0 auto;}
+.pg.active{display:block;}
+/* PANELS */
+.pnl{background:var(--nv2);border:1px solid var(--br);border-radius:14px;margin-bottom:16px;overflow:hidden;}
+.ph{padding:16px 20px;border-bottom:1px solid var(--br);display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap;}
+.pt{font-size:16px;font-weight:700;color:var(--gd);}
+.ps{font-size:12px;color:var(--sv);margin-top:2px;}
+.pb{padding:16px 20px;}
+/* FORM */
+.fi{width:100%;padding:11px 14px;background:rgba(255,255,255,.04);border:1.5px solid rgba(255,255,255,.1);border-radius:10px;color:#e8f0fe;font-size:15px;font-family:var(--font);outline:none;transition:border .2s;}
+.fi:focus{border-color:var(--gd);}
+.fi::placeholder{color:var(--sv);}
+.fs{width:100%;padding:11px 14px;background:rgba(255,255,255,.04);border:1.5px solid rgba(255,255,255,.1);border-radius:10px;color:#e8f0fe;font-size:15px;font-family:var(--font);outline:none;cursor:pointer;-webkit-appearance:none;appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%238899aa' stroke-width='1.5' fill='none'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center;}
+.fs option{background:#1a2a3a;color:#e8f0fe;}
+.ft{width:100%;padding:11px 14px;background:rgba(255,255,255,.04);border:1.5px solid rgba(255,255,255,.1);border-radius:10px;color:#e8f0fe;font-size:14px;font-family:var(--font);outline:none;resize:vertical;min-height:80px;}
+.fl{display:block;font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--sv);margin-bottom:6px;}
+.fm{margin-bottom:14px;}
+/* BUTTONS */
+.bp{background:linear-gradient(135deg,var(--gd),#a07820);color:#fff;border:none;padding:12px 24px;border-radius:10px;font-family:var(--font);font-size:15px;font-weight:700;cursor:pointer;letter-spacing:.5px;width:100%;}
+.bp:hover{opacity:.9;}
+.bg{background:linear-gradient(135deg,var(--gn),#008a60);color:#fff;border:none;padding:10px 20px;border-radius:10px;font-family:var(--font);font-size:13px;font-weight:700;cursor:pointer;}
+.bs{background:rgba(255,255,255,.06);border:1px solid var(--br);color:#e8f0fe;padding:10px 20px;border-radius:10px;font-family:var(--font);font-size:13px;font-weight:600;cursor:pointer;}
+.br2{background:rgba(255,77,109,.15);border:1px solid rgba(255,77,109,.3);color:var(--rd);padding:8px 16px;border-radius:8px;font-family:var(--font);font-size:12px;font-weight:700;cursor:pointer;}
+/* TOKEN */
+.tok{background:linear-gradient(135deg,rgba(201,168,76,.08),rgba(201,168,76,.03));border:1.5px solid rgba(201,168,76,.3);border-radius:12px;padding:14px 20px;margin-bottom:18px;display:inline-block;}
+.tkl{font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--sv);margin-bottom:4px;}
+.tkn{font-family:var(--mono);font-size:16px;font-weight:700;color:var(--gd);cursor:pointer;}
+/* STATS */
+.kpg{display:grid;grid-template-columns:repeat(auto-fit,minmax(110px,1fr));gap:10px;margin-bottom:16px;}
+.kpc{background:var(--nv2);border:1px solid var(--br);border-radius:12px;padding:14px;text-align:center;}
+.kpv{font-size:24px;font-weight:700;margin-bottom:2px;}
+.kpl{font-size:11px;color:var(--sv);letter-spacing:.5px;}
+/* TABLE */
+.tbl{width:100%;border-collapse:collapse;font-size:13px;}
+.tbl th{padding:10px 12px;text-align:left;color:var(--sv);font-size:10px;letter-spacing:1px;text-transform:uppercase;border-bottom:1px solid var(--br);}
+.tbl td{padding:10px 12px;border-bottom:1px solid rgba(255,255,255,.04);vertical-align:middle;}
+.tbl tr:hover td{background:rgba(255,255,255,.02);}
+/* STATUS BADGES */
+.st{display:inline-block;padding:3px 10px;border-radius:20px;font-size:11px;font-weight:700;letter-spacing:.5px;}
+.st-open{background:rgba(77,166,255,.15);color:var(--bl);}
+.st-processing{background:rgba(255,140,66,.15);color:var(--or);}
+.st-completed{background:rgba(0,196,140,.15);color:var(--gn);}
+.st-cert-recv{background:rgba(201,168,76,.15);color:var(--gd);}
+.st-cert-del{background:rgba(0,196,140,.25);color:var(--gn);}
+.st-rejected{background:rgba(255,77,109,.15);color:var(--rd);}
+/* MODAL */
+.mo{display:none;position:fixed;inset:0;z-index:1000;background:rgba(0,0,0,.7);align-items:flex-end;justify-content:center;}
+.mo.show{display:flex;}
+.mc{background:#162a4a;border-radius:20px 20px 0 0;width:100%;max-width:600px;max-height:92vh;overflow-y:auto;border:1px solid rgba(201,168,76,.2);}
+.mc.sm{border-radius:16px;max-height:80vh;margin:auto;}
+/* PIPELINE */
+.pipe{display:flex;align-items:center;flex-wrap:nowrap;overflow-x:auto;padding:8px 0;gap:0;scrollbar-width:none;}
+.pipe::-webkit-scrollbar{display:none;}
+.pnode{display:flex;align-items:center;gap:0;flex-shrink:0;}
+.pnd{background:var(--nv2);border:1px solid var(--br);border-radius:8px;padding:6px 10px;font-size:11px;font-weight:600;color:var(--sv);white-space:nowrap;cursor:pointer;}
+.pnd.act{border-color:var(--gd);color:var(--gd);background:rgba(201,168,76,.08);}
+.parr{color:var(--sv);font-size:14px;padding:0 4px;}
+/* DOCS PANEL */
+.dp{display:none;background:rgba(201,168,76,.05);border:1px solid rgba(201,168,76,.2);border-radius:10px;padding:14px;margin-bottom:14px;}
+.dp.show{display:block;}
+.dtg{font-size:13px;padding:3px 0;color:#c8d8e8;}
+/* TOAST */
+#toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#162a4a;color:#e8f0fe;padding:12px 22px;border-radius:12px;z-index:9999;font-size:14px;font-weight:600;opacity:0;transition:opacity .3s;pointer-events:none;border-left:4px solid var(--gd);min-width:200px;text-align:center;box-shadow:0 4px 20px rgba(0,0,0,.4);}
+#toast.show{opacity:1;}
+/* GRID */
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+.g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;}
+@media(max-width:600px){.g2{grid-template-columns:1fr;}.g3{grid-template-columns:1fr 1fr;}}
+/* SEARCH */
+.srch-bar{display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap;align-items:center;}
+/* ATTEND */
+.attend-wrap{position:relative;border-radius:12px;overflow:hidden;background:#000;aspect-ratio:4/3;cursor:pointer;}
+.attend-canvas{position:absolute;top:0;left:0;width:100%;height:100%;}
+/* STAFF CARD */
+.scard{background:rgba(255,255,255,.03);border:1px solid var(--br);border-radius:12px;padding:16px;margin-bottom:12px;}
+/* COUPON */
+.cpn-box{background:linear-gradient(135deg,rgba(201,168,76,.08),rgba(201,168,76,.02));border:1.5px dashed rgba(201,168,76,.3);border-radius:12px;padding:14px;margin-bottom:12px;}
+/* SOCIAL */
+.soc-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:10px;}
+.soc-card{border:1.5px solid var(--br);border-radius:10px;padding:12px;text-align:center;cursor:pointer;}
+.soc-card.done{border-color:rgba(0,196,140,.3);background:rgba(0,196,140,.06);}
+/* LABEL STEP */
+.step-lbl{font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--sv);margin-bottom:6px;display:block;}
+/* PROGRESS BAR */
+.pbar{height:4px;background:rgba(255,255,255,.06);border-radius:4px;margin-top:8px;overflow:hidden;}
+.pfill{height:100%;background:var(--gd);border-radius:4px;transition:width .4s;}
+</style>
+</head>
+<body onload="try{genTok();doRenderGrid();doRenderStaff();}catch(e){}">
+
+<!-- HEADER -->
+<!-- Offline Banner -->
+<div id="offline-banner" style="display:none;background:#FF8C42;color:#fff;text-align:center;padding:8px;font-size:12px;font-weight:600;position:sticky;top:0;z-index:999"></div>
+
+<div class="hdr">
+  <div class="logo">
+    <div class="lic">RR</div>
+    <div>
+      <div class="lnm">RR COMPUTERS — MEESEVA</div>
+      <div class="ltg">"Your Needs, Our Services" | Gudivada &amp; Hanuman Junction</div>
+    </div>
+  </div>
+  <div class="hst">
+    <div class="sp"><div class="sd a"></div><span id="s-tot" style="color:var(--sv)">0</span></div>
+    <div class="sp"><div class="sd g"></div><span id="s-act" style="color:var(--sv)">0</span></div>
+    <div class="sp"><div class="sd b"></div><span id="s-dn" style="color:var(--sv)">0</span></div>
+    <div class="sp" id="supa-pill"><div class="sd" id="supa-dot"></div><span id="supa-lbl" style="color:var(--sv);font-size:11px;">DB</span></div>
+  </div>
+  <div class="hbr">
+    <div class="sip" onclick="showPg('setup')"><div class="dot" style="width:8px;height:8px;border-radius:50%;background:var(--gn);"></div><span id="si-txt">Sheets</span></div>
+    <button class="bh" onclick="refreshFromSupabase()" title="Sync from cloud">🔄</button>
+    <button class="bh g" onclick="showPg('new')">+ New</button>
+    <button class="bh" onclick="expCSV()">⬇ CSV</button>
+  </div>
+</div>
+
+<!-- TABS -->
+<div class="tabs">
+  <div class="tab active" id="tab-dashboard" onclick="showPg('dashboard')">📊 Dashboard</div>
+  <div class="tab" id="tab-new" onclick="showPg('new')">➕ New Service</div>
+  <div class="tab" id="tab-tracker" onclick="showPg('tracker')">📋 All <span class="tbg" id="ba">0</span></div>
+  <div class="tab" id="tab-eod" onclick="showPg('eod')">📈 EOD</div>
+  <div class="tab" id="tab-perf" onclick="showPg('perf')">🏆 Performance</div>
+  <div class="tab" id="tab-leads" onclick="showPg('leads')">📍 Leads</div>
+  <div class="tab" id="tab-mkt" onclick="showPg('mkt')">📣 Marketing</div>
+  <div class="tab" id="tab-crm" onclick="showPg('crm')">👥 CRM</div>
+  <div class="tab" id="tab-cpn-dash" onclick="showPg('cpn-dash')">🎟️ Coupons</div>
+  <div class="tab" id="tab-admin" onclick="showPg('admin')">🔧 Admin</div>
+  <div class="tab" id="tab-attend" onclick="showPg('attend')">📸 Attendance</div>
+  <div class="tab" id="tab-setup" onclick="showPg('setup')">⚙️ Sheets</div>
+</div>
+
+<!-- ══ DASHBOARD ══ -->
+<div class="pg active" id="pg-dashboard">
+  <div class="kpg" id="d-kpis"></div>
+  <div class="pnl">
+    <div class="ph"><div class="pt">📊 Today's Activity</div></div>
+    <div class="pb" id="d-chart"></div>
+  </div>
+  <div class="pnl">
+    <div class="ph"><div class="pt">🕐 Recent Services</div></div>
+    <div class="pb" id="dash-recent" style="overflow-x:auto;"></div>
+  </div>
+</div>
+
+<!-- ══ NEW SERVICE ══ -->
+<div class="pg" id="pg-new">
+  <div class="pnl">
+    <div class="ph">
+      <div><div class="pt">🆕 Register New Service</div><div class="ps">Auto-syncs to Supabase &amp; Google Sheets</div></div>
+    </div>
+    <div class="pb">
+      <!-- TOKEN -->
+      <div class="tok" onclick="genTok()" title="Tap to refresh">
+        <div class="tkl">Token No.</div>
+        <div class="tkn" id="tok-d">Loading...</div>
+      </div>
+
+      <!-- CUSTOMER INFO -->
+      <div style="font-size:12px;font-weight:700;letter-spacing:2px;color:var(--bl);margin-bottom:14px;">👤 CUSTOMER INFORMATION</div>
+      <div class="fm"><label class="fl">Customer Name *</label><input class="fi" id="f-nm" placeholder="రాజు కుమార్ / Raju Kumar" required></div>
+      <div class="fm"><label class="fl">Mobile Number *</label><input class="fi" id="f-mb" type="tel" placeholder="9XXXXXXXXX" maxlength="10" required oninput="onMobileInput(this.value)"></div>
+
+      <!-- CUSTOMER LIVE PROFILE PANEL -->
+      <div id="cust-profile-panel" style="display:none;margin:4px 0 12px;background:rgba(201,168,76,.06);border:1.5px solid rgba(201,168,76,.22);border-radius:12px;padding:12px;font-size:12px">
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">
+          <div id="cpp-tier-icon" style="font-size:28px">🌱</div>
+          <div style="flex:1">
+            <div id="cpp-name" style="font-weight:700;font-size:14px;color:var(--gd)">New Customer</div>
+            <div id="cpp-tier" style="font-size:11px;color:var(--sv)">First Visit</div>
+          </div>
+          <div id="cpp-new-badge" style="background:rgba(0,196,140,.12);color:var(--gn);padding:3px 8px;border-radius:8px;font-size:10px;font-weight:700;display:none">🌟 NEW</div>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-bottom:10px">
+          <div style="text-align:center;background:rgba(255,255,255,.04);border-radius:7px;padding:6px">
+            <div id="cpp-visits" style="font-size:18px;font-weight:800;color:var(--gd)">0</div>
+            <div style="font-size:9px;color:var(--sv);letter-spacing:.5px">VISITS</div>
+          </div>
+          <div style="text-align:center;background:rgba(255,255,255,.04);border-radius:7px;padding:6px">
+            <div id="cpp-refs" style="font-size:18px;font-weight:800;color:var(--bl)">0</div>
+            <div style="font-size:9px;color:var(--sv);letter-spacing:.5px">REFERRALS</div>
+          </div>
+          <div style="text-align:center;background:rgba(255,255,255,.04);border-radius:7px;padding:6px">
+            <div id="cpp-spent" style="font-size:18px;font-weight:800;color:var(--gn)">₹0</div>
+            <div style="font-size:9px;color:var(--sv);letter-spacing:.5px">SPENT</div>
+          </div>
+          <div style="text-align:center;background:rgba(255,255,255,.04);border-radius:7px;padding:6px">
+            <div id="cpp-saved" style="font-size:18px;font-weight:800;color:var(--or)">₹0</div>
+            <div style="font-size:9px;color:var(--sv);letter-spacing:.5px">SAVED</div>
+          </div>
+        </div>
+        <div id="cpp-last" style="font-size:11px;color:var(--sv);margin-bottom:8px"></div>
+        <div id="cpp-ref-block" style="background:rgba(255,255,255,.04);border-radius:8px;padding:8px">
+          <div style="font-size:10px;font-weight:700;letter-spacing:1px;color:var(--sv);margin-bottom:4px">REFERRAL CODE</div>
+          <div style="display:flex;align-items:center;gap:8px">
+            <div id="cpp-ref-code" style="font-family:monospace;font-size:15px;font-weight:800;color:var(--gd);letter-spacing:2px">—</div>
+            <button onclick="sendRefLinkWA()" style="background:linear-gradient(135deg,#25D366,#128C7E);color:#fff;border:none;border-radius:6px;padding:5px 10px;font-size:11px;font-weight:700;cursor:pointer;font-family:inherit">📲 Share Link</button>
+          </div>
+          <div id="cpp-ref-used" style="font-size:10px;color:var(--sv);margin-top:3px"></div>
+        </div>
+      </div>
+
+      <div class="fm"><label class="fl">Aadhaar (Optional)</label><input class="fi" id="f-ad" placeholder="XXXX XXXX XXXX" oninput="fmtAad(this)" maxlength="14"></div>
+      <div class="fm"><label class="fl">Village / Address</label><input class="fi" id="f-addr" placeholder="Village, Mandal"></div>
+      <div class="fm"><label class="fl">Branch *</label>
+        <select class="fs" id="f-br" onchange="genTok()">
+          <option value="G">Gudivada Branch</option>
+          <option value="H">Hanuman Junction Branch</option>
+        </select>
+      </div>
+      <div class="fm"><label class="fl">Coupon Code (if any)</label><input class="fi" id="f-cpn" placeholder="E.g. FIRST" oninput="onCpnInput(this.value)">
+      </div>
+      <div class="fm" id="ref-code-wrap">
+        <label class="fl" style="color:var(--bl)">Referral Code (if referred by someone)</label>
+        <input class="fi" id="f-ref" placeholder="e.g. RR9449212" oninput="onRefInput(this.value)" style="font-family:monospace;letter-spacing:2px">
+        <div id="ref-info" style="font-size:11px;margin-top:4px;display:none"></div></div>
+
+      <!-- LEAD SOURCE -->
+
+      <!-- AGE-BASED BUNDLE OFFERS -->
+      <div style="font-size:12px;font-weight:700;letter-spacing:2px;color:var(--gd);margin:18px 0 10px;">🎁 SPECIAL BUNDLES — Save More!</div>
+      <div id="age-bundle-wrap" style="display:flex;gap:10px;overflow-x:auto;padding-bottom:8px;-webkit-overflow-scrolling:touch;margin-bottom:16px"></div>
+
+      <!-- SERVICE SELECTION -->
+      <div style="font-size:12px;font-weight:700;letter-spacing:2px;color:var(--gd);margin:18px 0 14px;">🛠️ SELECT SERVICE *</div>
+
+      <div class="fm">
+        <span class="step-lbl">Step 1 — Select Category</span>
+        <select class="fs" id="svc-cat" onchange="onCatChange(this.value)">
+          <option value="">-- Category ఎంచుకోండి --</option>
+          <option value="0">🪪 Aadhaar Services</option>
+          <option value="1">💳 PAN Card Services</option>
+          <option value="2">📗 Passport Services</option>
+          <option value="3">🗳️ Voter ID Services</option>
+          <option value="4">📋 MeeSeva Certificates</option>
+          <option value="5">🏭 Udyam / MSME</option>
+          <option value="6">🏦 PF Services</option>
+          <option value="7">🚗 RTA / Vehicle</option>
+          <option value="8">🏢 Business / Legal</option>
+          <option value="9">💰 Finance / Banking</option>
+          <option value="10">📄 Documents / Jobs</option>
+          <option value="11">🖨️ Print / Scan / Bills</option>
+          <option value="other" style="color:#A78BFA;font-weight:700;">✏️ Other / Not in list</option>
+        </select>
+      </div>
+
+      <div class="fm" id="svc-sub-wrap" style="display:none;">
+        <span class="step-lbl">Step 2 — Select Service</span>
+        <select class="fs" id="svc-grid" onchange="pickSvc(this.value)">
+          <option value="">-- Service ఎంచుకోండి --</option>
+        </select>
+      </div>
+
+      <!-- OTHER SERVICE -->
+      <div id="other-wrap" style="display:none;background:rgba(167,139,250,.05);border:1px solid rgba(167,139,250,.2);border-radius:10px;padding:14px;margin-bottom:14px;">
+        <div class="fm"><label class="fl">Service Name (English) *</label><input class="fi" id="other-name" placeholder="e.g. Income Certificate"></div>
+        <div class="fm"><label class="fl">Service Name (Telugu)</label><input class="fi" id="other-telugu" placeholder="ఆదాయ ధృవపత్రం"></div>
+        <div style="display:flex;gap:10px;margin-bottom:14px;">
+          <div style="flex:1;"><label class="fl">Govt Fee (₹)</label><input class="fi" id="other-govt" type="number" value="0" oninput="calcOtherTotal()"></div>
+          <div style="flex:1;"><label class="fl">Our Charge (₹)</label><input class="fi" id="other-charge" type="number" value="0" oninput="calcOtherTotal()"></div>
+        </div>
+      </div>
+
+      <!-- DOCS REQUIRED -->
+      <div class="dp" id="docs-p">
+        <div style="font-size:11px;font-weight:700;letter-spacing:1px;color:var(--gd);margin-bottom:8px;">📋 REQUIRED DOCUMENTS</div>
+        <div id="docs-l"></div>
+        <div style="margin-top:8px;font-size:12px;color:var(--sv);">⏱️ TAT: <span id="tat-v" style="color:var(--gd);font-weight:700;">—</span></div>
+      </div>
+
+      <!-- PAYMENT -->
+      <div style="font-size:12px;font-weight:700;letter-spacing:2px;color:var(--gn);margin:18px 0 14px;">💰 PAYMENT DETAILS</div>
+      <div class="g2">
+        <div class="fm"><label class="fl">Amount (₹) *</label><input class="fi" id="f-amt" type="number" placeholder="0" required></div>
+        <div class="fm"><label class="fl">Payment Mode *</label>
+          <select class="fs" id="f-pay">
+            <option value="">-- Mode --</option>
+            <option value="cash">💵 Cash</option>
+            <option value="upi">📱 UPI / GPay</option>
+            <option value="card">💳 Card</option>
+            <option value="pending">⏳ Pending</option>
+          </select>
+        </div>
+      </div>
+      <div class="fm"><label class="fl">Priority</label>
+        <select class="fs" id="f-pri">
+          <option value="Normal">Normal</option>
+          <option value="Urgent">🚀 Urgent</option>
+          <option value="VIP">⭐ VIP</option>
+        </select>
+      </div>
+      <div class="fm"><label class="fl">Application No. / Reference</label><input class="fi" id="f-app" placeholder="Will be updated after processing"></div>
+      <div class="fm"><label class="fl">Notes</label><textarea class="ft" id="f-nts" placeholder="Any special instructions..."></textarea></div>
+
+      <div id="first-ban" style="display:none;background:rgba(0,196,140,.08);border:1px solid rgba(0,196,140,.2);border-radius:10px;padding:12px;margin-bottom:14px;font-size:13px;color:var(--gn);">🎉 First Visit! Welcome coupon will be issued automatically.</div>
+
+      <button class="bp" onclick="subSvc()">✅ Register Service</button>
+      <button class="bs" onclick="clrForm()" style="margin-top:10px;width:100%;">🗑️ Clear Form</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══ TRACKER ══ -->
+<!-- COUPON DASHBOARD -->
+<div class="pg" id="pg-cpn-dash">
+  <div class="pnl">
+    <div class="ph">
+      <div><div class="pt">🎫 Coupon & Offers Dashboard</div><div class="ps">Active coupons, expiry alerts, bulk promos</div></div>
+      <button class="bg" style="width:auto;padding:5px 12px;font-size:11px" onclick="renderCpnDash()">↺ Refresh</button>
+    </div>
+    <div class="pb" id="cpn-dash-wrap">
+      <div style="color:var(--sv);text-align:center;padding:16px">Loading...</div>
+    </div>
+  </div>
+  <div class="pnl">
+    <div class="ph"><div class="pt">📊 Expiry Alerts</div></div>
+    <div class="pb">
+      <button class="bp" style="width:100%;margin-bottom:8px" onclick="checkCouponExpiries()">🔔 Send Expiry Alerts Now</button>
+      <div style="font-size:11px;color:var(--sv)">Auto-sends alerts 3 days, 1 day and on expiry day. Run manually any time to trigger.</div>
+    </div>
+  </div>
+</div>
+
+<div class="pg" id="pg-tracker">
+  <div class="pnl" style="margin-bottom:12px;">
+    <div class="pb" style="padding:12px 16px;">
+      <div class="srch-bar">
+        <input class="fi" id="srch" placeholder="🔍 Search name, mobile, token..." oninput="debounceSearch()" style="flex:1;min-width:180px;">
+        <input class="fi" id="date-from" type="date" onchange="renderTbl()" style="width:140px;">
+        <input class="fi" id="date-to" type="date" onchange="renderTbl()" style="width:140px;">
+        <button class="bs" onclick="clearDateFilter()" style="padding:10px 14px;font-size:12px;">✕ Clear</button>
+      </div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;" id="filter-btns">
+        <button class="bs" onclick="setF('all',this)" style="font-size:12px;padding:6px 12px;">All</button>
+        <button class="bs" onclick="setF('open',this)" style="font-size:12px;padding:6px 12px;">📥 Open</button>
+        <button class="bs" onclick="setF('processing',this)" style="font-size:12px;padding:6px 12px;">⚡ Processing</button>
+        <button class="bs" onclick="setF('completed',this)" style="font-size:12px;padding:6px 12px;">✅ Completed</button>
+        <button class="bs" onclick="setF('cert-recv',this)" style="font-size:12px;padding:6px 12px;">📜 Cert Recv</button>
+        <button class="bs" onclick="setF('cert-del',this)" style="font-size:12px;padding:6px 12px;">🎉 Delivered</button>
+        <button class="bs" onclick="setF('rejected',this)" style="font-size:12px;padding:6px 12px;">❌ Rejected</button>
+      </div>
+    </div>
+  </div>
+  <div class="pnl" style="margin-bottom:12px;">
+    <div class="ph"><div class="pt">🔄 Pipeline</div></div>
+    <div class="pb" id="pipeline-wrap" style="overflow-x:auto;"></div>
+  </div>
+  <div class="pnl">
+    <div class="ph">
+      <div class="pt">📋 Services <span id="tbl-count" style="color:var(--sv);font-size:13px;font-weight:400;"></span></div>
+      <button class="bg" onclick="refreshFromSupabase()" style="padding:8px 14px;font-size:12px;">🔄 Sync</button>
+    </div>
+    <div style="overflow-x:auto;"><table class="tbl" id="svc-tbl"><thead><tr><th>Token</th><th>Customer</th><th>Service</th><th>Amount</th><th>Status</th><th>Date</th><th>Actions</th></tr></thead><tbody id="tbl-body"></tbody></table></div>
+  </div>
+</div>
+
+<!-- ══ EOD ══ -->
+<div class="pg" id="pg-eod">
+  <div class="kpg" id="eod-kpis"></div>
+  <div class="pnl"><div class="ph"><div class="pt">📊 Today's Services</div></div><div class="pb" id="eod-svc"></div></div>
+  <div class="pnl"><div class="ph"><div class="pt">⏳ Pending Cases</div></div><div class="pb" id="eod-pnd"></div></div>
+  <div class="pnl"><div class="ph"><div class="pt">🔔 Reminders</div></div><div class="pb" id="eod-rem"></div></div>
+  <div style="display:flex;gap:10px;margin-top:16px;flex-wrap:wrap;">
+    <button class="bp" onclick="sendEOD()" style="flex:1;">📱 Send EOD Report</button>
+    <input class="fi" id="eod-dt" type="date" style="width:160px;">
+  </div>
+</div>
+
+<!-- ══ PERFORMANCE ══ -->
+<div class="pg" id="pg-perf">
+  <div style="display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap;align-items:center;">
+    <select class="fs" id="perf-period" onchange="renderPerf()" style="width:auto;padding:8px 14px;font-size:13px;">
+      <option value="today">Today</option>
+      <option value="week">This Week</option>
+      <option value="month">This Month</option>
+    </select>
+    <button class="bg" onclick="sendManualReport('1pm')" style="padding:8px 14px;font-size:12px;">📱 1PM Report</button>
+    <button class="bg" onclick="sendManualReport('8pm')" style="padding:8px 14px;font-size:12px;">🌙 8PM Report</button>
+  </div>
+  <div class="kpg" id="perf-shop-kpis"></div>
+  <div id="perf-staff-cards"></div>
+
+  <!-- Social Media Tracker -->
+  <div class="pnl" id="social-pnl">
+    <div class="ph">
+      <div><div class="pt">📱 Social Media Tracker</div><div class="ps">Daily social media tasks</div></div>
+      <button class="bs" onclick="renderSocialTracker()" style="padding:7px 14px;font-size:12px;">🔄</button>
+    </div>
+    <div class="pb" id="social-tracker"></div>
+  </div>
+
+  <!-- Incentive Rules -->
+  <div class="pnl">
+    <div class="ph"><div class="pt">⚙️ Incentive Rules</div></div>
+    <div class="pb">
+      <div class="g2">
+        <div class="fm"><label class="fl">Walk-in Target/day</label><input class="fi" id="ir-walkin-target" type="number" value="30"></div>
+        <div class="fm"><label class="fl">Bonus per extra walk-in (₹)</label><input class="fi" id="ir-walkin-incentive" type="number" value="10"></div>
+        <div class="fm"><label class="fl">Completion Target (%)</label><input class="fi" id="ir-completion-target" type="number" value="90"></div>
+        <div class="fm"><label class="fl">Completion Bonus (₹)</label><input class="fi" id="ir-completion-bonus" type="number" value="100"></div>
+        <div class="fm"><label class="fl">Speed Bonus per service (₹)</label><input class="fi" id="ir-speed-bonus" type="number" value="5"></div>
+        <div class="fm"><label class="fl">Zero-rejection Bonus (₹)</label><input class="fi" id="ir-rejection-bonus" type="number" value="50"></div>
+      </div>
+      <button class="bg" onclick="saveIncentiveRules()">💾 Save Rules</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══ LEADS ══ -->
+<div class="pg" id="pg-leads">
+  <div class="pnl"><div class="ph"><div class="pt">📍 Lead Source Tracking</div><button class="bg" onclick="exportLeadsCSV()" style="padding:8px 14px;font-size:12px;">⬇ Export</button></div>
+  <div class="pb">
+    <div style="display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap;">
+      <button class="bs" onclick="setLeadFilter('today',this)" style="font-size:12px;padding:6px 12px;">Today</button>
+      <button class="bs" onclick="setLeadFilter('week',this)" style="font-size:12px;padding:6px 12px;">Week</button>
+      <button class="bs" onclick="setLeadFilter('month',this)" style="font-size:12px;padding:6px 12px;">Month</button>
+      <button class="bs" onclick="setLeadFilter('all',this)" style="font-size:12px;padding:6px 12px;">All</button>
+    </div>
+    <div id="lead-kpis" class="kpg"></div>
+    <div id="lead-chart"></div>
+  </div></div>
+</div>
+
+<!-- ══ MARKETING ══ -->
+<div class="pg" id="pg-crm">
+  <div class="pnl"><div class="ph"><div class="pt">👥 Customer Profiles</div><button class="bg" onclick="exportCRMCSV()" style="padding:8px 14px;font-size:12px;">⬇ Export</button></div>
+  <div class="pb">
+    <div style="display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap;">
+      <button class="bs" onclick="setCRMFilter('all',this)" style="font-size:12px;padding:6px 12px;">All</button>
+      <button class="bs" onclick="setCRMFilter('loyal',this)" style="font-size:12px;padding:6px 12px;">⭐ Loyal</button>
+      <button class="bs" onclick="setCRMFilter('new',this)" style="font-size:12px;padding:6px 12px;">🆕 New</button>
+      <button class="bs" onclick="setCRMFilter('inactive',this)" style="font-size:12px;padding:6px 12px;">😴 Inactive</button>
+    </div>
+    <div id="crm-list"></div>
+  </div></div>
+</div>
+
+<!-- ══ COUPONS ══ -->
+
+<div class="pg" id="pg-admin">
+  <div class="pnl"><div class="ph"><div class="pt">👥 Staff Management</div></div>
+  <div class="pb">
+    <div class="g2">
+      <div>
+        <div style="font-size:12px;font-weight:700;color:var(--gd);margin-bottom:10px;"></div>
+        <div id=""></div>
+        <button class="bs" onclick="addSt('fo')" style="font-size:12px;padding:6px 12px;margin-top:8px;">+ Add</button>
+      </div>
+      <div>
+        <div style="font-size:12px;font-weight:700;color:var(--bl);margin-bottom:10px;">💻 Operators</div>
+        <div id="op-list"></div>
+        <button class="bs" onclick="addSt('op')" style="font-size:12px;padding:6px 12px;margin-top:8px;">+ Add</button>
+      </div>
+    </div>
+    <button class="bg" onclick="saveStaff()" style="margin-top:12px;">💾 Save Staff</button>
+  </div></div>
+
+  <div class="pnl"><div class="ph"><div class="pt">🛠️ Services Management</div><button class="bg" onclick="opnAddSvc()" style="padding:8px 14px;font-size:12px;">+ Add Custom Service</button></div>
+  <div style="overflow-x:auto;"><table class="tbl" id="adm-svc-tbl"><thead><tr><th>Service</th><th>Govt Fee</th><th>Our Charge</th><th>Total</th><th>Actions</th></tr></thead><tbody id="adm-svc-body"></tbody></table></div></div>
+
+  <div class="pnl"><div class="ph"><div class="pt" style="color:var(--rd);">⚠️ Danger Zone</div></div>
+  <div class="pb"><button class="br2" onclick="clearAllData()">🗑️ Clear All Data</button></div></div>
+</div>
+
+<!-- ══ ATTENDANCE ══ -->
+
+<div class="pg" id="pg-mkt">
+  <div class="pnl"><div class="ph"><div class="pt">📣 WhatsApp Marketing</div></div>
+  <div class="pb">
+    <div class="fm"><label class="fl">Campaign Type</label>
+      <select class="fs" id="mkt-type" onchange="mktTypeChanged(this.value)">
+        <option value="promo">📢 Promotional</option>
+        <option value="reminder">⏰ Reminder</option>
+        <option value="festival">🎉 Festival Greeting</option>
+        <option value="new-service">🆕 New Service Alert</option>
+      </select>
+    </div>
+    <div class="fm"><label class="fl">Target Audience</label>
+      <select class="fs" id="mkt-aud">
+        <option value="all">All Customers</option>
+        <option value="recent">Recent (30 days)</option>
+        <option value="inactive">Inactive (90+ days)</option>
+      </select>
+    </div>
+    
+    </div>
+    <div class="pnl">
+      <div class="ph"><div class="pt">👤 Register Face</div></div>
+      <div class="pb">
+        <div class="fm"><label class="fl">Select Staff Member</label>
+          <select class="fs" id="reg-staff-sel">
+            <option value="">-- Select Staff --</option>
+            <option value="Gudapati Satish">Gudapati Satish</option>
+            <option value="Gudapati Prasanna Kumari">Gudapati Prasanna Kumari</option>
+            <option value="Allu Ambica">Allu Ambica</option>
+          </select>
+        </div>
+        <button class="bp" onclick="captureAndRegister()" style="margin-bottom:12px;">📸 Capture &amp; Register Face</button>
+        <button class="bs" onclick="deleteFace()" style="width:100%;font-size:12px;padding:8px;">🗑️ Delete Face Data</button>
+      </div>
+      <div class="pnl" style="margin:0 16px 16px;"><div class="ph"><div class="pt">📅 Today's Log</div></div>
+      <div class="pb" id="attend-log"></div>
+      <button class="bg" onclick="sendAttendWA()" style="margin:0 16px 16px;padding:8px 16px;font-size:12px;">📱 WA Report</button></div>
+    </div>
+  </div>
+  <div class="pnl"><div class="ph"><div class="pt">📊 Monthly Summary</div></div><div class="pb" id="attend-summary"></div></div>
+
+  <div class="pnl"><div class="ph"><div class="pt">⚙️ Office Settings</div></div>
+  <div class="pb">
+    <div class="g2">
+      <div class="fm"><label class="fl">Start Time</label><input class="fi" id="off-start" type="time" value="09:30"></div>
+      <div class="fm"><label class="fl">End Time</label><input class="fi" id="off-end" type="time" value="19:00"></div>
+      <div class="fm"><label class="fl">Grace Period (mins)</label><input class="fi" id="off-grace" type="number" value="15"></div>
+      <div class="fm"><label class="fl">Deduct After (mins)</label><input class="fi" id="off-deduct" type="number" value="20"></div>
+    </div>
+    <div style="font-size:12px;font-weight:700;color:var(--sv);margin-bottom:10px;">Monthly Salaries (₹)</div>
+    <div class="g2" id="salary-inputs"></div>
+    <button class="bg" onclick="saveOfficeSettings()">💾 Save Settings</button>
+  </div></div>
+</div>
+
+<!-- ══ SETUP / SHEETS ══ -->
+<div class="pg" id="pg-attend">
+  <div class="g2" style="margin-bottom:16px;">
+    <div class="pnl">
+      <div class="ph"><div class="pt">📸 Face Recognition</div></div>
+      <div class="pb">
+        <div style="display:flex;gap:8px;margin-bottom:12px;">
+          <button class="bg" id="btn-checkin" onclick="setAttendMode('in')" style="flex:1;">🟢 Check IN</button>
+          <button class="br2" id="btn-checkout" onclick="setAttendMode('out')" style="flex:1;border-radius:10px;">🔴 Check OUT</button>
+        </div>
+        <div class="attend-wrap" onclick="if(!_stream)startCamera();">
+          <video id="attend-video" autoplay muted playsinline webkit-playsinline style="width:100%;height:100%;object-fit:cover;display:block;background:#000;"></video>
+          <canvas id="attend-canvas" class="attend-canvas"></canvas>
+          <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;pointer-events:none;"><div style="width:60%;aspect-ratio:1;border:2px solid rgba(0,196,140,.4);border-radius:50%;"></div></div>
+        </div>
+        <div style="display:flex;gap:8px;margin-top:10px;">
+          <button class="bp" onclick="startCamera()" style="flex:1;padding:10px;">📷 Start Camera</button>
+          <button class="bs" onclick="stopCamera()" style="padding:10px 16px;">⏹ Stop</button>
+        </div>
+        <div id="model-load-status" style="margin-top:8px;font-size:13px;text-align:center;color:var(--or);font-weight:600;">⏳ Loading AI... (needs internet)</div>
+        <div id="model-progress-bar" style="display:none;margin-top:6px;"><div class="pbar"><div class="pfill" id="model-progress-fill" style="width:0%"></div></div></div>
+        <div id="attend-banner" style="margin-top:8px;text-align:center;font-size:13px;color:var(--sv);">Tap Start Camera to begin</div>
+      </div>
+    </div>
+    <div class="pnl">
+      <div class="ph"><div class="pt">👤 Register Face</div></div>
+      <div class="pb">
+        <div class="fm"><label class="fl">Select Staff Member</label>
+          <select class="fs" id="reg-staff-sel">
+            <option value="">-- Select Staff --</option>
+            <option value="Gudapati Satish">Gudapati Satish</option>
+            <option value="Gudapati Prasanna Kumari">Gudapati Prasanna Kumari</option>
+            <option value="Allu Ambica">Allu Ambica</option>
+          </select>
+        </div>
+        <button class="bp" onclick="captureAndRegister()" style="margin-bottom:12px;">📸 Capture &amp; Register Face</button>
+        <button class="bs" onclick="deleteFace()" style="width:100%;font-size:12px;padding:8px;">🗑️ Delete Face Data</button>
+      </div>
+      <div class="pnl" style="margin:0 16px 16px;"><div class="ph"><div class="pt">📅 Today's Log</div></div>
+      <div class="pb" id="attend-log"></div>
+      <button class="bg" onclick="sendAttendWA()" style="margin:0 16px 16px;padding:8px 16px;font-size:12px;">📱 WA Report</button></div>
+    </div>
+  </div>
+  <div class="pnl"><div class="ph"><div class="pt">📊 Monthly Summary</div></div><div class="pb" id="attend-summary"></div></div>
+
+  <div class="pnl"><div class="ph"><div class="pt">⚙️ Office Settings</div></div>
+  <div class="pb">
+    <div class="g2">
+      <div class="fm"><label class="fl">Start Time</label><input class="fi" id="off-start" type="time" value="09:30"></div>
+      <div class="fm"><label class="fl">End Time</label><input class="fi" id="off-end" type="time" value="19:00"></div>
+      <div class="fm"><label class="fl">Grace Period (mins)</label><input class="fi" id="off-grace" type="number" value="15"></div>
+      <div class="fm"><label class="fl">Deduct After (mins)</label><input class="fi" id="off-deduct" type="number" value="20"></div>
+    </div>
+    <div style="font-size:12px;font-weight:700;color:var(--sv);margin-bottom:10px;">Monthly Salaries (₹)</div>
+    <div class="g2" id="salary-inputs"></div>
+    <button class="bg" onclick="saveOfficeSettings()">💾 Save Settings</button>
+  </div></div>
+</div>
+
+<!-- ══ SETUP / SHEETS ══ -->
+<div class="pg" id="pg-setup">
+  <div class="pnl"><div class="ph"><div class="pt">⚙️ Google Sheets Setup</div></div>
+  <div class="pb">
+    <div class="fm"><label class="fl">Apps Script Web App URL</label>
+      <div style="display:flex;gap:8px;">
+        <input class="fi" id="sh-url" placeholder="https://script.google.com/macros/s/.../exec" style="flex:1;font-size:12px;font-family:var(--mono);">
+        <button class="bg" onclick="saveURL()" style="white-space:nowrap;padding:10px 16px;">Save</button>
+      </div>
+    </div>
+    <button class="bg" onclick="syncAll()" style="margin-right:8px;">☁️ Sync All</button>
+    <button class="bs" onclick="checkSyncHealth()">🔍 Check Health</button>
+    <div id="sync-log" style="margin-top:14px;max-height:200px;overflow-y:auto;font-family:var(--mono);font-size:11px;"></div>
+  </div></div>
+
+  <div class="pnl"><div class="ph"><div class="pt">🗄️ Supabase Status</div><div id="supa-badge" style="font-size:12px;color:var(--sv);">Checking...</div><span id="sync-queue-count" style="font-size:10px;color:var(--or)"></span></div>
+  <div class="pb">
+    <button class="bg" onclick="pingSupabase()">🔍 Ping Supabase</button>
+    <button class="bs" onclick="refreshFromSupabase()" style="margin-left:8px;">🔄 Reload Data</button>
+    <div id="supa-info" style="margin-top:12px;font-size:12px;color:var(--sv);"></div>
+  </div></div>
+</div>
+
+<!-- MODALS -->
+<div class="mo" id="det-mo" onclick="if(event.target===this)closeM('det-mo')">
+  <div class="mc"><div id="det-bdy"></div><div id="det-ftr" style="padding:16px 20px;border-top:1px solid var(--br);display:flex;gap:8px;flex-wrap:wrap;"></div></div>
+</div>
+<div class="mo" id="wa-mo" onclick="if(event.target===this)closeM('wa-mo')">
+  <div class="mc sm"><div id="wa-bdy" style="padding:20px;"></div></div>
+</div>
+<div class="mo" id="svc-mo" onclick="if(event.target===this)closeM('svc-mo')">
+  <div class="mc sm">
+    <div style="padding:16px 20px;border-bottom:1px solid var(--br);"><div class="pt">🛠️ Add/Edit Service</div></div>
+    <div style="padding:16px 20px;">
+      <div class="fm"><label class="fl">Service Name *</label><input class="fi" id="sv-nm" placeholder="Income Certificate"></div>
+      <div class="fm"><label class="fl">Service Name (Telugu)</label><input class="fi" id="sv-tl" placeholder="ఆదాయ ధృవపత్రం"></div>
+      <div class="fm"><label class="fl">Icon (emoji)</label><input class="fi" id="sv-ic" placeholder="📋" maxlength="4" style="width:80px;"></div>
+      <div class="fm"><label class="fl">Processing Time</label><input class="fi" id="sv-tt" placeholder="Same Day / 7-10 days"></div>
+      <div class="g2">
+        <div class="fm"><label class="fl">Govt Fee (₹)</label><input class="fi" id="sv-gv" type="number" value="0" oninput="calcSvTot()"></div>
+        <div class="fm"><label class="fl">Our Charge (₹)</label><input class="fi" id="sv-ch" type="number" value="0" oninput="calcSvTot()"></div>
+      </div>
+      <div style="font-size:14px;color:var(--gd);margin-bottom:14px;">Total: <span id="sv-tot">₹0</span></div>
+      <div class="fm"><label class="fl">Documents (one per line)</label><textarea class="ft" id="sv-dc" placeholder="Aadhaar Card&#10;PAN Card"></textarea></div>
+      <input type="hidden" id="sv-id">
+      <button class="bp" onclick="saveSvc()">💾 Save Service</button>
+    </div>
+  </div>
+</div>
+<div id="toast"></div>
+
+<script>
+// RR Computers Service Manager — Build 20260422-0655
+var WA_LOG = JSON.parse(localStorage.getItem('rr-wa-log') || '[]');
+
+// ════════════════════════════════════════════════════════
+// RR COMPUTERS — MEESEVA SERVICE MANAGER v3.0
+
+// ── Helper: getElementById shorthand ──
+function el(id){ return document.getElementById(id); }
+function esc(s){ return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+// Clean rebuild — single script block at end of body
+// All functions defined BEFORE window.onload
+// ════════════════════════════════════════════════════════
+
+// ── CONFIG ──
+var SUPA_URL = 'https://xcnwiadovhmrahcbpmuy.supabase.co';
+var sheetsURL = localStorage.getItem('rr-sh-url') || 'https://script.google.com/macros/s/AKfycbyTZbFGCIcYwOAoWXvll-mMAKubk42LMvhY3e8ntAFXRR7DfFV7SCH_UCl5iRACuWmm/exec';
+var SUPA_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhjbndpYWRvdmhtcmFoY2JwbXV5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQwNjUxMzEsImV4cCI6MjA4OTY0MTEzMX0.-vfGFeFPk6pC5CkTDLgnqeSNqNd5FT6Bl24QLEsUuIs';
+var PHONE_ADMIN = '919493212655';
+var PHONE_CALL  = '9493212655';
+var WEBSITE     = 'www.rrcomputers.online';
+
+// ── STATE ──
+var SVC = [];
+var cSvcs = JSON.parse(localStorage.getItem('rr-csvc') || '[]');
+var STAFF = {
+  fo: JSON.parse(localStorage.getItem('rr-fo') || '["Gudapati Satish"]'),
+  op: JSON.parse(localStorage.getItem('rr-op') || '["Gudapati Satish","Gudapati Prasanna Kumari","Allu Ambica"]')
+};
+sheetsURL = localStorage.getItem('rr-sh-url') || 'https://script.google.com/macros/s/AKfycbyTZbFGCIcYwOAoWXvll-mMAKubk42LMvhY3e8ntAFXRR7DfFV7SCH_UCl5iRACuWmm/exec';
+var IRULES = JSON.parse(localStorage.getItem('rr-irules') || '{"walkinTarget":0,"walkinIncentive":5,"completionTarget":90,"completionBonus":100,"speedBonus":5,"rejectionBonus":50}');
+var SOCIAL_LOG = JSON.parse(localStorage.getItem('rr-social') || '{}');
+var ATTEND_LOG = JSON.parse(localStorage.getItem('rr-attend') || '[]');
+var FACE_DATA = JSON.parse(localStorage.getItem('rr-faces') || '{}');
+var OFFICE_CFG = JSON.parse(localStorage.getItem('rr-office-cfg') || '{"startTime":"09:30","endTime":"19:00","graceMinutes":15,"deductMinutes":20,"salaries":{"Gudapati Prasanna Kumari":20000,"Allu Ambica":10000}}');
+var selS = null;
+var _curFilter = 'all';
+var _curLeadFilter = 'all';
+var _curCRMFilter = 'all';
+var _curCpnFilter = 'all';
+var _searchTimer = null;
+var _stream = null;
+var _video = null;
+var _faceModelsLoaded = false;
+var _attendMode = 'in';
+var _recLoop = null;
+var _supaLoaded = false;
+var isOnline = navigator.onLine;
+
+// ── SERVICE GROUPS ──
+var SVC_GROUPS = [
+  {label:'🪪 Aadhaar Services',      ids:['a-new','a-sishu','a-mob','a-email','a-addr','a-addr-gz','a-name','a-dob','a-pvc','a-full','a-prt','a-idcard','a-lam','a-unlock','a-hist']},
+  {label:'💳 PAN Card Services',     ids:['p-new','p-inst','p-cor','p-ttk','p-dup','p-lost','p-lnk']},
+  {label:'📗 Passport Services',     ids:['ps-fresh','ps-renew','ps-minor','ps-pcc','ps-ttk']},
+  {label:'🗳️ Voter ID Services',     ids:['v-new','v-cor','v-prtm','v-prtnm','v-xfr','v-srch']},
+  {label:'📋 MeeSeva Certificates',  ids:['m-birth','m-cst','m-inc','m-ews','m-obc','m-res','m-nat','m-dob','m-notr','m-intg']},
+  {label:'🏭 Udyam / MSME',          ids:['u-reg','u-upd','u-prt','u-lost','u-inst']},
+  {label:'🏦 PF Services',           ids:['pf-kyc','pf-nom','pf-with','pf-bal']},
+  {label:'🚗 RTA / Vehicle',         ids:['r-xfr','r-cbk','r-dl']},
+  {label:'🏢 Business / Legal',      ids:['b-fss','b-lab','b-lab2','b-dsc','l-ec','l-est','l-rent','l-bank','l-esh','l-rat']},
+  {label:'💰 Finance / Banking',     ids:['f-cbl','f-npc','f-pmk']},
+  {label:'📄 Documents / Jobs',      ids:['d-job','d-hal','d-rsm','d-sch']},
+  {label:'🖨️ Print / Scan / Bills',  ids:['print','scan','eb-bill','photo']},
+];
+
+// ── BASE SERVICES ──
+var BASE = [
+  // AADHAAR
+  {id:'a-new',    name:'New Aadhaar Enrollment',     icon:'🆕',govt:0,   svc:200,time:'Same Day',    docs:['DOB proof','Address proof','Photo'],                          telugu:'కొత్త ఆధార్ నమోదు'},
+  {id:'a-sishu',  name:'Sishu Aadhaar (Child <5yr)', icon:'👶',govt:0,   svc:200,time:'Same Day',    docs:['Parent Aadhaar','Child Birth Certificate','Child photo'],      telugu:'శిశు ఆధార్'},
+  {id:'a-mob',    name:'Aadhaar Mobile Update',      icon:'📱',govt:0,   svc:200,time:'Same Day',    docs:['Aadhaar Card','Mobile number to link'],                        telugu:'ఆధార్ మొబైల్ అప్‌డేట్'},
+  {id:'a-email',  name:'Aadhaar Email Update',       icon:'📧',govt:0,   svc:200,time:'Same Day',    docs:['Aadhaar Card','Email ID'],                                     telugu:'ఆధార్ ఈమెయిల్ అప్‌డేట్'},
+  {id:'a-addr',   name:'Aadhaar Address Update',     icon:'🏠',govt:0,   svc:200,time:'Same Day',    docs:['Aadhaar Card','Address proof (bill/bank/rent)'],               telugu:'ఆధార్ చిరునామా అప్‌డేట్'},
+  {id:'a-addr-gz',name:'Aadhaar Address (Gazetted)', icon:'📋',govt:0,   svc:500,time:'2-3 days',   docs:['Aadhaar Card','Gazetted officer letter','Address proof'],       telugu:'ఆధార్ చిరునామా (గెజిటెడ్)'},
+  {id:'a-name',   name:'Aadhaar Name Correction',    icon:'✏️',govt:0,   svc:200,time:'Same Day',    docs:['Aadhaar Card','Name proof (SSC/PAN/Passport)'],                telugu:'ఆధార్ పేరు సవరణ'},
+  {id:'a-dob',    name:'Aadhaar DOB Correction',     icon:'🎂',govt:0,   svc:200,time:'Same Day',    docs:['Aadhaar Card','DOB proof (Birth cert/SSC)'],                   telugu:'ఆధార్ పుట్టిన తేది సవరణ'},
+  {id:'a-pvc',    name:'Aadhaar PVC Card (Order)',   icon:'💎',govt:50,  svc:100,time:'15-20 days',  docs:['Aadhaar number','Registered mobile'],                          telugu:'ఆధార్ PVC కార్డ్'},
+  {id:'a-full',   name:'Aadhaar Full Print (A4)',    icon:'🖨️',govt:0,   svc:20, time:'Same Day',    docs:['Aadhaar number or card'],                                     telugu:'ఆధార్ ఫుల్ ప్రింట్'},
+  {id:'a-prt',    name:'e-Aadhaar Print (Mini)',     icon:'🖨️',govt:0,   svc:10, time:'Same Day',    docs:['Aadhaar number or card'],                                     telugu:'ఈ-ఆధార్ ప్రింట్'},
+  {id:'a-idcard', name:'Aadhaar ID Card (Laminated)',icon:'🪪',govt:0,   svc:30, time:'Same Day',    docs:['Aadhaar card or number'],                                     telugu:'ఆధార్ ID కార్డ్'},
+  {id:'a-lam',    name:'Aadhaar Lamination Only',    icon:'✨',govt:0,   svc:20, time:'Same Day',    docs:['Aadhaar printout'],                                           telugu:'ఆధార్ లామినేషన్'},
+  {id:'a-unlock', name:'Aadhaar Biometric Unlock',   icon:'🔓',govt:0,   svc:100,time:'Same Day',    docs:['Aadhaar Card','Registered mobile OTP'],                        telugu:'ఆధార్ బయోమెట్రిక్ అన్‌లాక్'},
+  {id:'a-hist',   name:'Aadhaar Update History',     icon:'📅',govt:0,   svc:50, time:'Same Day',    docs:['Aadhaar number','Registered mobile'],                          telugu:'ఆధార్ అప్‌డేట్ హిస్టరీ'},
+  // PAN
+  {id:'p-new',    name:'New PAN Card',               icon:'💳',govt:107, svc:200,time:'7-10 days',   docs:['Aadhaar Card','Passport photo','DOB proof'],                   telugu:'కొత్త PAN కార్డ్'},
+  {id:'p-inst',   name:'Instant PAN (Aadhaar based)',icon:'⚡',govt:0,   svc:100,time:'Same Day',    docs:['Aadhaar Card','PAN linked mobile'],                            telugu:'ఇన్‌స్టంట్ PAN కార్డ్'},
+  {id:'p-cor',    name:'PAN Correction / Reprint',   icon:'✏️',govt:107, svc:200,time:'7-10 days',   docs:['Existing PAN','Aadhaar Card','Correction proof'],              telugu:'PAN కార్డ్ కరెక్షన్'},
+  {id:'p-ttk',    name:'PAN Correction Tatkal',      icon:'🚀',govt:107, svc:300,time:'3-5 days',    docs:['Existing PAN','Aadhaar Card','Correction proof'],              telugu:'PAN తత్కాల్'},
+  {id:'p-dup',    name:'Duplicate PAN Card',         icon:'📋',govt:107, svc:200,time:'7-10 days',   docs:['Aadhaar Card','Old PAN details','Passport photo'],             telugu:'డూప్లికేట్ PAN కార్డ్'},
+  {id:'p-lost',   name:'PAN Lost - Number + Card',   icon:'🔍',govt:107, svc:300,time:'7-10 days',   docs:['Aadhaar Card','Mobile number','Passport photo'],               telugu:'పోయిన PAN'},
+  {id:'p-lnk',    name:'PAN-Aadhaar Link',           icon:'🔗',govt:1000,svc:200,time:'Same Day',    docs:['PAN Card','Aadhaar Card','Registered mobile'],                 telugu:'PAN-ఆధార్ లింక్'},
+  // PASSPORT
+  {id:'ps-fresh', name:'Fresh Passport (Normal)',    icon:'📗',govt:1500,svc:500, time:'30-45 days',  docs:['Aadhaar','PAN','DOB proof','Address proof','Photo','Class 10'],telugu:'కొత్త పాస్‌పోర్ట్'},
+  {id:'ps-renew', name:'Passport Renewal',           icon:'🔄',govt:1500,svc:400, time:'15-30 days',  docs:['Old Passport','Aadhaar','PAN','Passport photo'],               telugu:'పాస్‌పోర్ట్ రెన్యూవల్'},
+  {id:'ps-minor', name:'Minor Passport (< 18 yrs)', icon:'👦',govt:1000,svc:400, time:'15-30 days',  docs:['Birth certificate','Parent passports','Aadhaar','School ID'],  telugu:'మైనర్ పాస్‌పోర్ట్'},
+  {id:'ps-pcc',   name:'Police Clearance (PCC)',     icon:'🛡️',govt:500, svc:300, time:'7-15 days',   docs:['Passport','Aadhaar','Address proof'],                          telugu:'పోలీస్ క్లియరెన్స్'},
+  {id:'ps-ttk',   name:'Tatkal Passport',            icon:'🚀',govt:3500,svc:1000,time:'7-14 days',   docs:['All fresh passport docs','Tatkal docs','Affidavit'],           telugu:'తత్కాల్ పాస్‌పోర్ట్'},
+  // VOTER
+  {id:'v-new',    name:'New Voter ID (Form 6)',      icon:'🗳️',govt:0,   svc:150,time:'15-30 days',  docs:['Aadhaar Card','Passport photo','Age proof (18+)','Address proof'],telugu:'కొత్త ఓటర్ ID'},
+  {id:'v-cor',    name:'Voter ID Correction (Form 8)',icon:'✏️',govt:0,  svc:150,time:'15-30 days',  docs:['Existing Voter ID','Aadhaar','Correction proof'],              telugu:'ఓటర్ ID కరెక్షన్'},
+  {id:'v-prtm',   name:'Voter ID Print (with mobile)',icon:'🖨️',govt:0,  svc:50, time:'Same Day',    docs:['Voter ID number or Aadhaar','Registered mobile'],              telugu:'ఓటర్ ID ప్రింట్ (మొబైల్)'},
+  {id:'v-prtnm',  name:'Voter ID Print (no mobile)', icon:'📄',govt:0,   svc:100,time:'Same Day',    docs:['Voter ID number','Name + DOB + Address details'],              telugu:'ఓటర్ ID ప్రింట్ (మొబైల్ లేకుండా)'},
+  {id:'v-xfr',    name:'Voter Transfer (Form 8A)',   icon:'🔄',govt:0,   svc:150,time:'15-30 days',  docs:['Current Voter ID','New address proof','Aadhaar'],              telugu:'ఓటర్ ట్రాన్స్ఫర్'},
+  {id:'v-srch',   name:'Voter Number Search',        icon:'🔍',govt:0,   svc:50, time:'Same Day',    docs:['Name + DOB or Aadhaar number'],                               telugu:'ఓటర్ నంబర్ వెతకడం'},
+  // MEESEVA
+  {id:'m-birth',  name:'Birth Certificate',          icon:'👶',govt:50,  svc:150,time:'7-15 days',   docs:['Hospital birth record','Parent Aadhaar','Marriage certificate'], telugu:'జన్మ ధృవపత్రం'},
+  {id:'m-cst',    name:'Caste Certificate',          icon:'📋',govt:50,  svc:150,time:'10-15 days',  docs:['Aadhaar Card','Ration Card','School TC','Father caste cert'],   telugu:'కులం ధృవపత్రం'},
+  {id:'m-inc',    name:'Income Certificate',         icon:'📜',govt:50,  svc:150,time:'7-10 days',   docs:['Aadhaar Card','Ration Card','Salary proof','Passport photo'],   telugu:'ఆదాయ ధృవపత్రం'},
+  {id:'m-ews',    name:'EWS Certificate',            icon:'📃',govt:50,  svc:150,time:'7-10 days',   docs:['Aadhaar Card','Ration Card','Income proof','Property details'], telugu:'EWS ధృవపత్రం'},
+  {id:'m-obc',    name:'OBC Certificate',            icon:'📑',govt:50,  svc:150,time:'7-10 days',   docs:['Aadhaar Card','Ration Card','School TC','Father caste details'],telugu:'OBC ధృవపత్రం'},
+  {id:'m-res',    name:'Residence Certificate',      icon:'🏠',govt:35,  svc:150,time:'7 days',      docs:['Aadhaar Card','Ration Card','EB/water bill'],                  telugu:'నివాస ధృవపత్రం'},
+  {id:'m-nat',    name:'Nativity Certificate',       icon:'🌍',govt:35,  svc:150,time:'7 days',      docs:['Aadhaar Card','Ration Card'],                                  telugu:'స్వస్థల ధృవపత్రం'},
+  {id:'m-dob',    name:'Date of Birth Certificate',  icon:'🎂',govt:50,  svc:150,time:'7-10 days',   docs:['Aadhaar Card','School TC or hospital record'],                 telugu:'పుట్టిన తేది ధృవపత్రం'},
+  {id:'m-notr',   name:'Certificate with Notary',    icon:'⚖️',govt:50,  svc:300,time:'Same Day',    docs:['Original certificate','Aadhaar Card','Passport photo'],        telugu:'నోటరీ సర్టిఫికేట్'},
+  {id:'m-intg',   name:'Integrated Certificate',     icon:'📰',govt:50,  svc:200,time:'10-15 days',  docs:['Aadhaar','Ration Card','Caste proof','DOB proof'],             telugu:'ఇంటిగ్రేటెడ్ సర్టిఫికేట్'},
+  // PRINT/SCAN
+  {id:'print',    name:'Print Service',              icon:'🖨️',govt:0,   svc:0,  time:'Same Day',    docs:['Document to print'],telugu:'ప్రింట్ సర్వీస్',printSlab:true},
+  {id:'scan',     name:'Scan Service',               icon:'📷',govt:0,   svc:0,  time:'Same Day',    docs:['Document to scan'], telugu:'స్కాన్ సర్వీస్', scanSlab:true},
+  {id:'eb-bill',  name:'Current Bill Payment',       icon:'⚡',govt:0,   svc:0,  time:'Same Day',    docs:['Account number or old bill'],telugu:'కరెంట్ బిల్ పేమెంట్',billSlab:true},
+  {id:'photo',    name:'Passport Photo Print',       icon:'📸',govt:0,   svc:50, time:'Same Day',    docs:['Soft copy or take photo here'],telugu:'పాస్‌పోర్ట్ ఫోటో ప్రింట్'},
+  // UDYAM
+  {id:'u-reg',    name:'Udyam Registration (New)',   icon:'🏭',govt:0,   svc:300,time:'Same Day',    docs:['Aadhaar Card','PAN Card','Business details','Bank account'],    telugu:'ఉద్యమ్ రిజిస్ట్రేషన్'},
+  {id:'u-upd',    name:'Udyam Update / Correction',  icon:'✏️',govt:0,   svc:200,time:'Same Day',    docs:['Udyam number','Aadhaar Card','Details to update'],             telugu:'ఉద్యమ్ అప్‌డేట్'},
+  {id:'u-prt',    name:'Udyam Certificate Print',    icon:'🖨️',govt:0,   svc:50, time:'Same Day',    docs:['Udyam number','Registered mobile'],                            telugu:'ఉద్యమ్ సర్టిఫికేట్ ప్రింట్'},
+  {id:'u-lost',   name:'Udyam Number Lost',          icon:'🔍',govt:0,   svc:200,time:'Same Day',    docs:['Aadhaar Card','Business name','Mobile number'],                telugu:'ఉద్యమ్ నంబర్ పోవడం'},
+  {id:'u-inst',   name:'Udyam Instant (No Mobile)',  icon:'⚡',govt:0,   svc:500,time:'Same Day',    docs:['Aadhaar Card','PAN','Business address','Bank details'],         telugu:'ఉద్యమ్ ఇన్‌స్టంట్'},
+  // PF
+  {id:'pf-kyc',   name:'PF KYC Update',              icon:'🏦',govt:0,   svc:200,time:'3-7 days',    docs:['Aadhaar','PAN','Bank passbook','UAN number'],                  telugu:'PF KYC అప్‌డేట్'},
+  {id:'pf-nom',   name:'PF Nomination Update',       icon:'👨‍👩‍👧',govt:0,  svc:200,time:'3-7 days',    docs:['UAN number','Nominee Aadhaar','Bank details'],                 telugu:'PF నామినేషన్'},
+  {id:'pf-with',  name:'PF Withdrawal',              icon:'💸',govt:0,   svc:300,time:'15-30 days',  docs:['Aadhaar','PAN','Bank passbook','UAN','Form 19/10C'],            telugu:'PF విత్‌డ్రావల్'},
+  {id:'pf-bal',   name:'PF Balance Check',           icon:'📊',govt:0,   svc:50, time:'Same Day',    docs:['UAN number','Registered mobile'],                              telugu:'PF బ్యాలెన్స్ చెక్'},
+  // RTA
+  {id:'r-xfr',    name:'Vehicle Transfer (RC)',      icon:'🚗',govt:500, svc:500,time:'15-30 days',  docs:['RC Book','Insurance','PUC','Aadhaar (buyer+seller)','Form 29/30'],telugu:'వాహన ట్రాన్స్ఫర్'},
+  {id:'r-cbk',    name:'Vehicle C-Book / Smart Card',icon:'📒',govt:300, svc:350,time:'15-30 days',  docs:['RC Book','Aadhaar','Insurance','PUC'],                         telugu:'వాహన C-బుక్'},
+  {id:'r-dl',     name:'DL Apply / Renewal',         icon:'🏍️',govt:300, svc:350,time:'15-30 days',  docs:['Aadhaar','DOB proof','Medical cert','Existing DL','Photo'],    telugu:'డ్రైవింగ్ లైసెన్స్'},
+  // BUSINESS
+  {id:'b-fss',    name:'FSSAI Registration (Basic)', icon:'🍽️',govt:100, svc:800,time:'30-45 days',  docs:['Aadhaar','PAN','Business address proof','Photo'],              telugu:'FSSAI రిజిస్ట్రేషన్'},
+  {id:'b-lab',    name:'Labour License',             icon:'⚙️',govt:1000,svc:800,time:'30-60 days',  docs:['Aadhaar','PAN','Business proof','Employee list','Rent agreement'],telugu:'లేబర్ లైసెన్స్'},
+  {id:'b-lab2',   name:'Labour License Registration',icon:'👷',govt:300, svc:0,  time:'15-30 days',  docs:['Aadhaar Card','PAN Card','Business address','Employee list'],  telugu:'లేబర్ లైసెన్స్ రిజిస్ట్రేషన్'},
+  {id:'b-dsc',    name:'Digital Signature (DSC)',    icon:'🔏',govt:1000,svc:500,time:'3-5 days',    docs:['Aadhaar','PAN','Passport photo','Mobile+Email'],               telugu:'డిజిటల్ సిగ్నేచర్'},
+  {id:'l-ec',     name:'EC / Encumbrance Certificate',icon:'🏗️',govt:300,svc:200,time:'Same Day',    docs:['Survey number','Owner name','Year range'],                     telugu:'ఎన్‌కంబ్రెన్స్ సర్టిఫికేట్'},
+  {id:'l-est',    name:'E-Stamping',                 icon:'📝',govt:0,   svc:30, time:'Same Day',    docs:['Aadhaar (both parties)','Agreement details','Stamp value'],    telugu:'ఇ-స్టాంపింగ్'},
+  {id:'l-rent',   name:'Rental Agreement',           icon:'🏘️',govt:150, svc:150,time:'Same Day',    docs:['Aadhaar (owner & tenant)','Property address','Rent & duration'],telugu:'అద్దె ఒప్పందం'},
+  {id:'l-bank',   name:'Bank Statement (12 months)', icon:'🏦',govt:0,   svc:100,time:'Same Day',    docs:['Bank passbook or account number','Aadhaar Card'],              telugu:'బ్యాంక్ స్టేట్‌మెంట్'},
+  {id:'l-esh',    name:'e-Shram Card',               icon:'🪪',govt:0,   svc:100,time:'Same Day',    docs:['Aadhaar Card','Mobile linked to Aadhaar','Bank passbook'],      telugu:'ఇ-శ్రమ్ కార్డ్'},
+  {id:'l-rat',    name:'Ration Card',                icon:'🃏',govt:0,   svc:250,time:'15-30 days',  docs:['Aadhaar (all family)','Gas connection photo','Bank passbook'],  telugu:'రేషన్ కార్డ్'},
+  // FINANCE
+  {id:'f-cbl',    name:'CIBIL Score Check',          icon:'📊',govt:0,   svc:150,time:'Same Day',    docs:['PAN Card','Mobile number'],                                    telugu:'CIBIL స్కోర్'},
+  {id:'f-npc',    name:'NPCI / DBT Link',            icon:'🏦',govt:0,   svc:100,time:'Same Day',    docs:['Aadhaar Card','Bank passbook','Mobile number'],                telugu:'NPCI / DBT లింక్'},
+  {id:'f-pmk',    name:'PM-KISAN eKYC',              icon:'🌾',govt:0,   svc:75, time:'Same Day',    docs:['Aadhaar Card','Registered mobile','PM-KISAN registration no.'], telugu:'PM-KISAN eKYC'},
+  // DOCS
+  {id:'d-job',    name:'Govt Job Application',       icon:'💼',govt:100, svc:150,time:'2-3 hrs',     docs:['Aadhaar','PAN','Education certs','Passport photo','Mobile+Email'],telugu:'ప్రభుత్వ ఉద్యోగ దరఖాస్తు'},
+  {id:'d-hal',    name:'Hall Ticket Download',       icon:'🎫',govt:0,   svc:30, time:'Same Day',    docs:['Application number or registration ID','DOB'],                 telugu:'హాల్ టికెట్'},
+  {id:'d-rsm',    name:'Resume Making',              icon:'📄',govt:0,   svc:250,time:'Same Day',    docs:['Personal details','Education','Work experience','Mobile+Email'],telugu:'రెజ్యూమ్ తయారీ'},
+  {id:'d-sch',    name:'Scholarship Application',    icon:'🎓',govt:0,   svc:200,time:'2-3 hrs',     docs:['Aadhaar','Income cert','Caste cert','Marks memo','Bank passbook'],telugu:'స్కాలర్‌షిప్ దరఖాస్తు'},
+];
+
+function allS() {
+  if (!cSvcs || !cSvcs.length) return BASE.slice();
+  var result = [];
+  var ovIds = {}, ovNames = {};
+  for (var i = 0; i < cSvcs.length; i++) {
+    ovIds[cSvcs[i].id] = true;
+    if (cSvcs[i].name) ovNames[cSvcs[i].name.toLowerCase()] = true;
+  }
+  for (var j = 0; j < BASE.length; j++) {
+    if (!ovIds[BASE[j].id] && !ovNames[(BASE[j].name||'').toLowerCase()])
+      result.push(BASE[j]);
+  }
+  for (var k = 0; k < cSvcs.length; k++) result.push(cSvcs[k]);
+  return result;
+}
+
+// ── HELPER: esc ──
+function esc(str) {
+  if (!str) return '';
+  return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+function fmt(n) { return (n||0).toLocaleString('en-IN'); }
+
+function dateStr(iso) {
+  if (!iso) return '--';
+  var d = new Date(iso);
+  return d.getDate() + '/' + (d.getMonth()+1) + '/' + d.getFullYear();
+}
+
+// ── TOAST ──
+function toast(msg, type) {
+  var el = document.getElementById('toast');
+  if (!el) return;
+  el.textContent = msg;
+  el.className = 'toast show';
+  if (type === 'success') el.style.borderLeftColor = 'var(--gn)';
+  else if (type === 'error') el.style.borderLeftColor = 'var(--rd)';
+  else el.style.borderLeftColor = 'var(--bl)';
+  clearTimeout(window._toastT);
+  window._toastT = setTimeout(function() { el.classList.remove('show'); }, 3000);
+}
+
+// ── CLOSE MODAL ──
+function closeM(id) {
+  var el = document.getElementById(id);
+  if (el) el.classList.remove('show');
+}
+
+// ── SHOW PAGE ──
+function showPg(n) {
+  document.querySelectorAll('.pg').forEach(function(p) { p.classList.remove('active'); });
+  document.querySelectorAll('.tab').forEach(function(t) { t.classList.remove('active'); });
+  var pg = document.getElementById('pg-' + n);
+  var tb = document.getElementById('tab-' + n);
+  if (pg) pg.classList.add('active');
+  if (tb) tb.classList.add('active');
+  if (n === 'new') { genTok(); doRenderGrid(); doRenderStaff(); renderAgeBundleCards(); }
+  else if (n === 'tracker') { renderTbl(); renderPipeline(); }
+  else if (n === 'eod') renderEOD();
+  else if (n === 'dashboard') renderDsh();
+  else if (n === 'admin') { renderAdmTbl(); renderStAdm(); }
+  else if (n === 'setup') checkSyncHealth();
+  else if (n === 'perf') { renderPerf(); loadIRulesUI(); renderSocialTracker(); }
+  else if (n === 'cpn-dash') renderCpnDash();
+  else if (n === 'leads') renderLeads();
+  else if (n === 'mkt') { renderMkt(); }
+  else if (n === 'crm') renderCRM();
+  else if (n === 'attend') initAttendTab();
+}
+
+// ── TOKEN ──
+function genTok() {
+  var now = new Date();
+  var brEl = document.getElementById('f-br');
+  var br = (brEl && brEl.value) ? brEl.value : 'G';
+  var mo = String(now.getMonth()+1); if (mo.length < 2) mo = '0'+mo;
+  var dy = String(now.getDate()); if (dy.length < 2) dy = '0'+dy;
+  var hr = String(now.getHours()); if (hr.length < 2) hr = '0'+hr;
+  var mn = String(now.getMinutes()); if (mn.length < 2) mn = '0'+mn;
+  var sc = String(now.getSeconds()); if (sc.length < 2) sc = '0'+sc;
+  var t = 'RRC-'+br+'-'+now.getFullYear()+'-'+mo+'-'+dy+'-'+hr+mn+sc;
+  var el = document.getElementById('tok-d');
+  if (el) { el.textContent = t; el.style.color = 'var(--gd)'; }
+  return t;
+}
+
+// Refresh token every 30s
+setInterval(function() { try { genTok(); } catch(e) {} }, 30000);
+
+// ── LEAD SOURCE ──
+function leadSourceChanged(v) {
+  var w = document.getElementById('lead-ref-wrap');
+  if (w) w.style.display = (v && v !== 'walkin-direct' && v !== '') ? 'block' : 'none';
+}
+
+// ── AADHAAR FORMAT ──
+function fmtAad(el) {
+  var v = el.value.replace(/[^0-9]/g,'').substring(0,12);
+  var out = '';
+  for (var i = 0; i < v.length; i++) { if (i > 0 && i % 4 === 0) out += ' '; out += v[i]; }
+  el.value = out;
+}
+
+// ── CATEGORY → SUB-SERVICES ──
+function onCatChange(val) {
+  var subWrap = document.getElementById('svc-sub-wrap');
+  var subSel = document.getElementById('svc-grid');
+  selS = null;
+  try { document.getElementById('f-amt').value = ''; } catch(e) {}
+  try { document.getElementById('docs-p').classList.remove('show'); } catch(e) {}
+  try { document.getElementById('other-wrap').style.display = 'none'; } catch(e) {}
+  if (subSel) subSel.value = '';
+
+  if (!val) { if (subWrap) subWrap.style.display = 'none'; return; }
+  if (val === 'other') {
+    if (subWrap) subWrap.style.display = 'none';
+    pickSvc('other');
+    return;
+  }
+
+  var grp = SVC_GROUPS[parseInt(val, 10)];
+  if (!grp) { if (subWrap) subWrap.style.display = 'none'; return; }
+
+  var svcs = allS();
+  var opts = '<option value="">-- ' + grp.label + ' లో service ఎంచుకోండి --</option>';
+  for (var i = 0; i < grp.ids.length; i++) {
+    for (var j = 0; j < svcs.length; j++) {
+      if (svcs[j].id === grp.ids[i]) {
+        var s = svcs[j];
+        var tot = (s.govt||0) + (s.svc||0);
+        opts += '<option value="' + s.id + '">' + s.icon + ' ' + s.name + (tot ? ' - Rs.' + tot : '') + '</option>';
+        break;
+      }
+    }
+  }
+  if (subSel) subSel.innerHTML = opts;
+  if (subWrap) subWrap.style.display = 'block';
+}
+
+// ── PICK SERVICE ──
+function pickSvc(id) {
+  var sel = document.getElementById('svc-grid');
+  if (sel && id) sel.value = id;
+
+  var ow = document.getElementById('other-wrap');
+  var dp = document.getElementById('docs-p');
+  var dl = document.getElementById('docs-l');
+  var tv = document.getElementById('tat-v');
+  var fa = document.getElementById('f-amt');
+
+  if (id === 'other') {
+    if (ow) ow.style.display = 'block';
+    if (dp) dp.classList.remove('show');
+    selS = null;
+    return;
+  }
+  if (ow) ow.style.display = 'none';
+
+  var svcs = allS();
+  selS = null;
+  for (var i = 0; i < svcs.length; i++) {
+    if (svcs[i].id === id) { selS = svcs[i]; break; }
+  }
+  if (!selS) return;
+
+  if (dl && selS.docs) {
+    dl.innerHTML = selS.docs.map(function(d) {
+      return '<div class="dtg">📄 ' + d + '</div>';
+    }).join('');
+  }
+  if (tv) tv.textContent = selS.time || '--';
+  if (dp) dp.classList.add('show');
+
+  if (fa && !selS.billSlab && !selS.printSlab && !selS.scanSlab) {
+    fa.value = (selS.govt||0) + (selS.svc||0) || '';
+  }
+
+  // Check first visit
+  chkFirst();
+}
+
+// ── FIRST VISIT CHECK ──
+function chkFirst() {
+  var mob = (document.getElementById('f-mb') || {}).value || '';
+  if (!mob || mob.length < 10) { var fb = document.getElementById('first-ban'); if(fb)fb.style.display='none'; return; }
+  var prev = SVC.filter(function(s) { return s.mobile === mob; });
+  var fb = document.getElementById('first-ban');
+  if (fb) fb.style.display = (prev.length === 0) ? 'block' : 'none';
+}
+
+// ── CALC TOTALS ──
+function calcSvTot() {
+  var g = parseInt((document.getElementById('sv-gv')||{}).value)||0;
+  var c = parseInt((document.getElementById('sv-ch')||{}).value)||0;
+  var el = document.getElementById('sv-tot');
+  if (el) el.textContent = 'Rs.' + (g+c);
+}
+
+function calcOtherTotal() {
+  var g = parseInt((document.getElementById('other-govt')||{}).value)||0;
+  var c = parseInt((document.getElementById('other-charge')||{}).value)||0;
+  var el = document.getElementById('f-amt');
+  if (el) el.value = g + c;
+}
+
+// ── RENDER GRID (category dropdown) ──
+function doRenderGrid() {
+  // Category options already hardcoded in HTML
+  // This just ensures sub-wrap is hidden on reset
+  var sw = document.getElementById('svc-sub-wrap');
+  if (sw) sw.style.display = 'none';
+  var cat = document.getElementById('svc-cat');
+  if (cat) cat.value = '';
+}
+
+function renderGrid() { doRenderGrid(); }
+
+// ── RENDER STAFF DROPDOWNS ──
+function doRenderStaff() {
+  // FO role removed — no dropdowns to populate
+}
+
+function renderStSels() { doRenderStaff(); }
+
+// ── CLEAR FORM ──
+function clrForm() {
+  ['f-nm','f-mb','f-ad','f-addr','f-app','f-nts','f-amt','f-cpn'].forEach(function(id) {
+    var el = document.getElementById(id); if (el) el.value = '';
+  });
+  var fp = document.getElementById('f-pay'); if(fp) fp.value = '';
+  var fri = document.getElementById('f-pri'); if(fri) fri.value = 'Normal';
+  var fc = document.getElementById('svc-cat'); if(fc) fc.value = '';
+  var fs = document.getElementById('svc-grid'); if(fs) fs.value = '';
+  var sw = document.getElementById('svc-sub-wrap'); if(sw) sw.style.display = 'none';
+  var dp = document.getElementById('docs-p'); if(dp) dp.classList.remove('show');
+  var ow = document.getElementById('other-wrap'); if(ow) ow.style.display = 'none';
+  var fb = document.getElementById('first-ban'); if(fb) fb.style.display = 'none';
+  var lrw = document.getElementById('lead-ref-wrap'); if(lrw) lrw.style.display = 'none';
+  var fl = document.getElementById('f-lead'); if(fl) fl.value = '';
+  selS = null;
+  genTok();
+  // Hide customer profile panel
+  var cpp = document.getElementById('cust-profile-panel');
+  if (cpp) cpp.style.display = 'none';
+  var refInfo = document.getElementById('ref-info');
+  if (refInfo) refInfo.style.display = 'none';
+  var fRef = document.getElementById('f-ref');
+  if (fRef) fRef.value = '';
+  window._currentProfile = null;
+}
+
+// ── SUBMIT SERVICE ──
+
+// ═══════════════════════════════════════════════════════════════
+// AGE-BASED SERVICE BUNDLES
+// 18+ Youth Bundle: PAN + Voter ID + DL LLR = Govt Rs.1100 → Our Rs.999
+// <25 Bundle: Same combo → Rs.999
+// Child Aadhaar: Sishu Aadhaar Enrollment → Rs.200
+// ═══════════════════════════════════════════════════════════════
+
+var AGE_BUNDLES = [
+  {
+    id: 'bundle-18plus',
+    name: '18+ Youth Combo',
+    telugu: '18+ యువత Special Combo',
+    icon: '🎯',
+    emoji: '🎉',
+    targetAge: '18+',
+    ageDesc: '18 సంవత్సరాలు పూర్తయిన తర్వాత',
+    services: [
+      { name: 'New PAN Card',          icon: '💳', govt: 107, desc: 'Income tax, banking అన్నింటికీ' },
+      { name: 'New Voter ID (Form 6)', icon: '🗳️', govt: 0,   desc: 'మీ vote మీ హక్కు' },
+      { name: 'DL - LLR (2W + 4W)',    icon: '🏍️', govt: 300, desc: '2-wheeler + 4-wheeler LLR' }
+    ],
+    govtTotal: 1100,   // 300+150+650 — actual govt + svc costs
+    ourPrice:  999,    // Our special combo price
+    validity: 'Registration day నుండి 7 days valid',
+    whyNow: 'First time 18+ మైనారు? ఇప్పుడే 3 important documents ఒకే సారి apply చేయండి!',
+    waMsg: function(name) {
+      return 'నమస్కారం *' + name + '* గారూ! 🎉\n\n'
+        + '🎯 *18+ Youth Combo — Special Offer!*\n\n'
+        + '18 సంవత్సరాలు పూర్తయాయా? ఈ 3 important documents ఒకే సారి apply చేయండి:\n\n'
+        + '💳 *New PAN Card* — Banking, IT filing\n'
+        + '🗳️ *New Voter ID* — మీ voting right\n'
+        + '🏍️ *DL — LLR (2W + 4W)* — Driving start\n\n'
+        + '━━━━━━━━━━━━━━━━━━━━\n'
+        + '💰 Govt charges: ~~Rs.1,100/-~~\n'
+        + '🎁 *Our Special Price: Rs.999/- only!*\n'
+        + '💵 You Save: *Rs.101/-*\n'
+        + '━━━━━━━━━━━━━━━━━━━━\n\n'
+        + '📞 Book now: *9493212655*\n'
+        + '📍 Gudivada | Hanuman Junction\n'
+        + '_Limited offer — first come first served!_ 🙏';
+    }
+  },
+  {
+    id: 'bundle-under25',
+    name: 'Under 25 Combo',
+    telugu: '25 లోపు Youth Special',
+    icon: '⚡',
+    emoji: '🌟',
+    targetAge: '<25',
+    ageDesc: '25 సంవత్సరాల లోపు',
+    services: [
+      { name: 'New PAN Card',          icon: '💳', govt: 107, desc: 'Financial identity' },
+      { name: 'New Voter ID (Form 6)', icon: '🗳️', govt: 0,   desc: 'Democratic right' },
+      { name: 'DL - LLR (2W + 4W)',    icon: '🏍️', govt: 300, desc: '2W + 4W LLR combo' }
+    ],
+    govtTotal: 1100,
+    ourPrice:  999,
+    validity: '7 days valid',
+    whyNow: '25 లోపు ఉన్నారా? Career start కి ముందే ఈ 3 documents ready చేసుకోండి!',
+    waMsg: function(name) {
+      return 'నమస్కారం *' + name + '* గారూ! 🌟\n\n'
+        + '⚡ *Under 25 Youth Combo!*\n\n'
+        + 'Career start కి ముందే 3 important documents:\n\n'
+        + '💳 *New PAN Card* — Job, banking essential\n'
+        + '🗳️ *New Voter ID* — Citizenship proof\n'
+        + '🏍️ *DL — LLR (2W + 4W)* — Driving licence\n\n'
+        + '━━━━━━━━━━━━━━━━━━━━\n'
+        + '💰 Regular charges: ~~Rs.1,100/-~~\n'
+        + '🎁 *Youth Special: Rs.999/- only!*\n'
+        + '💵 Savings: *Rs.101/-*\n'
+        + '━━━━━━━━━━━━━━━━━━━━\n\n'
+        + '📞 9493212655 | 📍 Gudivada | Hanuman Junction';
+    }
+  },
+  {
+    id: 'bundle-child-aadhaar',
+    name: 'Child Aadhaar Enrollment',
+    telugu: 'పిల్లల ఆధార్ నమోదు',
+    icon: '👶',
+    emoji: '🍼',
+    targetAge: 'child',
+    ageDesc: '5 సంవత్సరాల లోపు పిల్లలు',
+    services: [
+      { name: 'Sishu Aadhaar (Child <5)', icon: '👶', govt: 0, desc: 'Biometric లేకుండా enrollment' }
+    ],
+    govtTotal: 0,
+    ourPrice:  200,
+    validity: 'Walk-in — Same Day',
+    whyNow: 'పిల్లలకి Aadhaar ముఖ్యం — School admission, govt benefits అన్నింటికీ అవసరం!',
+    waMsg: function(name) {
+      return 'నమస్కారం *' + name + '* గారూ! 🍼\n\n'
+        + '👶 *Child Aadhaar Enrollment*\n\n'
+        + '5 సంవత్సరాల లోపు పిల్లలకి Aadhaar enroll చేయండి:\n\n'
+        + '✅ Biometric లేకుండా enrollment\n'
+        + '✅ Same Day service\n'
+        + '✅ School admission, govt benefits కి essential\n\n'
+        + '💰 *Price: Rs.200/- only*\n\n'
+        + '📎 Documents: Parent Aadhaar + Birth Certificate/School Record\n\n'
+        + '📞 9493212655 | 📍 Gudivada | Hanuman Junction';
+    }
+  }
+];
+
+// Render age bundle cards in New Service form
+function renderAgeBundleCards() {
+  var wrap = el('age-bundle-wrap');
+  if (!wrap) return;
+
+  wrap.innerHTML = AGE_BUNDLES.map(function(b) {
+    var svcList = b.services.map(function(s) {
+      return '<div style="display:flex;align-items:center;gap:6px;padding:4px 0;border-bottom:1px solid rgba(255,255,255,.05)">'
+        + '<span style="font-size:14px">' + s.icon + '</span>'
+        + '<div><div style="font-size:11px;font-weight:700">' + s.name + '</div>'
+        + '<div style="font-size:10px;color:var(--sv)">' + s.desc + '</div></div></div>';
+    }).join('');
+
+    return '<div style="flex:0 0 220px;background:rgba(201,168,76,.06);border:1.5px solid rgba(201,168,76,.25);border-radius:12px;padding:14px">'
+      + '<div style="display:flex;align-items:center;gap:8px;margin-bottom:10px">'
+      + '<span style="font-size:24px">' + b.icon + '</span>'
+      + '<div><div style="font-size:13px;font-weight:800;color:var(--gd)">' + b.name + '</div>'
+      + '<div style="font-size:10px;color:var(--or)">' + b.ageDesc + '</div></div></div>'
+      + svcList
+      + '<div style="margin-top:10px;padding:8px;background:rgba(0,196,140,.08);border-radius:8px;text-align:center">'
+      + '<div style="font-size:11px;text-decoration:line-through;color:var(--sv)">Govt: Rs.' + b.govtTotal + '/-</div>'
+      + '<div style="font-size:18px;font-weight:900;color:var(--gn)">Our: Rs.' + b.ourPrice + '/-</div>'
+      + '</div>'
+      + '<button data-bundle-id="' + b.id + '" style="width:100%;margin-top:8px;background:linear-gradient(135deg,#C9A84C,#8B6914);color:#fff;border:none;border-radius:8px;padding:10px;font-size:12px;font-weight:700;cursor:pointer;font-family:inherit">'
+      + b.emoji + ' Select Bundle</button>'
+      + '<div style="margin-top:6px;font-size:10px;color:var(--sv);text-align:center">' + b.whyNow + '</div>'
+      + '</div>';
+  }).join('');
+
+  wrap.onclick = function(e) {
+    var btn = e.target.closest('[data-bundle-id]');
+    if (!btn) return;
+    var bid = btn.getAttribute('data-bundle-id');
+    var bundle = AGE_BUNDLES.find(function(b) { return b.id === bid; });
+    if (!bundle) return;
+    // Set amount to bundle price
+    var amtEl = el('f-amt'); if (amtEl) amtEl.value = bundle.ourPrice;
+    // Set notes
+    var notesEl = el('f-notes') || el('f-nts');
+    if (notesEl) notesEl.value = bundle.name + ' — ' + bundle.services.map(function(s){return s.name;}).join(' + ');
+    toast(bundle.name + ' selected! Rs.' + bundle.ourPrice + '/-', 'success');
+    // Send WA offer
+    var mobile = (el('f-mobile') || el('f-mob') || {}).value || '';
+    var name   = (el('f-name')   || el('f-nm')  || {}).value || '';
+    if (mobile.length === 10 && name) {
+      var msg = bundle.waMsg(name);
+      openWAQuiet(mobile, msg);
+    }
+  };
+}
+
+// Send age bundle offer WA to customer
+function sendAgeBundleWA(bundleId, name, mobile) {
+  var bundle = AGE_BUNDLES.find(function(b) { return b.id === bundleId; });
+  if (!bundle || !mobile || !name) return;
+  var msg = bundle.waMsg(name);
+  openWAQuiet(mobile, msg);
+}
+
+// ════════════════════════════════════════════════════════════════
+// CUSTOMER TRACKING SYSTEM
+// Tracks: visits, referrals, spend, savings, loyalty tier
+// Live profile on mobile input, referral code generation & sharing
+// ════════════════════════════════════════════════════════════════
+
+var REFERRALS = JSON.parse(localStorage.getItem('rr-referrals') || '{}');
+// REFERRALS[refCode] = { mobile, name, usedBy:[{mobile,name,token,date}], totalEarned }
+
+function saveReferrals() {
+  try { localStorage.setItem('rr-referrals', JSON.stringify(REFERRALS)); } catch(e) {}
+}
+
+// Generate stable referral code from mobile number
+function genRefCode(mobile) {
+  var m = String(mobile).replace(/\D/g,'');
+  return 'RR' + m.slice(0,3) + m.slice(-4);  // e.g. RR944...9212 → RR9449212
+}
+
+// Get full customer profile from SVC history
+function getCustProfile(mobile) {
+  var visits = SVC.filter(function(s) { return s.mobile === mobile; })
+                  .sort(function(a,b) { return new Date(a.createdAt)-new Date(b.createdAt); });
+  var totalSpent = visits.reduce(function(a,s) { return a+(s.amount||0); }, 0);
+  var totalSaved = visits.reduce(function(a,s) {
+    return a + (s.cpn ? s.cpn.discount : 0);
+  }, 0);
+  var refCode  = genRefCode(mobile);
+  var refEntry = REFERRALS[refCode] || {};
+  var refCount = (refEntry.usedBy||[]).length;
+  var name     = visits.length ? visits[visits.length-1].name : '';
+  var visitNum = visits.length + 1; // next visit
+  var tier     = getLoyaltyTier(visits.length);
+  var lastVisit = visits.length ? visits[visits.length-1] : null;
+  return {
+    mobile, name, visits: visits.length, visitNum,
+    totalSpent, totalSaved, refCode, refCount,
+    tier, lastVisit, refEntry, isNew: visits.length === 0
+  };
+}
+
+// Loyalty tier based on visit count
+function getLoyaltyTier(visits) {
+  if (visits >= 10) return { name:'💎 Diamond', emoji:'💎', color:'#4DA6FF' };
+  if (visits >= 7)  return { name:'🥇 Gold',    emoji:'🥇', color:'#C9A84C' };
+  if (visits >= 4)  return { name:'🥈 Silver',  emoji:'🥈', color:'#8899AA' };
+  if (visits >= 2)  return { name:'🥉 Bronze',  emoji:'🥉', color:'#FF8C42' };
+  return             { name:'🌱 New',       emoji:'🌱', color:'#00C48C' };
+}
+
+// ── Real-time mobile input handler ──
+function onMobileInput(val) {
+  var mobile = val.replace(/\D/g,'');
+  var panel  = document.getElementById('cust-profile-panel');
+  if (!panel) return;
+
+  if (mobile.length < 10) {
+    panel.style.display = 'none';
+    return;
+  }
+
+  var p = getCustProfile(mobile);
+  panel.style.display = 'block';
+
+  // Header
+  var tierIcon = document.getElementById('cpp-tier-icon');
+  var nameEl   = document.getElementById('cpp-name');
+  var tierEl   = document.getElementById('cpp-tier');
+  var newBadge = document.getElementById('cpp-new-badge');
+
+  if (tierIcon) tierIcon.textContent = p.tier.emoji;
+  if (nameEl)   nameEl.textContent   = p.isNew ? 'New Customer' : p.name;
+  if (tierEl)   tierEl.textContent   = p.tier.name + (p.visits > 0 ? ' • Visit #' + p.visitNum + ' coming' : ' • First visit!');
+  if (newBadge) newBadge.style.display = p.isNew ? 'block' : 'none';
+
+  // Stats
+  setValue('cpp-visits', p.visits > 0 ? p.visits : '—');
+  setValue('cpp-refs',   p.refCount > 0 ? p.refCount : '—');
+  setValue('cpp-spent',  p.totalSpent > 0 ? '₹'+p.totalSpent : '₹0');
+  setValue('cpp-saved',  p.totalSaved > 0 ? '₹'+p.totalSaved : '₹0');
+
+  // Last visit
+  var lastEl = document.getElementById('cpp-last');
+  if (lastEl) {
+    if (p.lastVisit) {
+      lastEl.textContent = 'Last: ' + (p.lastVisit.service ? p.lastVisit.service.name : '') + ' on ' + (p.lastVisit.createdAt||'').slice(0,10);
+    } else {
+      lastEl.textContent = 'No previous visits';
+    }
+  }
+
+  // Referral code block
+  var refCodeEl = document.getElementById('cpp-ref-code');
+  var refUsedEl = document.getElementById('cpp-ref-used');
+  if (refCodeEl) refCodeEl.textContent = p.refCode;
+  if (refUsedEl) {
+    refUsedEl.textContent = p.refCount > 0
+      ? p.refCount + ' friend(s) referred — ₹' + (p.refCount*20) + ' benefit earned!'
+      : 'Share to earn ₹20 per referral';
+  }
+
+  // Auto-fill name if returning customer
+  var nmEl = document.getElementById('f-nm');
+  if (nmEl && !nmEl.value.trim() && p.name) nmEl.value = p.name;
+
+  // Store current profile for use in subSvc
+  window._currentProfile = p;
+}
+
+function setValue(id, val) {
+  var e = document.getElementById(id);
+  if (e) e.textContent = val;
+}
+
+// ── Referral code input handler ──
+function onRefInput(val) {
+  var code   = val.trim().toUpperCase();
+  var infoEl = document.getElementById('ref-info');
+  if (!infoEl) return;
+
+  if (code.length < 5) { infoEl.style.display = 'none'; return; }
+
+  var refEntry = REFERRALS[code];
+  var curMobile = ((document.getElementById('f-mb')||{}).value||'').replace(/\D/g,'');
+
+  if (refEntry) {
+    // Valid referral found
+    if (refEntry.mobile === curMobile) {
+      infoEl.style.display = 'block';
+      infoEl.style.color   = 'var(--rd)';
+      infoEl.textContent   = '❌ మీ స్వంత referral code use చేయలేరు!';
+      return;
+    }
+    var refVisits = SVC.filter(function(s) { return s.mobile === refEntry.mobile; }).length;
+    var refTier   = getLoyaltyTier(refVisits);
+    infoEl.style.display  = 'block';
+    infoEl.style.color    = 'var(--gn)';
+    infoEl.textContent    = '✅ Referred by: ' + refEntry.name + ' (' + refTier.emoji + refTier.name + ') — Both get ₹20 benefit!';
+  } else if (code.length >= 8) {
+    infoEl.style.display = 'block';
+    infoEl.style.color   = 'var(--or)';
+    infoEl.textContent   = '⚠️ Code not found — enter correctly or leave blank';
+  } else {
+    infoEl.style.display = 'none';
+  }
+}
+
+// Coupon input handler
+function onCpnInput(val) {
+  // Basic validation display — can extend later
+}
+
+// ── Send referral share link via WhatsApp ──
+function sendRefLinkWA() {
+  var mobile = ((document.getElementById('f-mb')||{}).value||'').replace(/\D/g,'');
+  var name   = ((document.getElementById('f-nm')||{}).value||'').trim();
+  if (!mobile || mobile.length < 10) {
+    toast('Mobile number enter చేసిన తర్వాత share చేయండి', 'error'); return;
+  }
+  var p   = getCustProfile(mobile);
+  var msg = 'నమస్కారం! 🙏\n\n'
+    + '*RR Computers — MeeSeva Centre* visit చేయండి!\n\n'
+    + '📋 Services: Aadhaar, PAN Card, Voter ID, Passport,\n'
+    + '   Certificates, Driving Licence, PF, FSSAI & more\n\n'
+    + '🎁 నా referral code వాడి register చేయండి:\n'
+    + '   Code: *' + p.refCode + '*\n\n'
+    + '✅ మీకు: Next service లో ₹20 discount\n'
+    + '✅ నాకు: ₹20 benefit\n\n'
+    + '📍 Gudivada | Hanuman Junction\n'
+    + '📞 ' + PHONE_CALL + ' | 🌐 ' + WEBSITE;
+  window.open('https://api.whatsapp.com/send?text=' + encodeURIComponent(msg), '_blank');
+}
+
+// ── Process referral on new registration ──
+// processReferral replaced by coupon system below
+
+
+// Register current customer's referral code in REFERRALS map
+function registerRefCode(rec) {
+  var code = genRefCode(rec.mobile);
+  if (!REFERRALS[code]) {
+    REFERRALS[code] = {
+      mobile: rec.mobile, name: rec.name,
+      createdAt: rec.createdAt, usedBy: [], totalEarned: 0
+    };
+    saveReferrals();
+  } else if (!REFERRALS[code].name && rec.name) {
+    REFERRALS[code].name = rec.name;
+    saveReferrals();
+  }
+}
+
+// ── Customer profile in detail view ──
+function getCustHistory(mobile) {
+  var visits = SVC.filter(function(s) { return s.mobile === mobile; })
+                  .sort(function(a,b){ return new Date(b.createdAt)-new Date(a.createdAt); });
+  return visits;
+}
+
+
+
+function subSvc() {
+  var nm = (document.getElementById('f-nm')||{}).value || '';
+  var mb = (document.getElementById('f-mb')||{}).value || '';
+  var amt = (document.getElementById('f-amt')||{}).value || '';
+  var pay = (document.getElementById('f-pay')||{}).value || '';
+  var lead = '';  // lead source removed
+
+  if (!nm) { toast('Customer name required', 'error'); return; }
+  if (!mb || mb.length < 10) { toast('Valid mobile number required', 'error'); return; }
+  if (!amt) { toast('Amount required', 'error'); return; }
+  if (!pay) { toast('Payment mode required', 'error'); return; }
+  // lead source validation removed
+
+  // Determine service
+  var svc;
+  var catVal = (document.getElementById('svc-cat')||{}).value || '';
+  var svcVal = (document.getElementById('svc-grid')||{}).value || '';
+
+  if (catVal === 'other') {
+    var oName = (document.getElementById('other-name')||{}).value || '';
+    if (!oName) { toast('Service name required for custom service', 'error'); return; }
+    svc = {
+      id: 'other-' + Date.now(),
+      name: oName,
+      icon: '✏️',
+      govt: parseInt((document.getElementById('other-govt')||{}).value)||0,
+      svc: parseInt((document.getElementById('other-charge')||{}).value)||0,
+      time: '--',
+      docs: [],
+      telugu: (document.getElementById('other-telugu')||{}).value || '',
+      isOther: true
+    };
+  } else if (selS) {
+    svc = selS;
+  } else {
+    toast('Please select a service', 'error');
+    return;
+  }
+
+  var token = genTok();
+  var now = new Date().toISOString();
+  var fo = 'Gudapati Satish'; // FO role removed
+  var op = ''; // operator removed
+  var mobile = mb.replace(/\s/g,'');
+
+  // Check first visit + coupon
+  var visitNum = SVC.filter(function(s) { return s.mobile === mobile; }).length + 1;
+  var isFirst = visitNum === 1;
+  var cpn = null;
+
+  if (parseInt(amt) >= 100 && !svc.isEStamping) {
+    // Issue loyalty coupon
+    var disc = 20;
+    if (visitNum === 2) disc = 30;
+    else if (visitNum === 3) disc = 40;
+    else if (visitNum >= 4 && visitNum <= 6) disc = 50;
+    else if (visitNum >= 7 && visitNum <= 9) disc = 75;
+    else if (visitNum >= 10) disc = 100;
+    var cpnCode = 'V' + visitNum + '-' + mobile.slice(-4);
+    var cpnExpiry = new Date(); cpnExpiry.setDate(cpnExpiry.getDate()+7);
+    cpn = {
+      code: cpnCode, discount: disc, visitNum: visitNum,
+      issuedAt: now, validUntil: cpnExpiry.toISOString(),
+      used: false
+    };
+  }
+
+  var rec = {
+    id: 'RR-' + Date.now(),
+    token: token,
+    name: nm,
+    mobile: mobile,
+    aadhaar: (document.getElementById('f-ad')||{}).value || '',
+    address: (document.getElementById('f-addr')||{}).value || '',
+    branch: (document.getElementById('f-br')||{}).value || 'G',
+    fo: fo,
+    staff: op,
+    service: svc,
+    payment: pay,
+    amount: parseInt(amt),
+    priority: (document.getElementById('f-pri')||{}).value || 'Normal',
+    appno: (document.getElementById('f-app')||{}).value || '',
+    notes: (document.getElementById('f-nts')||{}).value || '',
+    // leadSource removed
+    leadRef: '',
+    status: 'open',
+    isFirst: isFirst,
+    visitNum: visitNum,
+    cpn: cpn,
+    couponCode: (document.getElementById('f-cpn')||{}).value || '',
+    timeline: [{stage:'open', at:now, note:'Service registered'}],
+    createdAt: now,
+    updatedAt: now,
+    waSent: false,
+    synced: false
+  };
+
+  // Process referral (must happen before save)
+  processReferral(rec);
+  // Register this customer's own referral code
+  registerRefCode(rec);
+
+  SVC.push(rec);
+  localStorage.setItem('rr-svcs', JSON.stringify(SVC));
+
+  // Save offline-first (localStorage → queue → Supabase)
+  smartSave(rec);
+  // Track review request for ₹100+ orders
+  trackReviewRequest(rec);
+
+  // Sync to Sheets
+  if (sheetsURL) syncOne(rec);
+
+  // Send WhatsApp
+  var waMsg = buildMsg('submitted', rec);
+  openWAQuiet(mobile, waMsg);
+
+  toast('✅ Service registered! Token: ' + token, 'success');
+  clrForm();
+  updSt();
+  renderDsh();
+}
+
+// ── STATUS UPDATE ──
+function updSt() {
+  var total = SVC.length;
+  var active = SVC.filter(function(s) { return !['cert-del','rejected'].includes(s.status); }).length;
+  var done = SVC.filter(function(s) { return s.status === 'cert-del'; }).length;
+  var today = SVC.filter(function(s) { return s.createdAt && s.createdAt.startsWith(new Date().toISOString().slice(0,10)); }).length;
+  var el;
+  el = document.getElementById('s-tot'); if(el) el.textContent = total;
+  el = document.getElementById('s-act'); if(el) el.textContent = active;
+  el = document.getElementById('s-dn'); if(el) el.textContent = done;
+  el = document.getElementById('ba'); if(el) el.textContent = today;
+}
+
+// ── DASHBOARD ──
+function renderDsh() {
+  var today = new Date().toISOString().slice(0,10);
+  var todaySvcs = SVC.filter(function(s) { return s.createdAt && s.createdAt.startsWith(today); });
+  var todayRev = todaySvcs.reduce(function(a,s) { return a+s.amount; }, 0);
+  var completed = todaySvcs.filter(function(s) { return ['completed','cert-recv','cert-del'].includes(s.status); }).length;
+  var pending = todaySvcs.filter(function(s) { return !['cert-del','rejected'].includes(s.status); }).length;
+
+  var kpis = document.getElementById('d-kpis');
+  if (kpis) kpis.innerHTML = [
+    {v: todaySvcs.length, l: 'Today Walk-ins', c: 'var(--bl)'},
+    {v: 'Rs.'+fmt(todayRev), l: 'Today Revenue', c: 'var(--gn)'},
+    {v: completed, l: 'Completed', c: 'var(--gn)'},
+    {v: pending, l: 'Pending', c: 'var(--or)'},
+    {v: SVC.length, l: 'Total Records', c: 'var(--gd)'},
+  ].map(function(k) {
+    return '<div class="kpc"><div class="kpv" style="color:'+k.c+'">'+k.v+'</div><div class="kpl">'+k.l+'</div></div>';
+  }).join('');
+
+  var rec = document.getElementById('dash-recent');
+  if (rec) {
+    var recent = SVC.slice(-10).reverse();
+    if (!recent.length) { rec.innerHTML = '<div style="color:var(--sv);text-align:center;padding:20px;">No records yet</div>'; return; }
+    rec.innerHTML = '<table class="tbl"><thead><tr><th>Token</th><th>Name</th><th>Service</th><th>Amount</th><th>Status</th></tr></thead><tbody>' +
+      recent.map(function(s) {
+        return '<tr><td style="font-family:var(--mono);font-size:11px;color:var(--gd);">'+esc(s.token)+'</td><td>'+esc(s.name)+'</td><td>'+esc(s.service?s.service.name:'')+'</td><td>Rs.'+fmt(s.amount)+'</td><td><span class="st st-'+s.status+'">'+s.status+'</span></td></tr>';
+      }).join('') + '</tbody></table>';
+  }
+}
+
+// ── TRACKER ──
+function renderTbl() {
+  var srch = (document.getElementById('srch')||{}).value || '';
+  var df = (document.getElementById('date-from')||{}).value || '';
+  var dt = (document.getElementById('date-to')||{}).value || '';
+  var list = SVC.slice();
+
+  if (_curFilter !== 'all') list = list.filter(function(s) { return s.status === _curFilter; });
+  if (srch) {
+    var q = srch.toLowerCase();
+    list = list.filter(function(s) {
+      return (s.name||'').toLowerCase().includes(q) ||
+             (s.mobile||'').includes(q) ||
+             (s.token||'').toLowerCase().includes(q) ||
+             (s.service && (s.service.name||'').toLowerCase().includes(q));
+    });
+  }
+  if (df) list = list.filter(function(s) { return s.createdAt && s.createdAt.slice(0,10) >= df; });
+  if (dt) list = list.filter(function(s) { return s.createdAt && s.createdAt.slice(0,10) <= dt; });
+  list = list.reverse();
+
+  var cnt = document.getElementById('tbl-count');
+  if (cnt) cnt.textContent = '(' + list.length + ' records)';
+
+  var tbody = document.getElementById('tbl-body');
+  if (!tbody) return;
+
+  if (!list.length) {
+    tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;color:var(--sv);padding:30px;">No records found</td></tr>';
+    return;
+  }
+
+  tbody.innerHTML = list.map(function(s) {
+    return '<tr onclick="showDet(\''+s.id+'\')" style="cursor:pointer;">' +
+      '<td style="font-family:var(--mono);font-size:11px;color:var(--gd);">'+esc(s.token)+'</td>' +
+      '<td><div style="font-weight:600;">'+esc(s.name)+'</div><div style="font-size:11px;color:var(--sv);">'+esc(s.mobile)+'</div></td>' +
+      '<td>'+esc(s.service?s.service.icon+' '+s.service.name:'')+'</td>' +
+      '<td style="color:var(--gn);font-weight:700;">Rs.'+fmt(s.amount)+'</td>' +
+      '<td><span class="st st-'+s.status+'">'+s.status+'</span></td>' +
+      '<td style="font-size:11px;color:var(--sv);">'+dateStr(s.createdAt)+'</td>' +
+      '<td style="display:flex;gap:4px;">' +
+        '<button class="bg" onclick="event.stopPropagation();opnWA(\''+s.id+'\')" style="padding:4px 8px;font-size:11px;">📱</button>' +
+      '</td>' +
+    '</tr>';
+  }).join('');
+}
+
+function setF(f, btn) {
+  _curFilter = f;
+  document.querySelectorAll('#filter-btns button').forEach(function(b) { b.style.borderColor=''; b.style.color=''; });
+  if (btn) { btn.style.borderColor='var(--gd)'; btn.style.color='var(--gd)'; }
+  renderTbl();
+}
+
+function debounceSearch() {
+  clearTimeout(_searchTimer);
+  _searchTimer = setTimeout(function() { try { renderTbl(); } catch(e) {} }, 300);
+}
+
+function clearDateFilter() {
+  var df = document.getElementById('date-from'); if(df) df.value='';
+  var dt = document.getElementById('date-to'); if(dt) dt.value='';
+  renderTbl();
+}
+
+// ── PIPELINE ──
+function renderPipeline() {
+  var stages = [
+    {id:'open',       label:'📥 Open'},
+    {id:'assigned',   label:'👤 Assigned'},
+    {id:'processing', label:'⚡ Processing'},
+    {id:'completed',  label:'✅ Completed'},
+    {id:'cert-recv',  label:'📜 Cert Recv'},
+    {id:'cert-del',   label:'🎉 Delivered'},
+  ];
+  var counts = {};
+  SVC.forEach(function(s) { counts[s.status] = (counts[s.status]||0)+1; });
+  var el = document.getElementById('pipeline-wrap');
+  if (!el) return;
+  el.innerHTML = '<div class="pipe">' + stages.map(function(st, i) {
+    var c = counts[st.id]||0;
+    return '<div class="pnode">' +
+      '<div class="pnd' + (c>0?' act':'') + '" onclick="setF(\''+st.id+'\',null)">' +
+        st.label + (c>0?' <span class="tbg">'+c+'</span>':'') +
+      '</div>' +
+      (i < stages.length-1 ? '<div class="parr">→</div>' : '') +
+    '</div>';
+  }).join('') + '</div>';
+}
+
+// ── SHOW DETAIL ──
+function showDet(id) {
+  var rec = SVC.find(function(s) { return s.id === id; });
+  if (!rec) return;
+
+  var stages = [
+    {id:'open',label:'📥 Open'},{id:'assigned',label:'👤 Assigned'},
+    {id:'processing',label:'⚡ Processing'},{id:'completed',label:'✅ Completed'},
+    {id:'cert-recv',label:'📜 Cert Recv'},{id:'cert-del',label:'🎉 Delivered'}
+  ];
+
+  var bdy = document.getElementById('det-bdy');
+  var ftr = document.getElementById('det-ftr');
+  if (!bdy) return;
+
+  bdy.innerHTML = '<div style="padding:16px 20px;border-bottom:1px solid var(--br);display:flex;justify-content:space-between;align-items:center;">' +
+    '<div><div class="pt">'+esc(rec.service?rec.service.icon+' '+rec.service.name:'Service')+'</div>' +
+    '<div style="font-family:var(--mono);font-size:11px;color:var(--gd);margin-top:4px;">'+esc(rec.token)+'</div></div>' +
+    '<button onclick="closeM(\'det-mo\')" style="background:none;border:none;color:var(--sv);font-size:20px;cursor:pointer;">✕</button></div>' +
+    '<div style="padding:16px 20px;">' +
+    '<div class="g2" style="margin-bottom:14px;">' +
+    '<div><div class="fl" style="margin-bottom:2px;">Customer</div><div style="font-weight:600;">'+esc(rec.name)+'</div><div style="font-size:12px;color:var(--sv);">'+esc(rec.mobile)+'</div></div>' +
+    '<div><div class="fl" style="margin-bottom:2px;">Amount</div><div style="font-size:20px;font-weight:700;color:var(--gn);">Rs.'+fmt(rec.amount)+'</div><div style="font-size:12px;color:var(--sv);">'+esc(rec.payment)+'</div></div>' +
+    '</div>' +
+    '<div style="margin-bottom:14px;"><div class="fl" style="margin-bottom:6px;">Pipeline</div>' +
+    '<div style="display:flex;flex-wrap:wrap;gap:6px;">' +
+    stages.map(function(st) {
+      var isCur = rec.status === st.id;
+      var isDone = stages.findIndex(function(x) { return x.id===rec.status; }) >= stages.findIndex(function(x) { return x.id===st.id; });
+      return '<button onclick="advanceStage(\''+id+'\',\''+st.id+'\')" style="padding:5px 10px;font-size:11px;font-weight:700;border-radius:8px;cursor:pointer;border:1.5px solid '+(isCur?'var(--gd)':'rgba(255,255,255,.1)')+';background:'+(isCur?'rgba(201,168,76,.15)':isDone?'rgba(0,196,140,.08)':'transparent')+';color:'+(isCur?'var(--gd)':isDone?'var(--gn)':'var(--sv)')+';">' + st.label + '</button>';
+    }).join('') +
+    '</div></div>' +
+    '<div style="margin-bottom:14px;">' +
+    '<div class="fl" style="margin-bottom:4px;">Application No.</div>' +
+    '<input class="fi" value="'+esc(rec.appno)+'" id="det-app" style="margin-bottom:8px;">' +
+    '<button class="bg" onclick="saveAppNo(\''+id+'\')" style="padding:6px 14px;font-size:12px;">Save</button>' +
+    '</div>' +
+    (rec.notes ? '<div style="font-size:12px;color:var(--sv);margin-bottom:10px;">📝 '+esc(rec.notes)+'</div>' : '') +
+    '</div>';
+
+  if (ftr) ftr.innerHTML =
+    '<button class="bg" onclick="opnWA(\''+id+'\')" style="padding:8px 16px;font-size:13px;">📱 WhatsApp</button>' +
+    '<button class="bs" onclick="confirmReject(\''+id+'\')" style="padding:8px 16px;font-size:13px;">❌ Reject</button>' +
+    '<button class="br2" onclick="delSv(\''+id+'\')" style="padding:8px 16px;font-size:13px;">🗑️ Delete</button>';
+
+  var mo = document.getElementById('det-mo');
+  if (mo) mo.classList.add('show');
+}
+
+function saveAppNo(id) {
+  var rec = SVC.find(function(s) { return s.id === id; });
+  if (!rec) return;
+  var el = document.getElementById('det-app');
+  if (el) { rec.appno = el.value; rec.updatedAt = new Date().toISOString(); }
+  localStorage.setItem('rr-svcs', JSON.stringify(SVC));
+  supaUpsert(rec);
+  toast('Application number saved ✅', 'success');
+}
+
+function advanceStage(id, stage) {
+  var rec = SVC.find(function(s) { return s.id === id; });
+  if (!rec) return;
+  rec.status = stage;
+  rec.updatedAt = new Date().toISOString();
+  if (stage === 'completed') rec.completedAt = rec.updatedAt;
+  if (stage === 'cert-del') rec.deliveredAt = rec.updatedAt;
+  if (!rec.timeline) rec.timeline = [];
+  rec.timeline.push({stage:stage, at:rec.updatedAt});
+  localStorage.setItem('rr-svcs', JSON.stringify(SVC));
+  supaUpsert(rec);
+  showDet(id);
+  renderTbl();
+  updSt();
+  toast('Status updated to ' + stage, 'success');
+}
+
+function confirmReject(id) {
+  if (!confirm('Reject this service?')) return;
+  advanceStage(id, 'rejected');
+  closeM('det-mo');
+}
+
+function delSv(id) {
+  if (!confirm('Delete this record permanently?')) return;
+  SVC = SVC.filter(function(s) { return s.id !== id; });
+  localStorage.setItem('rr-svcs', JSON.stringify(SVC));
+  closeM('det-mo');
+  renderTbl();
+  updSt();
+  toast('Record deleted', 'error');
+}
+
+// ── EOD ──
+function renderEOD() {
+  var dt = (document.getElementById('eod-dt')||{}).value || new Date().toISOString().slice(0,10);
+  var day = SVC.filter(function(s) { return s.createdAt && s.createdAt.startsWith(dt); });
+  var rev = day.reduce(function(a,s){return a+s.amount;},0);
+  var completed = day.filter(function(s){return ['completed','cert-recv','cert-del'].includes(s.status);}).length;
+  var pending = day.filter(function(s){return !['cert-del','rejected'].includes(s.status);}).length;
+  var cash = day.filter(function(s){return s.payment==='cash';}).reduce(function(a,s){return a+s.amount;},0);
+  var upi = day.filter(function(s){return s.payment==='upi';}).reduce(function(a,s){return a+s.amount;},0);
+
+  var kpis = document.getElementById('eod-kpis');
+  if (kpis) kpis.innerHTML = [
+    {v:day.length,l:'Total Services',c:'var(--bl)'},{v:'Rs.'+fmt(rev),l:'Total Revenue',c:'var(--gn)'},
+    {v:'Rs.'+fmt(cash),l:'Cash',c:'var(--gd)'},{v:'Rs.'+fmt(upi),l:'UPI',c:'var(--bl)'},
+    {v:completed,l:'Completed',c:'var(--gn)'},{v:pending,l:'Pending',c:'var(--or)'}
+  ].map(function(k){return '<div class="kpc"><div class="kpv" style="color:'+k.c+'">'+k.v+'</div><div class="kpl">'+k.l+'</div></div>';}).join('');
+
+  var svcEl = document.getElementById('eod-svc');
+  if (svcEl) {
+    if (!day.length) { svcEl.innerHTML='<div style="color:var(--sv);text-align:center;padding:20px;">No services today</div>'; }
+    else {
+      svcEl.innerHTML = '<table class="tbl"><thead><tr><th>Token</th><th>Customer</th><th>Service</th><th>Amount</th><th>Status</th></tr></thead><tbody>' +
+        day.map(function(s){
+          return '<tr><td style="font-family:var(--mono);font-size:11px;color:var(--gd);">'+esc(s.token)+'</td><td>'+esc(s.name)+'</td><td>'+esc(s.service?s.service.name:'')+'</td><td style="color:var(--gn);">Rs.'+fmt(s.amount)+'</td><td><span class="st st-'+s.status+'">'+s.status+'</span></td></tr>';
+        }).join('') + '</tbody></table>';
+    }
+  }
+
+  var pndEl = document.getElementById('eod-pnd');
+  if (pndEl) {
+    var pnd = SVC.filter(function(s){return !['cert-del','rejected'].includes(s.status);});
+    pndEl.innerHTML = pnd.length ? pnd.slice(0,10).map(function(s){
+      var days = Math.floor((new Date()-new Date(s.createdAt))/(1000*60*60*24));
+      return '<div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--br);font-size:13px;"><span>'+esc(s.name)+' — '+esc(s.service?s.service.name:'')+'</span><span style="color:'+(days>7?'var(--rd)':'var(--or)')+'">'+days+' days</span></div>';
+    }).join('') : '<div style="color:var(--sv);text-align:center;padding:16px;">No pending cases 🎉</div>';
+  }
+}
+
+function sendEOD() {
+  var dt = (document.getElementById('eod-dt')||{}).value || new Date().toISOString().slice(0,10);
+  var day = SVC.filter(function(s) { return s.createdAt && s.createdAt.startsWith(dt); });
+  var rev = day.reduce(function(a,s){return a+s.amount;},0);
+  var cash = day.filter(function(s){return s.payment==='cash';}).reduce(function(a,s){return a+s.amount;},0);
+  var msg = '📊 *RR COMPUTERS — EOD REPORT*\n';
+  msg += '📅 ' + dt + '\n━━━━━━━━━━━━━━━━━━━━\n\n';
+  msg += '🚶 Total Walk-ins: ' + day.length + '\n';
+  msg += '💰 Total Revenue: Rs.' + fmt(rev) + '\n';
+  msg += '💵 Cash: Rs.' + fmt(cash) + ' | 📱 UPI: Rs.' + fmt(rev-cash) + '\n';
+  msg += '✅ Completed: ' + day.filter(function(s){return ['completed','cert-recv','cert-del'].includes(s.status);}).length + '\n';
+  msg += '⏳ Pending: ' + day.filter(function(s){return !['cert-del','rejected'].includes(s.status);}).length + '\n\n';
+  msg += '━━━━━━━━━━━━━━━━━━━━\n🏢 RR Computers | 📞 ' + PHONE_CALL;
+  window.open('https://api.whatsapp.com/send?phone=' + PHONE_ADMIN + '&text=' + encodeURIComponent(msg), '_blank');
+}
+
+// ── WA MESSAGES ──
+function buildMsg(type, rec) {
+  var svcName = rec.service ? rec.service.name : 'Service';
+  var nm = rec.name;
+  var tok = rec.token;
+  var appno = rec.appno || '';
+  var sig = '\n\n━━━━━━━━━━━━━━━━━━━━\n🏢 *RR Computers — MeeSeva*\n📞 ' + PHONE_CALL + ' | 🌐 ' + WEBSITE + '\n📍 Gudivada | Hanuman Junction';
+
+  // Social media — Facebook, Instagram, WhatsApp, YouTube, Twitter only
+  var socBlock = '\n\n💬 WhatsApp Channel: https://whatsapp.com/channel/0029Va5hYKfCnA82GkcXcA2w\n▶️ YouTube: https://www.youtube.com/@rrcomputersgdv?sub_confirmation=1';
+
+  if (type === 'submitted') {
+    var base = 'నమస్కారం *' + nm + '* గారూ! 🙏\n\n'
+      + '✅ *' + svcName + '* registered!\n'
+      + '🎟 Token: *' + tok + '*\n\n'
+      + 'Complete అయినప్పుడు WA వస్తుంది.';
+    var reviewBlock = '\n\n━━━━━━━━━━━━━━━━━━━━\n'
+      + '🙏 నమస్కారం!\n'
+      + 'RR COMPUTERS Meeseva సేవలు ఉపయోగించినందుకు ధన్యవాదాలు 😊\n'
+      + 'మీ feedback మాకు చాలా ముఖ్యము.\n'
+      + 'ఇప్పుడే మీ అనుభవం share చేయండి 👇\n'
+      + '👉 https://g.page/r/CVD_Aqgk-swzEBE/review\n'
+      + '🎁 Instant *₹10 OFF* — Review WhatsApp లో share చేయండి & ₹10 OFF పొందండి!\n'
+      + 'ధన్యవాదాలు 🙏';
+    return base + reviewBlock + socBlock + sig;
+  }
+  if (type === 'completed') {
+    return 'నమస్కారం *' + nm + '* గారూ! 🙏\n\n'
+      + '🎉 *మీ Service Complete అయింది!*\n\n'
+      + '📋 Token: *' + tok + '*\n'
+      + '🛠 Service: *' + svcName + '*\n'
+      + (appno ? '🔖 Application No: *' + appno + '*\n' : '')
+      + '\n🏢 Office కి వచ్చి Certificate తీసుకోండి.'
+      + socBlock + sig;
+  }
+  if (type === 'reminder') {
+    return 'నమస్కారం *' + nm + '* గారూ! 🙏\n\n'
+      + '⏰ *Service Status Update*\n\n'
+      + '📋 Token: *' + tok + '*\n'
+      + '🛠 Service: *' + svcName + '*\n\n'
+      + 'మీ application process లో ఉంది — soon complete అవుతుంది.'
+      + socBlock + sig;
+  }
+  if (type === 'rejected') {
+    return 'నమస్కారం *' + nm + '* గారూ! 🙏\n\n'
+      + '❌ *Service Rejected*\n\n'
+      + '📋 Token: *' + tok + '*\n'
+      + '🛠 Service: *' + svcName + '*\n\n'
+      + 'మీ application reject అయింది. Details కి office కి రండి.\n'
+      + '📞 ' + PHONE_CALL
+      + sig;
+  }
+  if (type === 'cert-received') {
+    return 'నమస్కారం *' + nm + '* గారూ! 🙏\n\n'
+      + '📜 *Certificate Ready for Delivery!*\n\n'
+      + '📋 Token: *' + tok + '*\n'
+      + '🛠 Service: *' + svcName + '*\n\n'
+      + '🏢 Certificate ready — collect చేయండి!'
+      + sig;
+  }
+  return '📱 *' + nm + '* గారూ — ' + svcName + ' update.\nToken: *' + tok + '*' + sig;
+}
+
+function opnWA(id) {
+  var rec = SVC.find(function(s) { return s.id === id; });
+  if (!rec) return;
+  var msgs = [
+    {label:'✅ Submitted', type:'submitted'},
+    {label:'⚡ In Progress', type:'reminder'},
+    {label:'🎉 Completed', type:'completed'},
+    {label:'📜 Cert Ready', type:'cert-received'},
+    {label:'❌ Rejected', type:'rejected'},
+  ];
+  var bdy = document.getElementById('wa-bdy');
+  if (!bdy) return;
+  bdy.innerHTML = '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;"><div class="pt">📱 WhatsApp — '+esc(rec.name)+'</div><button onclick="closeM(\'wa-mo\')" style="background:none;border:none;color:var(--sv);font-size:20px;cursor:pointer;">✕</button></div>' +
+    msgs.map(function(m) {
+      var msg = buildMsg(m.type, rec);
+      return '<button class="bg" onclick="sndWA(\''+cleanMobile(rec.mobile)+'\',\''+encodeURIComponent(msg)+'\')" style="width:100%;margin-bottom:8px;text-align:left;">' + m.label + '</button>';
+    }).join('');
+  var mo = document.getElementById('wa-mo');
+  if (mo) mo.classList.add('show');
+}
+
+function cleanMobile(m) {
+  // Strip spaces, dashes, leading country code, ensure 10 digits
+  var cleaned = String(m||'').replace(/[^0-9]/g,'');
+  if (cleaned.startsWith('91') && cleaned.length === 12) cleaned = cleaned.slice(2);
+  if (cleaned.startsWith('0') && cleaned.length === 11) cleaned = cleaned.slice(1);
+  return cleaned;
+}
+
+function sndWA(mobile, encodedMsg) {
+  var m = cleanMobile(mobile);
+  if (m.length !== 10) { toast('Invalid mobile number', 'error'); return; }
+  var url = 'https://api.whatsapp.com/send?phone=91' + m + '&text=' + encodedMsg;
+  window.open(url, '_blank');
+}
+
+function openWAQuiet(mobile, msg) {
+  var m = cleanMobile(mobile);
+  if (!m || m.length !== 10) return; // don't open if invalid
+  window.open('https://api.whatsapp.com/send?phone=91' + m + '&text=' + encodeURIComponent(msg), '_blank');
+}
+
+function swWA(mobile, msg) { window.open('https://api.whatsapp.com/send?phone=91'+mobile+'&text='+encodeURIComponent(msg),'_blank'); }
+
+function cpyWA(id) {
+  var rec = SVC.find(function(s){return s.id===id;});
+  if (!rec) return;
+  var msg = buildMsg('submitted', rec);
+  try { navigator.clipboard.writeText(msg).then(function(){toast('Copied!','success');}); } catch(e) { toast('Copy failed','error'); }
+}
+
+// ── EXPORT CSV ──
+function exportCSV() {
+  var rows = [['Token','Name','Mobile','Aadhaar','Address','Branch','FO','Operator','Service','Govt Fee','Our Charge','Amount','Payment','Status','App No','Notes','Date','Lead Source']];
+  SVC.forEach(function(s) {
+    rows.push([s.token,s.name,s.mobile,s.aadhaar||'',s.address||'',s.branch||'',s.fo||'',s.staff||'',s.service?s.service.name:'',s.service?s.service.govt:'',s.service?s.service.svc:'',s.amount,s.payment,s.status,s.appno||'',s.notes||'',dateStr(s.createdAt),s.leadSource||'']);
+  });
+  var csv = rows.map(function(r){return r.map(function(c){return '"'+(c||'').toString().replace(/"/g,'""')+'"';}).join(',');}).join('\n');
+  var a = document.createElement('a');
+  a.href = 'data:text/csv;charset=utf-8,' + encodeURIComponent(csv);
+  a.download = 'RR_Services_' + new Date().toISOString().slice(0,10) + '.csv';
+  a.click();
+}
+
+function expCSV() { exportCSV(); }
+
+// ── LEADS ──
+var LEAD_LABELS = {
+  'walkin-direct':'🚶 Walk-in','facebook':'📘 Facebook','instagram':'📸 Instagram',
+  'whatsapp':'💬 WhatsApp','google':'🔍 Google','referral-customer':'👥 Customer Referral',
+  'referral-agent':'🤝 Agent Referral','return-customer':'🔄 Return Customer',
+  'youtube':'▶️ YouTube','other':'✏️ Other'
+};
+
+function setLeadFilter(f, btn) {
+  _curLeadFilter = f;
+  renderLeads();
+}
+
+function renderLeads() {
+  var kpis = document.getElementById('lead-kpis');
+  if (!kpis) return;
+  var list = SVC;
+  var now = new Date();
+  if (_curLeadFilter === 'today') { var t=now.toISOString().slice(0,10); list=SVC.filter(function(s){return s.createdAt&&s.createdAt.startsWith(t);}); }
+  else if (_curLeadFilter === 'week') { var w=new Date(now); w.setDate(w.getDate()-7); list=SVC.filter(function(s){return s.createdAt&&new Date(s.createdAt)>=w;}); }
+  else if (_curLeadFilter === 'month') { var m=new Date(now); m.setDate(m.getDate()-30); list=SVC.filter(function(s){return s.createdAt&&new Date(s.createdAt)>=m;}); }
+
+  var counts = {};
+  list.forEach(function(s) { var l=s.leadSource||'other'; counts[l]=(counts[l]||0)+1; });
+  var total = list.length;
+  kpis.innerHTML = Object.keys(counts).sort(function(a,b){return counts[b]-counts[a];}).map(function(k) {
+    var pct = total ? Math.round(counts[k]/total*100) : 0;
+    return '<div class="kpc"><div class="kpv" style="color:var(--gd);">'+counts[k]+'</div><div class="kpl">'+(LEAD_LABELS[k]||k)+'</div><div style="font-size:11px;color:var(--sv);">'+pct+'%</div></div>';
+  }).join('');
+
+  var chart = document.getElementById('lead-chart');
+  if (chart) {
+    var max = Math.max.apply(null, Object.values(counts).concat([1]));
+    chart.innerHTML = '<div style="margin-top:14px;">' + Object.keys(counts).sort(function(a,b){return counts[b]-counts[a];}).map(function(k) {
+      var pct = Math.round(counts[k]/max*100);
+      return '<div style="margin-bottom:10px;"><div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:4px;"><span>'+(LEAD_LABELS[k]||k)+'</span><span style="color:var(--gd);">'+counts[k]+'</span></div><div style="background:rgba(255,255,255,.06);border-radius:4px;height:6px;"><div style="width:'+pct+'%;background:var(--gd);height:100%;border-radius:4px;"></div></div></div>';
+    }).join('') + '</div>';
+  }
+}
+
+function exportLeadsCSV() {
+  var rows = [['Lead Source','Count']];
+  var counts = {};
+  SVC.forEach(function(s) { var l=s.leadSource||'other'; counts[l]=(counts[l]||0)+1; });
+  Object.keys(counts).forEach(function(k) { rows.push([LEAD_LABELS[k]||k, counts[k]]); });
+  var csv = rows.map(function(r){return r.join(',');}).join('\n');
+  var a = document.createElement('a'); a.href='data:text/csv;charset=utf-8,'+encodeURIComponent(csv); a.download='leads.csv'; a.click();
+}
+
+// ── PERFORMANCE ──
+function renderPerf() {
+  var period = (document.getElementById('perf-period')||{}).value || 'today';
+  var now = new Date();
+  var recs;
+  if (period==='today') { var t=now.toISOString().slice(0,10); recs=SVC.filter(function(s){return s.createdAt&&s.createdAt.startsWith(t);}); }
+  else if (period==='week') { var w=new Date(now); w.setDate(w.getDate()-7); recs=SVC.filter(function(s){return s.createdAt&&new Date(s.createdAt)>=w;}); }
+  else { var m=new Date(now); m.setDate(m.getDate()-30); recs=SVC.filter(function(s){return s.createdAt&&new Date(s.createdAt)>=m;}); }
+
+  var rev = recs.reduce(function(a,s){return a+s.amount;},0);
+  var comp = recs.filter(function(s){return ['completed','cert-recv','cert-del'].includes(s.status);}).length;
+  var shared = calcSharedIncentive(recs);
+
+  var kpis = document.getElementById('perf-shop-kpis');
+  if (kpis) kpis.innerHTML = [
+    {v:recs.length,l:'Total Services',c:'var(--bl)'},{v:'Rs.'+fmt(rev),l:'Revenue',c:'var(--gn)'},
+    {v:comp,l:'Completed',c:'var(--gn)'},{v:'Rs.'+fmt(shared.perPerson),l:'Each Incentive',c:'var(--gd)'}
+  ].map(function(k){return '<div class="kpc"><div class="kpv" style="color:'+k.c+'">'+k.v+'</div><div class="kpl">'+k.l+'</div></div>';}).join('');
+
+  var cards = document.getElementById('perf-staff-cards');
+  if (!cards) return;
+  var allStaff = [];
+  // STAFF.fo removed forEach(function(n){if(allStaff.indexOf(n)<0)allStaff.push(n);});
+  STAFF.op.forEach(function(n){if(allStaff.indexOf(n)<0)allStaff.push(n);});
+
+  cards.innerHTML = allStaff.map(function(name) {
+    var mine = recs.filter(function(s){return s.fo===name||s.staff===name;});
+    var mRev = mine.reduce(function(a,s){return a+s.amount;},0);
+    var mComp = mine.filter(function(s){return ['completed','cert-recv','cert-del'].includes(s.status);}).length;
+    return '<div class="scard">' +
+      '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">' +
+        '<div style="font-weight:700;font-size:15px;">👤 '+esc(name)+'</div>' +
+        '<div style="color:var(--gd);font-weight:700;">₹'+fmt(shared.perPerson)+' incentive</div>' +
+      '</div>' +
+      '<div class="g3">' +
+        '<div class="kpc"><div class="kpv" style="color:var(--bl);font-size:18px;">'+mine.length+'</div><div class="kpl">Services</div></div>' +
+        '<div class="kpc"><div class="kpv" style="color:var(--gn);font-size:18px;">'+mComp+'</div><div class="kpl">Completed</div></div>' +
+        '<div class="kpc"><div class="kpv" style="color:var(--gd);font-size:18px;">Rs.'+fmt(mRev)+'</div><div class="kpl">Revenue</div></div>' +
+      '</div>' +
+      '<button class="bg" onclick="sendStaffWA(\''+esc(name)+'\')" style="padding:6px 14px;font-size:12px;margin-top:10px;">📱 Send Report</button>' +
+    '</div>';
+  }).join('');
+}
+
+function calcSharedIncentive(recs) {
+  var total     = recs.length;
+  var completed = recs.filter(function(s){return ['completed','cert-recv','cert-del'].includes(s.status);}).length;
+  var rejected  = recs.filter(function(s){return s.status==='rejected';}).length;
+  var compRate  = total>0 ? Math.round(completed/total*100) : 0;
+  var inc = 0; var breakdown = [];
+
+  // ₹5 per EVERY walk-in (given to each operator)
+  if (total > 0) {
+    var walkinBonus = total * IRULES.walkinIncentive; // ₹5 × walks
+    inc += walkinBonus;
+    breakdown.push({icon:'🚶',label:total+' walk-ins × ₹'+IRULES.walkinIncentive+' each',amount:walkinBonus});
+  }
+  // Completion bonus
+  if (compRate >= IRULES.completionTarget) {
+    inc += IRULES.completionBonus;
+    breakdown.push({icon:'✅',label:compRate+'% completion rate',amount:IRULES.completionBonus});
+  }
+  // Speed bonus per completed
+  var sb = completed * IRULES.speedBonus;
+  if (sb>0) { inc+=sb; breakdown.push({icon:'⚡',label:completed+' completed × ₹'+IRULES.speedBonus,amount:sb}); }
+  // Zero rejection bonus
+  if (total>0&&rejected===0) { inc+=IRULES.rejectionBonus; breakdown.push({icon:'🎯',label:'Zero rejections!',amount:IRULES.rejectionBonus}); }
+
+  var opCount = Math.max(1, STAFF.op.length);
+  return {total:inc, perPerson:Math.floor(inc/opCount), breakdown:breakdown, completionRate:compRate, opCount:opCount};
+}
+
+function loadIRulesUI() {
+  ['walkinTarget','walkinIncentive','completionTarget','completionBonus','speedBonus','rejectionBonus'].forEach(function(k) {
+    var el = document.getElementById('ir-'+k.replace(/([A-Z])/g,'-$1').toLowerCase());
+    if (el) el.value = IRULES[k];
+  });
+}
+
+function saveIncentiveRules() {
+  IRULES = {
+    walkinTarget: parseInt((document.getElementById('ir-walkin-target')||{}).value)||30,
+    walkinIncentive: parseInt((document.getElementById('ir-walkin-incentive')||{}).value)||10,
+    completionTarget: parseInt((document.getElementById('ir-completion-target')||{}).value)||90,
+    completionBonus: parseInt((document.getElementById('ir-completion-bonus')||{}).value)||100,
+    speedBonus: parseInt((document.getElementById('ir-speed-bonus')||{}).value)||5,
+    rejectionBonus: parseInt((document.getElementById('ir-rejection-bonus')||{}).value)||50,
+  };
+  localStorage.setItem('rr-irules', JSON.stringify(IRULES));
+  toast('Incentive rules saved ✅', 'success');
+  renderPerf();
+}
+
+function sendStaffWA(name) {
+  var recs = SVC.filter(function(s){return s.fo===name||s.staff===name;});
+  var rev = recs.reduce(function(a,s){return a+s.amount;},0);
+  var shared = calcSharedIncentive(SVC);
+  var msg = '📊 *'+name+' — Performance Report*\n';
+  msg += '📅 '+new Date().toLocaleDateString('en-IN')+'\n━━━━━━━━━━━━━━━━━━━━\n';
+  msg += '🚶 Services: '+recs.length+'\n';
+  msg += '💰 Revenue: Rs.'+fmt(rev)+'\n';
+  msg += '🏆 Your Incentive: Rs.'+fmt(shared.perPerson)+'\n';
+  msg += '━━━━━━━━━━━━━━━━━━━━\n🏢 RR Computers | 📞 '+PHONE_CALL;
+  window.open('https://api.whatsapp.com/send?phone='+PHONE_ADMIN+'&text='+encodeURIComponent(msg),'_blank');
+}
+
+function sendManualReport(slot) {
+  var recs = SVC.filter(function(s){return s.createdAt&&s.createdAt.startsWith(new Date().toISOString().slice(0,10));});
+  var rev = recs.reduce(function(a,s){return a+s.amount;},0);
+  var shared = calcSharedIncentive(recs);
+  var msg = (slot==='8pm'?'🌙 EOD':'📊 '+slot.toUpperCase())+' *RR Computers Report*\n';
+  msg += '📅 '+new Date().toLocaleDateString('en-IN')+'\n━━━━━━━━━━━━━━━━━━━━\n';
+  msg += '🚶 Walk-ins: '+recs.length+' | 💰 Revenue: Rs.'+fmt(rev)+'\n';
+  msg += '✅ Completed: '+recs.filter(function(s){return ['completed','cert-recv','cert-del'].includes(s.status);}).length+'\n';
+  msg += '⏳ Pending: '+recs.filter(function(s){return !['cert-del','rejected'].includes(s.status);}).length+'\n';
+  msg += '🏆 Team Incentive: Rs.'+fmt(shared.total)+' (Rs.'+fmt(shared.perPerson)+' each)\n';
+  msg += '━━━━━━━━━━━━━━━━━━━━\n🏢 RR Computers | 📞 '+PHONE_CALL;
+  window.open('https://api.whatsapp.com/send?phone='+PHONE_ADMIN+'&text='+encodeURIComponent(msg),'_blank');
+}
+
+// Auto reports at 1PM and 8:30PM
+setInterval(function() {
+  var now = new Date();
+  var h = now.getHours(); var m = now.getMinutes();
+  var key = now.toISOString().slice(0,10);
+  var last = localStorage.getItem('rr-last-report') || '';
+  if (h===13 && m===0 && last!==key+'-1pm') { localStorage.setItem('rr-last-report',key+'-1pm'); sendManualReport('1pm'); }
+  if (h===20 && m===30 && last!==key+'-8pm') { localStorage.setItem('rr-last-report',key+'-8pm'); sendManualReport('8pm'); }
+}, 60000);
+
+// ── SOCIAL MEDIA TRACKER ──
+var SOCIAL_PLATFORMS = [
+  {id:'google',label:'Google Reviews',icon:'⭐',color:'#FBBC04'},
+  {id:'facebook',label:'Facebook Post',icon:'📘',color:'#1877F2'},
+  {id:'instagram',label:'Instagram Post',icon:'📸',color:'#E4405F'},
+  {id:'youtube',label:'YouTube Video',icon:'▶️',color:'#FF0000'},
+  {id:'whatsapp',label:'WhatsApp Channel',icon:'💬',color:'#25D366'},
+  {id:'twitter',label:'Twitter/X Post',icon:'🐦',color:'#1DA1F2'},
+];
+
+function getTodaySocial() {
+  var today = new Date().toISOString().slice(0,10);
+  if (!SOCIAL_LOG[today]) SOCIAL_LOG[today] = {google:0,facebook:0,instagram:0,youtube:0,whatsapp:0,twitter:0};
+  return SOCIAL_LOG[today];
+}
+
+function markSocialDone(p) {
+  var t = getTodaySocial();
+  t[p] = (t[p]||0)+1;
+  localStorage.setItem('rr-social', JSON.stringify(SOCIAL_LOG));
+  renderSocialTracker();
+  toast(p + ' marked done ✅', 'success');
+}
+
+function renderSocialTracker() {
+  var el = document.getElementById('social-tracker');
+  if (!el) return;
+  var today = getTodaySocial();
+  var done = SOCIAL_PLATFORMS.filter(function(p){return today[p.id]>0;}).length;
+  el.innerHTML = '<div style="margin-bottom:12px;"><div style="display:flex;justify-content:space-between;margin-bottom:6px;"><span style="font-size:13px;color:var(--sv);">Today: '+done+'/'+SOCIAL_PLATFORMS.length+' done</span><button onclick="sendSocialReportWA()" style="background:linear-gradient(135deg,#25D366,#128C7E);color:#fff;border:none;padding:6px 14px;border-radius:8px;font-size:12px;font-weight:700;cursor:pointer;">📱 Report</button></div><div class="pbar"><div class="pfill" style="width:'+Math.round(done/SOCIAL_PLATFORMS.length*100)+'%;background:'+(done===SOCIAL_PLATFORMS.length?'var(--gn)':'var(--gd)')+'"></div></div></div>' +
+  '<div class="soc-grid">' + SOCIAL_PLATFORMS.map(function(p) {
+    var cnt = today[p.id]||0;
+    return '<div class="soc-card'+(cnt>0?' done':'')+'" onclick="markSocialDone(\''+p.id+'\')">' +
+      '<div style="font-size:22px;margin-bottom:4px;">'+p.icon+'</div>' +
+      '<div style="font-size:12px;font-weight:600;color:'+(cnt>0?p.color:'var(--sv)')+'">'+p.label+'</div>' +
+      '<div style="font-size:18px;font-weight:700;margin:6px 0;color:'+(cnt>0?'var(--gn)':'var(--sv)')+'">'+( cnt>0?cnt:'—')+'</div>' +
+      '<div style="font-size:11px;color:'+(cnt>0?'var(--gn)':'var(--gd)');+'font-weight:700;">'+(cnt>0?'✅ Done':'Tap to mark')+'</div>' +
+    '</div>';
+  }).join('') + '</div>';
+}
+
+function sendSocialReportWA() {
+  var today = getTodaySocial();
+  var done = SOCIAL_PLATFORMS.filter(function(p){return today[p.id]>0;});
+  var pending = SOCIAL_PLATFORMS.filter(function(p){return !today[p.id];});
+  var msg = '📱 *RR Computers — Social Media*\n📅 '+new Date().toLocaleDateString('en-IN')+'\n━━━━━━━━━━━━━━━━━━━━\n';
+  msg += '✅ Done ('+done.length+'/'+SOCIAL_PLATFORMS.length+'):\n'+done.map(function(p){return p.icon+' '+p.label;}).join('\n');
+  if (pending.length) msg += '\n⏳ Pending:\n'+pending.map(function(p){return p.icon+' '+p.label;}).join('\n');
+  window.open('https://api.whatsapp.com/send?phone='+PHONE_ADMIN+'&text='+encodeURIComponent(msg),'_blank');
+}
+
+// ── COUPONS ──
+
+
+function setCpnFilter(f,btn) { _curCpnFilter=f; renderCpnDash(); }
+
+function valCpn(code) {
+  var inp = (document.getElementById('f-cpn')||{}).value || code || '';
+  if (!inp) return;
+  var now = new Date();
+  var found = SVC.find(function(s){return s.cpn&&s.cpn.code===inp.toUpperCase()&&!s.cpn.used&&new Date(s.cpn.validUntil)>now;});
+  if (found) { toast('Coupon valid! Discount: Rs.'+found.cpn.discount, 'success'); }
+  else { toast('Invalid or expired coupon', 'error'); }
+}
+
+// ── CRM ──
+function getCustomerProfiles() {
+  var profiles = {};
+  SVC.forEach(function(s) {
+    if (!profiles[s.mobile]) profiles[s.mobile] = {name:s.name, mobile:s.mobile, visits:0, totalSpend:0, lastVisit:null, services:[]};
+    profiles[s.mobile].visits++;
+    profiles[s.mobile].totalSpend += s.amount;
+    profiles[s.mobile].services.push(s.service?s.service.name:'');
+    if (!profiles[s.mobile].lastVisit || s.createdAt > profiles[s.mobile].lastVisit) profiles[s.mobile].lastVisit = s.createdAt;
+  });
+  return Object.values(profiles);
+}
+
+function setCRMFilter(f,btn) { _curCRMFilter=f; renderCRM(); }
+
+function renderCRM() {
+  var profiles = getCustomerProfiles();
+  var now = new Date();
+  if (_curCRMFilter==='loyal') profiles=profiles.filter(function(p){return p.visits>=3;});
+  else if (_curCRMFilter==='new') profiles=profiles.filter(function(p){return p.visits===1;});
+  else if (_curCRMFilter==='inactive') profiles=profiles.filter(function(p){return p.lastVisit&&(now-new Date(p.lastVisit))>90*24*60*60*1000;});
+  profiles.sort(function(a,b){return b.totalSpend-a.totalSpend;});
+
+  var list = document.getElementById('crm-list');
+  if (!list) return;
+  list.innerHTML = profiles.slice(0,20).map(function(p) {
+    return '<div class="scard" style="cursor:pointer;" onclick="sendCRMWA(\''+esc(p.mobile)+'\',\''+esc(p.name)+'\')">' +
+      '<div style="display:flex;justify-content:space-between;align-items:center;">' +
+        '<div><div style="font-weight:700;">'+esc(p.name)+'</div><div style="font-size:12px;color:var(--sv);">'+esc(p.mobile)+'</div></div>' +
+        '<div style="text-align:right;"><div style="color:var(--gn);font-weight:700;">Rs.'+fmt(p.totalSpend)+'</div><div style="font-size:11px;color:var(--sv);">'+p.visits+' visits</div></div>' +
+      '</div>' +
+    '</div>';
+  }).join('') || '<div style="color:var(--sv);text-align:center;padding:20px;">No customers found</div>';
+}
+
+function sendCRMWA(mobile, name) {
+  var msg = 'Hello *'+name+'* ji! 🙏\n\nThank you for choosing RR Computers - MeeSeva.\n\nFor any government services (Aadhaar, PAN, Passport, Certificates), visit us at Gudivada or Hanuman Junction.\n\n📞 '+PHONE_CALL+' | 🌐 '+WEBSITE;
+  window.open('https://api.whatsapp.com/send?phone=91'+mobile+'&text='+encodeURIComponent(msg),'_blank');
+}
+
+function exportCRMCSV() {
+  var profiles = getCustomerProfiles();
+  var rows = [['Name','Mobile','Visits','Total Spend','Last Visit']];
+  profiles.forEach(function(p){rows.push([p.name,p.mobile,p.visits,p.totalSpend,dateStr(p.lastVisit)]);});
+  var csv = rows.map(function(r){return r.join(',');}).join('\n');
+  var a=document.createElement('a');a.href='data:text/csv;charset=utf-8,'+encodeURIComponent(csv);a.download='crm.csv';a.click();
+}
+
+// ── MARKETING ──
+function renderMkt() {
+  var t = (document.getElementById('mkt-type')||{}).value||'promo';
+  mktTypeChanged(t);
+}
+
+function mktTypeChanged(t) {
+  var msgs = {
+    promo:'📢 Dear Customer,\n\nRR Computers - MeeSeva provides all government services at your doorstep!\n\n🪪 Aadhaar | 💳 PAN | 📗 Passport | 📋 Certificates\n\nVisit us today!\n📞 '+PHONE_CALL+' | 🌐 '+WEBSITE,
+    reminder:'⏰ Reminder: Your pending application at RR Computers. Please visit us to check status.\n📞 '+PHONE_CALL,
+    festival:'🎉 Greetings from RR Computers!\n\nWishing you and your family a wonderful celebration!\n\nWe are here to serve you for all government services.\n📞 '+PHONE_CALL,
+    'new-service':'🆕 New Service at RR Computers!\n\nWe now offer more government services. Visit us!\n📞 '+PHONE_CALL+' | 🌐 '+WEBSITE
+  };
+  var el = document.getElementById('mkt-msg');
+  if (el) el.value = msgs[t]||msgs.promo;
+}
+
+function broadcastCampaign() {
+  var msg = (document.getElementById('mkt-msg')||{}).value||'';
+  if (!msg) { toast('Please enter a message', 'error'); return; }
+  window.open('https://api.whatsapp.com/send?phone='+PHONE_ADMIN+'&text='+encodeURIComponent(msg),'_blank');
+  toast('Campaign ready to send! Copy and broadcast from WhatsApp.', 'success');
+}
+
+// ── ADMIN ──
+function renderStAdm() {
+  var foList = null;
+  var opList = document.getElementById('op-list');
+    if (opList) opList.innerHTML = STAFF.op.map(function(n,i){
+    return '<div style="display:flex;gap:6px;margin-bottom:6px;"><input class="fi staff-op" value="'+esc(n)+'" style="flex:1;font-size:13px;padding:8px 12px;"><button onclick="rmSt(\'op\','+i+')" class="br2" style="padding:6px 10px;font-size:12px;">✕</button></div>';
+  }).join('');
+}
+
+function addSt(type) { STAFF[type].push(''); saveSt(); renderStAdm(); }
+
+function rmSt(type, i) { STAFF[type].splice(i,1); saveSt(); renderStAdm(); renderStSels(); }
+
+function saveSt() { localStorage.setItem('rr-fo',JSON.stringify(STAFF.fo)); localStorage.setItem('rr-op',JSON.stringify(STAFF.op)); }
+
+function saveStaff() {
+  STAFF.fo = Array.from(document.querySelectorAll('.staff-fo')).map(function(e){return e.value.trim();}).filter(Boolean);
+  STAFF.op = Array.from(document.querySelectorAll('.staff-op')).map(function(e){return e.value.trim();}).filter(Boolean);
+  if(!STAFF.fo.length)STAFF.fo=['Gudapati Satish'];
+  if(!STAFF.op.length)STAFF.op=['Gudapati Satish','Gudapati Prasanna Kumari','Allu Ambica'];
+  saveSt(); renderStAdm(); renderStSels();
+  toast('Staff saved ✅', 'success');
+}
+
+function renderAdmTbl() {
+  var svcs = allS();
+  var tbody = document.getElementById('adm-svc-body');
+  if (!tbody) return;
+  tbody.innerHTML = svcs.map(function(s){
+    return '<tr><td>'+esc(s.icon+' '+s.name)+'</td><td>Rs.'+(s.govt||0)+'</td><td>Rs.'+(s.svc||0)+'</td><td style="color:var(--gd);font-weight:700;">Rs.'+((s.govt||0)+(s.svc||0))+'</td>' +
+      '<td><button onclick="opnEd(\''+s.id+'\')" style="background:none;border:none;color:var(--bl);cursor:pointer;font-size:14px;">✏️</button>' +
+      (s.isCustom?'<button onclick="delCustomSvc(\''+s.id+'\')" style="background:none;border:none;color:var(--rd);cursor:pointer;font-size:14px;">🗑️</button>':'') +
+      '</td></tr>';
+  }).join('');
+}
+
+function opnAddSvc() { opnEd(null); }
+
+function opnEd(id) {
+  var s = id ? allS().find(function(x){return x.id===id;}) : null;
+  var fields = ['sv-nm','sv-tl','sv-ic','sv-tt','sv-gv','sv-ch','sv-dc','sv-id'];
+  fields.forEach(function(f){ var el=document.getElementById(f);if(el)el.value=''; });
+  if (s) {
+    if(document.getElementById('sv-nm'))document.getElementById('sv-nm').value=s.name||'';
+    if(document.getElementById('sv-tl'))document.getElementById('sv-tl').value=s.telugu||'';
+    if(document.getElementById('sv-ic'))document.getElementById('sv-ic').value=s.icon||'';
+    if(document.getElementById('sv-tt'))document.getElementById('sv-tt').value=s.time||'';
+    if(document.getElementById('sv-gv'))document.getElementById('sv-gv').value=s.govt||0;
+    if(document.getElementById('sv-ch'))document.getElementById('sv-ch').value=s.svc||0;
+    if(document.getElementById('sv-dc'))document.getElementById('sv-dc').value=(s.docs||[]).join('\n');
+    if(document.getElementById('sv-id'))document.getElementById('sv-id').value=s.id||'';
+    calcSvTot();
+  }
+  var mo = document.getElementById('svc-mo'); if(mo) mo.classList.add('show');
+}
+
+function saveSvc() {
+  var nm = (document.getElementById('sv-nm')||{}).value||'';
+  if (!nm) { toast('Service name required','error'); return; }
+  var existId = (document.getElementById('sv-id')||{}).value||'';
+  var svc = {
+    id: existId || 'c-'+Date.now(),
+    name: nm,
+    telugu: (document.getElementById('sv-tl')||{}).value||'',
+    icon: (document.getElementById('sv-ic')||{}).value||'📋',
+    time: (document.getElementById('sv-tt')||{}).value||'',
+    govt: parseInt((document.getElementById('sv-gv')||{}).value)||0,
+    svc: parseInt((document.getElementById('sv-ch')||{}).value)||0,
+    docs: ((document.getElementById('sv-dc')||{}).value||'').split('\n').map(function(d){return d.trim();}).filter(Boolean),
+    isCustom: true
+  };
+  var idx = cSvcs.findIndex(function(x){return x.id===svc.id;});
+  if (idx>=0) cSvcs[idx]=svc; else cSvcs.push(svc);
+  localStorage.setItem('rr-csvc',JSON.stringify(cSvcs));
+  closeM('svc-mo'); renderAdmTbl();
+  toast('Service saved ✅','success');
+}
+
+function delCustomSvc(id) {
+  cSvcs = cSvcs.filter(function(s){return s.id!==id;});
+  localStorage.setItem('rr-csvc',JSON.stringify(cSvcs));
+  renderAdmTbl(); toast('Service deleted','error');
+}
+
+function clearAllData() {
+  var c1=confirm('Delete ALL data? This cannot be undone!');
+  if (!c1) return;
+  var c2=confirm('Are you absolutely sure? All services, customers, and coupons will be deleted!');
+  if (!c2) return;
+  SVC=[];
+  localStorage.removeItem('rr-svcs');
+  updSt(); renderDsh(); renderTbl();
+  toast('All data cleared','error');
+}
+
+// ── SETUP / SHEETS ──
+function saveURL() {
+  var url = (document.getElementById('sh-url')||{}).value||'';
+  if (url) { sheetsURL=url; localStorage.setItem('rr-sh-url',url); toast('URL saved ✅','success'); setSI(true); }
+  else toast('Enter a valid URL','error');
+}
+
+function setSI(ok) {
+  var el = document.getElementById('si-txt'); if(el) el.textContent = ok?'Sheets ✅':'Sheets';
+}
+
+function checkSyncHealth() {
+  var el = document.getElementById('sh-url');
+  if (el) el.value = sheetsURL;
+  setSI(!!sheetsURL);
+  pingSupabase();
+    // Check coupon expiries on load
+    setTimeout(checkCouponExpiries, 6000);
+}
+
+function updateBadge(online) {
+  var dot   = document.getElementById('supa-dot');
+  var badge = document.getElementById('supa-badge');
+  if (dot) dot.style.background = online ? '#00C48C' : '#888';
+  if (badge) {
+    badge.textContent  = online ? 'DB ✅' : 'Local 💾';
+    badge.style.color  = online ? 'var(--gn)' : 'var(--sv)';
+  }
+}
+
+async function pingSupabase() {
+  var dot   = document.getElementById('supa-dot');
+  var badge = document.getElementById('supa-badge');
+  var info  = document.getElementById('supa-info');
+  try {
+    var res = await fetch(SUPA_URL + '/rest/v1/rr_services?select=count&limit=1',
+      { headers: { 'apikey': SUPA_KEY, 'Authorization': 'Bearer ' + SUPA_KEY } });
+    if (res.ok) {
+      if (dot)   dot.style.background = '#00C48C';
+      if (badge) { badge.textContent = 'DB ✅'; badge.style.color = 'var(--gn)'; }
+      if (info)  info.textContent = 'Connected — ' + new Date().toLocaleTimeString();
+      _supaLoaded = true;
+      updateOfflineUI();
+    } else {
+      if (dot)   dot.style.background = '#888';
+      if (badge) { badge.textContent = 'Local 💾'; badge.style.color = 'var(--sv)'; }
+    }
+  } catch(e) {
+    // No internet or CORS — silent, show local mode
+    if (dot)   dot.style.background = '#888';
+    if (badge) { badge.textContent = 'Local 💾'; badge.style.color = 'var(--sv)'; }
+    if (info)  info.textContent = 'Using saved data — connects when online';
+  }
+}
+
+function addLog(msg,type) {
+  var el = document.getElementById('sync-log');
+  if (!el) return;
+  var color = type==='error'?'var(--rd)':type==='warn'?'var(--or)':'var(--sv)';
+  el.innerHTML = '<div style="color:'+color+';margin-bottom:3px;">'+new Date().toLocaleTimeString()+' '+msg+'</div>' + el.innerHTML;
+}
+
+async function supaFetch(path, method, body, extraHeaders) {
+  var headers = {
+    'apikey': SUPA_KEY,
+    'Authorization': 'Bearer ' + SUPA_KEY,
+    'Content-Type': 'application/json',
+    'Prefer': 'return=minimal'
+  };
+  if (extraHeaders) Object.assign(headers, extraHeaders);
+  var res = await fetch(SUPA_URL + path, {
+    method: method || 'GET',
+    headers: headers,
+    body: body ? JSON.stringify(body) : undefined
+  });
+  return res; // errors handled by callers
+}
+
+async function supaUpsert(rec) {
+  try {
+    var row = {
+      token:        rec.token,
+      name:         rec.name,
+      mobile:       rec.mobile,
+      aadhaar:      rec.aadhaar      || '',
+      address:      rec.address      || '',
+      branch:       rec.branch       || 'G',
+      service_id:   rec.service ? rec.service.id   : '',
+      service_name: rec.service ? rec.service.name : '',
+      govt_fee:     rec.service ? rec.service.govt : 0,
+      svc_charge:   rec.service ? rec.service.svc  : 0,
+      amount:       rec.amount       || 0,
+      payment:      rec.payment      || 'cash',
+      priority:     rec.priority     || 'Normal',
+      fo:           rec.fo           || '',
+      operator:     rec.staff        || '',
+      app_no:       rec.appno        || '',
+      notes:        rec.notes        || '',
+      status:       rec.status       || 'open',
+      created_at:   rec.createdAt,
+      updated_at:   rec.updatedAt    || rec.createdAt,
+      internal_id:  rec.id
+    };
+    // Upsert: insert or update if token already exists
+    var res = await supaFetch(
+      '/rest/v1/rr_services?on_conflict=token',
+      'POST', row,
+      { 'Prefer': 'resolution=merge-duplicates,return=minimal' }
+    );
+    if (res.ok) {
+      rec.synced = true;
+      localStorage.setItem('rr-svcs', JSON.stringify(SVC));
+      updateBadge(true);
+    }
+  } catch(e) {
+    console.warn('supaUpsert error:', e);
+    updateBadge(false);
+  }
+}
+
+// Update just the status field in Supabase
+async function supaUpdateStatus(rec) {
+  try {
+    await supaFetch(
+      '/rest/v1/rr_services?token=eq.' + encodeURIComponent(rec.token),
+      'PATCH',
+      { status: rec.status, updated_at: rec.updatedAt || new Date().toISOString(), app_no: rec.appno || '' }
+    );
+  } catch(e) { console.warn('supaUpdateStatus:', e); }
+}
+
+async function loadFromSupabase() {
+  // Silent fail — always load local first, Supabase is enhancement
+  if (!navigator.onLine) {
+    loadFromLocal();
+    updateBadge(false);
+    return;
+  }
+  try {
+    var res = await supaFetch('/rest/v1/rr_services?select=*&order=created_at.desc&limit=500');
+    if (!res.ok) { loadFromLocal(); updateBadge(false); return; }
+    var rows = await res.json();
+    if (rows && Array.isArray(rows) && rows.length) {
+      var localUnsynced = SVC.filter(function(s) { return !s.synced; });
+      var supaRecs = rows.map(function(r) {
+        return {
+          id:         r.internal_id  || ('rr-' + r.id),
+          token:      r.token,
+          name:       r.name,
+          mobile:     r.mobile,
+          aadhaar:    r.aadhaar      || '',
+          address:    r.address      || '',
+          branch:     r.branch       || 'G',
+          fo:         r.fo           || '',
+          staff:      r.operator     || '',
+          service: {
+            id:   r.service_id,
+            name: r.service_name,
+            icon: '📋',
+            govt: r.govt_fee   || 0,
+            svc:  r.svc_charge || 0,
+            time: '', docs: []
+          },
+          amount:    r.amount    || 0,
+          payment:   r.payment   || '',
+          priority:  r.priority  || 'Normal',
+          status:    r.status    || 'open',
+          appno:     r.app_no    || '',
+          notes:     r.notes     || '',
+          leadSource:'',
+          createdAt: r.created_at,
+          updatedAt: r.updated_at,
+          timeline:  [{ stage: r.status || 'open', at: r.created_at }],
+          synced:    true
+        };
+      });
+      localUnsynced.forEach(function(l) {
+        if (!supaRecs.some(function(s) { return s.token === l.token; }))
+          supaRecs.unshift(l);
+      });
+      SVC = supaRecs;
+      localStorage.setItem('rr-svcs', JSON.stringify(SVC));
+      _supaLoaded = true;
+      updateBadge(true);
+      // Push any queued offline records now that we're connected
+      if (_syncQueue && _syncQueue.length) processSyncQueue();
+    } else {
+      loadFromLocal();
+      updateBadge(true); // connected but no data yet
+    }
+  } catch(e) {
+    // Silent — no console.warn spam, just use local data
+    loadFromLocal();
+    updateBadge(false);
+  }
+}
+
+function loadFromLocal() {
+  SVC = JSON.parse(localStorage.getItem('rr-svcs')||'[]');
+}
+
+function refreshFromSupabase() {
+  loadFromSupabase().then(function() {
+    renderTbl(); updSt(); renderDsh();
+    toast('Data refreshed ✅','success');
+  });
+}
+
+async function syncOne(rec) {
+  if (!sheetsURL) return;
+  try {
+    var data = {action:'addRecord',token:rec.token,name:rec.name,mobile:rec.mobile,service:rec.service?rec.service.name:'',amount:rec.amount,payment:rec.payment,status:rec.status,branch:rec.branch,fo:rec.fo,date:rec.createdAt};
+    await fetch(sheetsURL, {method:'POST',mode:'no-cors',body:JSON.stringify(data)});
+  } catch(e) {}
+}
+
+async function syncAll() {
+  addLog('Syncing '+SVC.length+' records...','info');
+  for (var i=0;i<SVC.length;i++) { try { await syncOne(SVC[i]); } catch(e) {} }
+  addLog('Sync complete ✅','info');
+  toast('Sync complete ✅','success');
+}
+
+// ── ATTENDANCE ──
+function initAttendTab() {
+  renderAttendLog();
+  renderAttendSummary();
+  loadOfficeSettingsUI();
+  renderRegStaffSel();
+  setModelStatus('⏳ Loading AI... (needs internet)', 'var(--or)', 0);
+  (function waitForFaceApi(tries) {
+    if (typeof typeof faceapi !== 'undefined') {
+      setModelStatus('✅ face-api.js loaded! Loading models...','var(--gn)',10);
+      loadFaceModels();
+    } else if (tries > 0) {
+      setTimeout(function(){waitForFaceApi(tries-1);}, 1000);
+    } else {
+      var el=document.getElementById('model-load-status');
+      if(el)el.innerHTML='<span style="color:var(--rd)">❌ face-api.js not loaded — </span><span onclick="initAttendTab()" style="color:var(--bl);cursor:pointer;text-decoration:underline;">Tap to retry</span>';
+    }
+  })(40);
+}
+
+function setModelStatus(msg,color,pct) {
+  var el=document.getElementById('model-load-status');
+  var bar=document.getElementById('model-progress-bar');
+  var fill=document.getElementById('model-progress-fill');
+  if(el){el.textContent=msg;el.style.color=color||'var(--sv)';}
+  if(bar)bar.style.display=pct>0?'block':'none';
+  if(fill)fill.style.width=pct+'%';
+}
+
+function loadFaceModels() {
+  if (typeof faceapi === 'undefined') { setModelStatus('📷 Camera ready (face-api not loaded)','var(--or)',5); return; }
+
+  if (_faceModelsLoaded) return;
+  var MODEL_URL='https://cdn.jsdelivr.net/npm/face-api.js@0.22.2/weights';
+  setModelStatus('⏳ Loading detector (1/3)...','var(--or)',15);
+  faceapi.nets.tinyFaceDetector.loadFromUri(MODEL_URL)
+  .then(function(){
+    setModelStatus('⏳ Loading landmarks (2/3)...','var(--or)',50);
+    return faceapi.nets.faceLandmark68TinyNet.loadFromUri(MODEL_URL);
+  }).then(function(){
+    setModelStatus('⏳ Loading recognition (3/3)...','var(--or)',80);
+    return faceapi.nets.faceRecognitionNet.loadFromUri(MODEL_URL);
+  }).then(function(){
+    _faceModelsLoaded=true;
+    setModelStatus('✅ AI Ready! Tap Start Camera','var(--gn)',100);
+    toast('Face AI ready ✅','success');
+  }).catch(function(e){
+    var el=document.getElementById('model-load-status');
+    if(el)el.innerHTML='<span style="color:var(--rd)">❌ Load failed — </span><span onclick="loadFaceModels()" style="color:var(--bl);cursor:pointer;text-decoration:underline;">Tap to retry</span>';
+  });
+}
+
+function startCamera() {
+  if (!navigator.mediaDevices||!navigator.mediaDevices.getUserMedia) {
+    toast('Camera not supported. Use Chrome.','error'); return;
+  }
+  if (!_faceModelsLoaded) {
+    toast('AI models loading — will start when ready','info');
+    var check=setInterval(function(){if(_faceModelsLoaded){clearInterval(check);startCamera();}},1000);
+    return;
+  }
+  setAttendMsg('📷 Requesting camera...');
+  navigator.mediaDevices.getUserMedia({video:{facingMode:'user',width:{ideal:640},height:{ideal:480}}})
+  .then(function(stream){
+    _stream=stream;
+    _video=document.getElementById('attend-video');
+    if(_video){
+      _video.srcObject=stream;
+      var p=_video.play();
+      if(p&&p.then) p.then(function(){setAttendMsg('✅ Camera active — face the camera');startRecognitionLoop();}).catch(function(){setAttendMsg('👆 Tap video to start');});
+      else {setAttendMsg('✅ Camera active');startRecognitionLoop();}
+    }
+  }).catch(function(e){
+    navigator.mediaDevices.getUserMedia({video:true}).then(function(stream){
+      _stream=stream;_video=document.getElementById('attend-video');
+      if(_video){_video.srcObject=stream;_video.play();setAttendMsg('✅ Camera active (basic)');startRecognitionLoop();}
+    }).catch(function(e2){setAttendMsg('❌ Camera error: '+e2.message);toast('Allow camera permission','error');});
+  });
+}
+
+function stopCamera() {
+  if (_recLoop) { clearInterval(_recLoop); _recLoop=null; }
+  if (_stream) { _stream.getTracks().forEach(function(t){t.stop();}); _stream=null; }
+  if (_video) { _video.srcObject=null; }
+  setAttendMsg('Camera stopped');
+}
+
+function setAttendMsg(msg) {
+  var el=document.getElementById('attend-banner'); if(el) el.textContent=msg;
+}
+
+function setAttendMode(mode) {
+  _attendMode=mode;
+  var ci=document.getElementById('btn-checkin');
+  var co=document.getElementById('btn-checkout');
+  if(ci)ci.style.opacity=mode==='in'?'1':'0.5';
+  if(co)co.style.opacity=mode==='out'?'1':'0.5';
+}
+
+function startRecognitionLoop() {
+  if(_recLoop) clearInterval(_recLoop);
+  _recLoop=setInterval(function(){
+    if(!_video||!_faceModelsLoaded||!_stream)return;
+    runRecognition();
+  },1500);
+}
+
+async function runRecognition() {
+  if(!_video||!_faceModelsLoaded)return;
+  try{
+    var canvas=document.getElementById('attend-canvas');
+    if(!canvas)return;
+    var w=_video.videoWidth||_video.offsetWidth||640;
+    var h=_video.videoHeight||_video.offsetHeight||480;
+    canvas.width=w;canvas.height=h;
+
+    var detections=await faceapi.detectAllFaces(_video,new faceapi.TinyFaceDetectorOptions())
+      .withFaceLandmarks(true).withFaceDescriptors();
+    if(!detections||!detections.length)return;
+
+    var ctx=canvas.getContext('2d');
+    ctx.clearRect(0,0,w,h);
+    faceapi.draw.drawDetections(canvas,detections);
+
+    var names=Object.keys(FACE_DATA);
+    if(!names.length)return;
+
+    detections.forEach(function(det){
+      var desc=det.descriptor;
+      var best=null;var bestDist=0.55;
+      names.forEach(function(name){
+        var samples=FACE_DATA[name];
+        if(!samples||!samples.length)return;
+        var dists=samples.map(function(s){return faceapi.euclideanDistance(desc,s);});
+        var minDist=Math.min.apply(null,dists);
+        if(minDist<bestDist){bestDist=minDist;best=name;}
+      });
+      if(best){
+        ctx.fillStyle='rgba(0,196,140,0.8)';ctx.font='bold 16px Rajdhani';
+        ctx.fillText(best+' ('+_attendMode+')',det.detection.box.x,det.detection.box.y-5);
+        markAttendance(best,1-bestDist);
+      }
+    });
+  }catch(e){}
+}
+
+function markAttendance(name,conf) {
+  var today=new Date().toISOString().slice(0,10);
+  var now=new Date();
+  var lastEntry=ATTEND_LOG.filter(function(e){return e.name===name&&e.dateStr===today;});
+  var lastTime=lastEntry.length?new Date(lastEntry[lastEntry.length-1].time):null;
+  if(lastTime&&(now-lastTime)<60000)return; // 1 min debounce
+
+  var late=calcLateMinutes(now,_attendMode);
+  var ded=calcDeduction(name,late,_attendMode);
+
+  var rec={
+    id:'A-'+Date.now(),name:name,type:_attendMode,
+    time:now.toISOString(),timeStr:now.toLocaleTimeString('en-IN'),
+    dateStr:today,confidence:Math.round(conf*100),
+    lateMins:late,deduction:ded,
+    lateType:late===0?'on-time':late<=OFFICE_CFG.graceMinutes?'grace':'deduct'
+  };
+  ATTEND_LOG.push(rec);
+  localStorage.setItem('rr-attend',JSON.stringify(ATTEND_LOG));
+  renderAttendLog();
+
+  var badge=rec.lateType==='on-time'?'✅ On time':rec.lateType==='grace'?'⏰ Grace':'❌ Rs.'+ded+' cut';
+  toast(name+' — '+(_attendMode==='in'?'Checked IN':'Checked OUT')+' '+badge,'success');
+
+  // Auto WA
+  var msg='📍 *'+name+'* — Check '+(_attendMode.toUpperCase())+'\n';
+  msg+='🕐 '+rec.timeStr+' | 📅 '+today+'\n';
+  msg+=badge+'\n🏢 RR Computers';
+  setTimeout(function(){window.open('https://api.whatsapp.com/send?phone='+PHONE_ADMIN+'&text='+encodeURIComponent(msg),'_blank');},1000);
+}
+
+function calcLateMinutes(now,type) {
+  if(type!=='in')return 0;
+  var parts=OFFICE_CFG.startTime.split(':');
+  var start=new Date(now);start.setHours(parseInt(parts[0]),parseInt(parts[1]),0,0);
+  if(now<=start)return 0;
+  return Math.round((now-start)/60000);
+}
+
+function calcDeduction(name,lateMins,type) {
+  if(type!=='in'||lateMins<=OFFICE_CFG.deductMinutes)return 0;
+  var sal=(OFFICE_CFG.salaries&&OFFICE_CFG.salaries[name])||0;
+  if(!sal)return 0;
+  var daysal=Math.round(sal/26);
+  var ratio=lateMins/480;
+  return Math.round(daysal*ratio);
+}
+
+function renderAttendLog() {
+  var el=document.getElementById('attend-log');if(!el)return;
+  var today=new Date().toISOString().slice(0,10);
+  var log=ATTEND_LOG.filter(function(e){return e.dateStr===today;});
+  if(!log.length){el.innerHTML='<div style="color:var(--sv);text-align:center;padding:16px;">No attendance today</div>';return;}
+  el.innerHTML=log.map(function(e){
+    var badge=e.lateType==='on-time'?'<span style="color:var(--gn)">✅</span>':e.lateType==='grace'?'<span style="color:var(--or)">⏰</span>':'<span style="color:var(--rd)">❌ Rs.'+e.deduction+' cut</span>';
+    return '<div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--br);font-size:13px;"><div><span style="font-weight:700;">'+esc(e.name)+'</span> <span style="color:var(--sv);font-size:11px;">'+(e.type==='in'?'🟢 IN':'🔴 OUT')+'</span></div><div style="text-align:right;"><div>'+e.timeStr+'</div><div>'+badge+'</div></div></div>';
+  }).join('');
+}
+
+function renderAttendSummary() {
+  var el=document.getElementById('attend-summary');if(!el)return;
+  var now=new Date();
+  var year=now.getFullYear();var month=now.getMonth();
+  var daysInMonth=new Date(year,month+1,0).getDate();
+  var names=Object.keys(OFFICE_CFG.salaries||{});
+  if(!names.length){el.innerHTML='<div style="color:var(--sv);text-align:center;padding:16px;">Set salaries in Office Settings</div>';return;}
+  el.innerHTML='<table class="tbl"><thead><tr><th>Name</th><th>Days Present</th><th>Late Days</th><th>Deductions</th><th>Net Salary</th></tr></thead><tbody>' +
+  names.map(function(name){
+    var myLog=ATTEND_LOG.filter(function(e){return e.name===name&&new Date(e.time).getMonth()===month&&new Date(e.time).getFullYear()===year;});
+    var inDays=new Set(myLog.filter(function(e){return e.type==='in';}).map(function(e){return e.dateStr;}));
+    var lateDays=myLog.filter(function(e){return e.type==='in'&&e.lateType==='deduct';}).length;
+    var totalDed=myLog.reduce(function(a,e){return a+e.deduction;},0);
+    var sal=(OFFICE_CFG.salaries[name]||0);
+    return '<tr><td style="font-weight:600;">'+esc(name)+'</td><td>'+inDays.size+'/'+daysInMonth+'</td><td style="color:var(--or);">'+lateDays+'</td><td style="color:var(--rd);">Rs.'+fmt(totalDed)+'</td><td style="color:var(--gn);font-weight:700;">Rs.'+fmt(sal-totalDed)+'</td></tr>';
+  }).join('') + '</tbody></table>';
+}
+
+async function captureAndRegister() {
+  var sel=document.getElementById('reg-staff-sel');
+  if(!sel||!sel.value){toast('Select a staff member first','error');return;}
+  var name=sel.value;
+  if(!_faceModelsLoaded){toast('AI models not loaded yet','error');return;}
+  if(!_video||!_stream){toast('Start camera first','error');return;}
+  try{
+    var det=await faceapi.detectSingleFace(_video,new faceapi.TinyFaceDetectorOptions()).withFaceLandmarks(true).withFaceDescriptor();
+    if(!det){toast('No face detected. Look at camera.','error');return;}
+    if(!FACE_DATA[name])FACE_DATA[name]=[];
+    FACE_DATA[name].push(Array.from(det.descriptor));
+    localStorage.setItem('rr-faces',JSON.stringify(FACE_DATA));
+    toast('Face registered for '+name+' ('+FACE_DATA[name].length+' samples)','success');
+  }catch(e){toast('Error: '+e.message,'error');}
+}
+
+function deleteFace() {
+  var sel=document.getElementById('reg-staff-sel');
+  if(!sel||!sel.value){toast('Select a staff member','error');return;}
+  var name=sel.value;
+  if(!confirm('Delete face data for '+name+'?'))return;
+  delete FACE_DATA[name];
+  localStorage.setItem('rr-faces',JSON.stringify(FACE_DATA));
+  toast('Face data deleted for '+name,'error');
+}
+
+function renderRegStaffSel() {
+  var sel=document.getElementById('reg-staff-sel');if(!sel)return;
+  var all=[];
+  // STAFF.fo removed forEach(function(n){if(all.indexOf(n)<0)all.push(n);});
+  STAFF.op.forEach(function(n){if(all.indexOf(n)<0)all.push(n);});
+  if(!all.length)all=['Gudapati Satish','Gudapati Prasanna Kumari','Allu Ambica'];
+  sel.innerHTML='<option value="">-- Select Staff --</option>'+all.map(function(n){return '<option value="'+n+'">'+n+'</option>';}).join('');
+}
+
+function loadOfficeSettingsUI() {
+  if(document.getElementById('off-start'))document.getElementById('off-start').value=OFFICE_CFG.startTime||'09:30';
+  if(document.getElementById('off-end'))document.getElementById('off-end').value=OFFICE_CFG.endTime||'19:00';
+  if(document.getElementById('off-grace'))document.getElementById('off-grace').value=OFFICE_CFG.graceMinutes||15;
+  if(document.getElementById('off-deduct'))document.getElementById('off-deduct').value=OFFICE_CFG.deductMinutes||20;
+  var si=document.getElementById('salary-inputs');if(!si)return;
+  var names=STAFF.op.filter(function(n,i,a){return a.indexOf(n)===i;}).filter(function(n){return n!=='Gudapati Satish';});
+  si.innerHTML=names.map(function(n){
+    return '<div class="fm"><label class="fl">'+esc(n)+'</label><input class="fi" id="sal-'+esc(n.replace(/\s/g,'_'))+'" type="number" value="'+(OFFICE_CFG.salaries&&OFFICE_CFG.salaries[n]!=null?OFFICE_CFG.salaries[n]:10000)+'"></div>';
+  }).join('');
+}
+
+function saveOfficeSettings() {
+  OFFICE_CFG.startTime=(document.getElementById('off-start')||{}).value||'09:30';
+  OFFICE_CFG.endTime=(document.getElementById('off-end')||{}).value||'19:00';
+  OFFICE_CFG.graceMinutes=parseInt((document.getElementById('off-grace')||{}).value)||15;
+  OFFICE_CFG.deductMinutes=parseInt((document.getElementById('off-deduct')||{}).value)||20;
+  var names=STAFF.op.filter(function(n,i,a){return a.indexOf(n)===i;}).filter(function(n){return n!=='Gudapati Satish';});
+  if(!OFFICE_CFG.salaries)OFFICE_CFG.salaries={};
+  names.forEach(function(n){
+    var el=document.getElementById('sal-'+n.replace(/\s/g,'_'));
+    if(el)OFFICE_CFG.salaries[n]=parseInt(el.value)||0;
+  });
+  localStorage.setItem('rr-office-cfg',JSON.stringify(OFFICE_CFG));
+  toast('Office settings saved ✅','success');
+}
+
+function sendAttendWA() {
+  var today=new Date().toISOString().slice(0,10);
+  var log=ATTEND_LOG.filter(function(e){return e.dateStr===today;});
+  var msg='📊 *Attendance Report — '+today+'*\n━━━━━━━━━━━━━━━━━━━━\n';
+  log.forEach(function(e){msg+='\n👤 '+e.name+' ('+(e.type==='in'?'IN':'OUT')+') — '+e.timeStr+' '+(e.lateType==='on-time'?'✅':e.lateType==='grace'?'⏰':'❌');});
+  msg+='\n━━━━━━━━━━━━━━━━━━━━\n🏢 RR Computers | 📞 '+PHONE_CALL;
+  window.open('https://api.whatsapp.com/send?phone='+PHONE_ADMIN+'&text='+encodeURIComponent(msg),'_blank');
+}
+
+function sndRem(id) {
+  var rec=SVC.find(function(s){return s.id===id;});
+  if(!rec)return;
+  var msg=buildMsg('reminder',rec);
+  window.open('https://api.whatsapp.com/send?phone=91'+cleanMobile(rec.mobile)+'&text='+encodeURIComponent(msg),'_blank');
+}
+
+function exportCpnCSV() {
+  var rows=[['Code','Customer','Mobile','Visit','Discount','Issued','Valid Until','Used']];
+  SVC.filter(function(s){return s.cpn;}).forEach(function(s){
+    var c=s.cpn;rows.push([c.code,s.name,s.mobile,c.visitNum,c.discount,dateStr(c.issuedAt),dateStr(c.validUntil),c.used?'Yes':'No']);
+  });
+  var csv=rows.map(function(r){return r.join(',');}).join('\n');
+  var a=document.createElement('a');a.href='data:text/csv;charset=utf-8,'+encodeURIComponent(csv);a.download='coupons.csv';a.click();
+}
+
+function sendReturnCoupon(id) {
+  var rec=SVC.find(function(s){return s.id===id;});
+  if(!rec||!rec.cpn)return;
+  var msg='🎟️ *Your Loyalty Coupon*\n\nHello *'+rec.name+'* ji!\n\n🎁 Coupon Code: *'+rec.cpn.code+'*\nDiscount: *Rs.'+rec.cpn.discount+'* off your next visit!\nValid until: '+new Date(rec.cpn.validUntil).toLocaleDateString('en-IN')+'\n\nVisit us again!\n📞 '+PHONE_CALL;
+  window.open('https://api.whatsapp.com/send?phone=91'+rec.mobile+'&text='+encodeURIComponent(msg),'_blank');
+}
+
+// ══ MAIN INIT ══
+
+// ══════════════════════════════════════════════════════════════
+// OFFLINE-FIRST SYNC SYSTEM
+// ══════════════════════════════════════════════════════════════
+
+// Offline queue — stores records that need syncing to Supabase
+var _syncQueue  = JSON.parse(localStorage.getItem('rr-sync-queue') || '[]');
+var _isSyncing  = false;
+var _onlineStatus = navigator.onLine;
+
+function saveSyncQueue() {
+  try { localStorage.setItem('rr-sync-queue', JSON.stringify(_syncQueue)); } catch(e) {}
+}
+
+// Add record to offline queue (called instead of direct supaUpsert when offline)
+function queueForSync(rec) {
+  // Remove existing entry for same token to avoid duplicates
+  _syncQueue = _syncQueue.filter(function(q) { return q.token !== rec.token; });
+  _syncQueue.push({ token: rec.token, rec: rec, queuedAt: new Date().toISOString() });
+  saveSyncQueue();
+}
+
+// Process offline queue — called when back online
+async function processSyncQueue() {
+  if (_isSyncing || !navigator.onLine || !_syncQueue.length) return;
+  _isSyncing = true;
+  var processed = 0;
+  var failed = [];
+
+  for (var i = 0; i < _syncQueue.length; i++) {
+    var item = _syncQueue[i];
+    try {
+      var res = await supaUpsert(item.rec);
+      processed++;
+    } catch(e) {
+      failed.push(item);
+    }
+  }
+
+  _syncQueue = failed; // keep only failed ones
+  saveSyncQueue();
+  _isSyncing = false;
+
+  if (processed > 0) {
+    toast(processed + ' records synced to Supabase ✅', 'success');
+    updateOfflineUI();
+  }
+}
+
+// Smart save — saves locally first, then queues/syncs to Supabase
+async function smartSave(rec) {
+  // 1. Always save locally first (instant, never fails)
+  localStorage.setItem('rr-svcs', JSON.stringify(SVC));
+
+  if (navigator.onLine) {
+    // 2a. Online: try direct Supabase sync
+    try {
+      await supaUpsert(rec);
+      // Remove from queue if it was queued before
+      _syncQueue = _syncQueue.filter(function(q) { return q.token !== rec.token; });
+      saveSyncQueue();
+    } catch(e) {
+      // Failed even though "online" — queue it
+      queueForSync(rec);
+      console.warn('Online sync failed, queued:', rec.token);
+    }
+  } else {
+    // 2b. Offline: add to sync queue
+    queueForSync(rec);
+  }
+  updateOfflineUI();
+}
+
+// Load data — always localStorage first, then Supabase in background
+async function smartLoad() {
+  // Step 1: Load from localStorage IMMEDIATELY (app usable right away)
+  loadFromLocal();
+  updSt(); renderDsh(); renderTbl();
+
+  // Step 2: If online, load from Supabase in background
+  if (navigator.onLine) {
+    try {
+      await loadFromSupabase();
+      // Process any queued records after load
+      if (_syncQueue.length > 0) processSyncQueue();
+    } catch(e) {
+      console.warn('Background Supabase load failed, using local data');
+    }
+  } else {
+    updateBadge(false);
+    showOfflineBanner(true);
+  }
+}
+
+// Visual offline banner
+function showOfflineBanner(show) {
+  var banner = document.getElementById('offline-banner');
+  if (!banner) return;
+  banner.style.display = show ? 'block' : 'none';
+  banner.textContent = show
+    ? '📵 Offline mode — data saved locally, will sync when connected'
+    : '';
+}
+
+// Update offline/online UI indicators
+function updateOfflineUI() {
+  var online = navigator.onLine;
+  updateBadge(online);
+  showOfflineBanner(!online);
+
+  var badge = document.getElementById('supa-badge');
+  var qCount = document.getElementById('sync-queue-count');
+  if (badge) {
+    if (!online) {
+      badge.textContent = '📵 Offline';
+      badge.style.color = 'var(--or)';
+    } else if (_syncQueue.length > 0) {
+      badge.textContent = '⏳ Syncing ' + _syncQueue.length + '...';
+      badge.style.color = 'var(--gd)';
+    } else {
+      badge.textContent = '✅ Synced';
+      badge.style.color = 'var(--gn)';
+    }
+  }
+  if (qCount) qCount.textContent = _syncQueue.length > 0 ? ' (' + _syncQueue.length + ' pending)' : '';
+}
+
+// Online/Offline event listeners
+window.addEventListener('online', function() {
+  _onlineStatus = true;
+  updateOfflineUI();
+  toast('🌐 Back online! Syncing data...', 'success');
+  // Sync queue + refresh from Supabase
+  processSyncQueue().then(function() {
+    loadFromSupabase().then(function() { updSt(); renderDsh(); renderTbl(); });
+  });
+});
+
+window.addEventListener('offline', function() {
+  _onlineStatus = false;
+  updateOfflineUI();
+  toast('📵 Offline — data saved locally', 'info');
+});
+
+
+// ════════════════════════════════════════════════════════════════════
+// COMPLETE COUPON & REFERRAL SYSTEM
+// ════════════════════════════════════════════════════════════════════
+// COUPONS store: { code: { mobile, name, type, discount, issuedAt,
+//   validUntil, used, usedAt, usedToken, minOrder } }
+
+var COUPONS = JSON.parse(localStorage.getItem('rr-coupons') || '{}');
+
+function saveCoupons() {
+  try { localStorage.setItem('rr-coupons', JSON.stringify(COUPONS)); } catch(e) {}
+}
+
+// ── Coupon types ──
+// REF-ISSUER : ₹20 — given to referrer when someone uses their code
+// REF-WALKIN : ₹20 — given to new walk-in who used referral code
+// LOYALTY    : ₹20-₹100 — based on visit number
+// PROMO      : Special offers sent to customers
+
+// ── Generate a unique coupon code ──
+function genCouponCode(prefix, mobile) {
+  var suffix = mobile.slice(-4) + Math.random().toString(36).slice(2,5).toUpperCase();
+  return prefix + suffix;
+}
+
+// ── Issue a coupon ──
+function issueCoupon(mobile, name, type, discount, minOrder, validDays) {
+  var code     = genCouponCode(type.slice(0,3) + '-', mobile);
+  var expiry   = new Date();
+  expiry.setDate(expiry.getDate() + (validDays || 7));
+
+  COUPONS[code] = {
+    code:       code,
+    mobile:     mobile,
+    name:       name,
+    type:       type,
+    discount:   discount,
+    minOrder:   minOrder || 100,
+    issuedAt:   new Date().toISOString(),
+    validUntil: expiry.toISOString(),
+    used:       false,
+    usedAt:     null,
+    usedToken:  null
+  };
+  saveCoupons();
+  return COUPONS[code];
+}
+
+// ── Apply coupon — validate and return discount ──
+function applyCoupon(code, orderAmt, mobile) {
+  code = (code || '').trim().toUpperCase();
+  var cpn = COUPONS[code];
+
+  if (!cpn)                           return { ok: false, msg: '❌ Invalid coupon code' };
+  if (cpn.used)                       return { ok: false, msg: '❌ Coupon already used on ' + fmtDate(cpn.usedAt) };
+  if (cpn.mobile !== mobile)          return { ok: false, msg: '❌ This coupon belongs to another customer' };
+  if (orderAmt < cpn.minOrder)        return { ok: false, msg: '❌ Minimum order ₹' + cpn.minOrder + ' required' };
+  if (new Date() > new Date(cpn.validUntil)) return { ok: false, msg: '❌ Coupon expired on ' + fmtDate(cpn.validUntil) };
+
+  return { ok: true, discount: cpn.discount, cpn: cpn,
+    msg: '✅ ₹' + cpn.discount + ' discount applied! (min ₹' + cpn.minOrder + ')' };
+}
+
+// ── Mark coupon as used ──
+function markCouponUsed(code, token) {
+  var cpn = COUPONS[code];
+  if (!cpn) return;
+  cpn.used      = true;
+  cpn.usedAt    = new Date().toISOString();
+  cpn.usedToken = token;
+  saveCoupons();
+}
+
+// ── Get active coupons for a mobile ──
+function getActiveCoupons(mobile) {
+  var now = new Date();
+  return Object.values(COUPONS).filter(function(c) {
+    return c.mobile === mobile && !c.used && new Date(c.validUntil) > now;
+  });
+}
+
+// ── Get coupon days remaining ──
+function couponDaysLeft(cpn) {
+  return Math.ceil((new Date(cpn.validUntil) - new Date()) / 86400000);
+}
+
+// ════════════════════════════════════════════════════════════════════
+// REFERRAL COUPON FLOW (replaces old processReferral)
+// ════════════════════════════════════════════════════════════════════
+
+function processReferral(rec) {
+  var refCodeEntered = ((document.getElementById('f-ref')||{}).value||'').trim().toUpperCase();
+  if (!refCodeEntered || parseInt(rec.amount) < 100) return;
+
+  var refEntry = REFERRALS[refCodeEntered];
+  if (!refEntry) return;
+  if (refEntry.mobile === rec.mobile) { toast('Self-referral blocked!','error'); return; }
+
+  // Record referral usage
+  if (!refEntry.usedBy) refEntry.usedBy = [];
+  refEntry.usedBy.push({ mobile:rec.mobile, name:rec.name, token:rec.token, date:rec.createdAt });
+  refEntry.totalEarned = (refEntry.totalEarned || 0) + 20;
+  saveReferrals();
+
+  rec.referredBy     = refCodeEntered;
+  rec.referrerMobile = refEntry.mobile;
+
+  // 1. Issue ₹20 coupon to REFERRER (person who shared the code)
+  var refCpn = issueCoupon(refEntry.mobile, refEntry.name, 'REF-ISSUER', 20, 100, 7);
+  sendCouponWA(refEntry.mobile, refEntry.name, refCpn, 'referrer', rec.name);
+
+  // 2. Issue ₹20 coupon to NEW WALK-IN (person who used the code)
+  var walkinCpn = issueCoupon(rec.mobile, rec.name, 'REF-WALKIN', 20, 100, 7);
+  sendCouponWA(rec.mobile, rec.name, walkinCpn, 'walkin', refEntry.name);
+
+  toast('✅ Referral! ₹20 coupon issued to both ' + refEntry.name + ' & ' + rec.name, 'success');
+}
+
+// ════════════════════════════════════════════════════════════════════
+// COUPON WA MESSAGES
+// ════════════════════════════════════════════════════════════════════
+
+function sendCouponWA(mobile, name, cpn, role, otherName) {
+  var daysLeft = couponDaysLeft(cpn);
+  var expDate  = fmtDate(cpn.validUntil);
+  var msg = '';
+
+  if (role === 'referrer') {
+    msg = 'నమస్కారం *' + name + '* గారూ! 🙏\n\n'
+      + '🎉 *మీ Referral Successful!*\n\n'
+      + '*' + otherName + '* మీ code వాడి RR Computers కి వచ్చారు!\n\n'
+      + '🎁 *మీ Reward: ₹20 Coupon!*\n'
+      + '━━━━━━━━━━━━━━━━━━━━\n'
+      + '🏷 Code: *' + cpn.code + '*\n'
+      + '💰 Discount: *₹' + cpn.discount + '/-*\n'
+      + '🛒 Min Order: ₹' + cpn.minOrder + '/-\n'
+      + '📅 Valid till: *' + expDate + '* (' + daysLeft + ' days)\n'
+      + '━━━━━━━━━━━━━━━━━━━━\n\n'
+      + '📊 Total referrals: *' + (REFERRALS[cpn.code]||{totalEarned:0}).totalEarned + '* friends\n\n'
+      + '_Next service లో counter లో code చెప్పండి!_ 🙏\n\n'
+      + '💬 https://whatsapp.com/channel/0029Va5hYKfCnA82GkcXcA2w\n'
+      + '▶️ https://www.youtube.com/@rrcomputersgdv?sub_confirmation=1';
+
+  } else { // walkin — new customer who used referral
+    msg = 'నమస్కారం *' + name + '* గారూ! 🙏\n\n'
+      + '🎊 *RR Computers కి స్వాగతం!*\n\n'
+      + '*' + otherName + '* గారు refer చేసినందుకు మీకు Special gift:\n\n'
+      + '🎁 *Welcome Coupon: ₹20 OFF!*\n'
+      + '━━━━━━━━━━━━━━━━━━━━\n'
+      + '🏷 Code: *' + cpn.code + '*\n'
+      + '💰 Discount: *₹' + cpn.discount + '/-*\n'
+      + '🛒 Min Order: ₹' + cpn.minOrder + '/-\n'
+      + '📅 Valid till: *' + expDate + '* (' + daysLeft + ' days)\n'
+      + '━━━━━━━━━━━━━━━━━━━━\n\n'
+      + '📋 మా services: Aadhaar, PAN, Voter ID, Passport,\n'
+      + '   DL, Certificates, PF, FSSAI & more!\n\n'
+      + '_మళ్ళీ visit చేసి discount పొందండి!_ 😊\n\n'
+      + '💬 https://whatsapp.com/channel/0029Va5hYKfCnA82GkcXcA2w\n'
+      + '▶️ https://www.youtube.com/@rrcomputersgdv?sub_confirmation=1';
+  }
+
+  var delay = role === 'referrer' ? 2000 : 4000;
+  setTimeout(function() {
+    window.open('https://api.whatsapp.com/send?phone=91' + mobile + '&text=' + encodeURIComponent(msg), '_blank');
+  }, delay);
+}
+
+// ════════════════════════════════════════════════════════════════════
+// COUPON EXPIRY ALERTS — 3 days before, 1 day before, on expiry day
+// ════════════════════════════════════════════════════════════════════
+
+function checkCouponExpiries() {
+  var now = new Date();
+  var todayStr = now.toISOString().slice(0,10);
+  var alreadySent = JSON.parse(localStorage.getItem('rr-cpn-alerts') || '{}');
+
+  Object.values(COUPONS).forEach(function(cpn) {
+    if (cpn.used) return;
+    var daysLeft = couponDaysLeft(cpn);
+    var alertKey = cpn.code + '-' + todayStr;
+
+    // Only send once per day per coupon
+    if (alreadySent[alertKey]) return;
+
+    if (daysLeft === 3 || daysLeft === 1 || daysLeft === 0) {
+      alreadySent[alertKey] = 1;
+      sendExpiryAlertWA(cpn, daysLeft);
+    }
+  });
+
+  try { localStorage.setItem('rr-cpn-alerts', JSON.stringify(alreadySent)); } catch(e) {}
+}
+
+function sendExpiryAlertWA(cpn, daysLeft) {
+  var urgency = daysLeft === 0
+    ? '🔴 *ఈ రోజే Last Chance!* Offer ends TODAY!'
+    : daysLeft === 1
+    ? '🟠 *రేపు Expire అవుతుంది!* Tomorrow last day!'
+    : '🟡 *3 రోజులే మిగిలాయి!* Only 3 days left!';
+
+  var msg = 'నమస్కారం *' + cpn.name + '* గారూ! 🙏\n\n'
+    + urgency + '\n\n'
+    + '⏰ మీ ₹' + cpn.discount + ' Discount Coupon expire అవుతుంది!\n\n'
+    + '🏷 Code: *' + cpn.code + '*\n'
+    + '💰 Discount: *₹' + cpn.discount + '/-*\n'
+    + '🛒 Min Order: ₹' + cpn.minOrder + '/- పై apply అవుతుంది\n'
+    + (daysLeft === 0
+       ? '📅 *ఈ రోజు midnight కి expire!*\n'
+       : '📅 Valid till: *' + fmtDate(cpn.validUntil) + '*\n')
+    + '\n🏃 *ఇప్పుడే రండి — Discount waste చేయకండి!*\n\n'
+    + '📍 Gudivada | Hanuman Junction\n'
+    + '📞 ' + PHONE_CALL + '\n'
+    + '🕐 Mon–Sat: 9:30 AM – 7:00 PM\n\n'
+    + '_Counter లో code చెప్పండి:_ *' + cpn.code + '*\n\n'
+    + '💬 https://whatsapp.com/channel/0029Va5hYKfCnA82GkcXcA2w';
+
+  window.open('https://api.whatsapp.com/send?phone=91' + cpn.mobile + '&text=' + encodeURIComponent(msg), '_blank');
+}
+
+// ════════════════════════════════════════════════════════════════════
+// PROMO / OFFER WA to drive walk-ins
+// ════════════════════════════════════════════════════════════════════
+
+var PROMO_OFFERS = [
+  {
+    id:'pan-quick', emoji:'💳', service:'New PAN Card',
+    offer:'Same Day Processing', detail:'Urgent PAN card needed? Today visit — today apply!',
+    cta:'రండి ఈ రోజే'
+  },
+  {
+    id:'voter-drive', emoji:'🗳️', service:'New Voter ID',
+    offer:'Free Govt Fee!', detail:'Voter ID apply కి govt fee zero! మా service charge మాత్రమే.',
+    cta:'Free Register చేయించుకోండి'
+  },
+  {
+    id:'bundle-youth', emoji:'🎯', service:'Youth Bundle',
+    offer:'PAN + Voter + DL — ₹999 only!', detail:'3 important documents ఒకే సారి apply!',
+    cta:'Bundle Booking చేయండి'
+  },
+  {
+    id:'pvc-card', emoji:'💎', service:'Aadhaar PVC Card',
+    offer:'Wallet-size Aadhaar', detail:'Plastic card — safe, durable, easy to carry!',
+    cta:'Order చేయండి'
+  },
+  {
+    id:'passport', emoji:'✈️', service:'Passport Apply',
+    offer:'Document Verification Help', detail:'Passport documents ready చేయడంలో మేము help చేస్తాము!',
+    cta:'Appointment Book చేయండి'
+  },
+  {
+    id:'udyam', emoji:'🏭', service:'Udyam Registration',
+    offer:'Business Certificate', detail:'Small business owners — free govt scheme! Register today.',
+    cta:'Business Register చేయండి'
+  },
+];
+
+function sendPromoWA(promoId, mobile, name) {
+  var promo = PROMO_OFFERS.find(function(p){ return p.id === promoId; });
+  if (!promo) return;
+
+  // Check if this customer has active coupon — add it to message
+  var activeCpns = getActiveCoupons(mobile);
+  var cpnBlock = activeCpns.length
+    ? '\n🎁 *మీ Active Coupon:* ' + activeCpns[0].code + ' (₹' + activeCpns[0].discount + ' off, ' + couponDaysLeft(activeCpns[0]) + ' days left)\n'
+    : '';
+
+  var msg = 'నమస్కారం *' + name + '* గారూ! 🙏\n\n'
+    + promo.emoji + ' *' + promo.service + ' — ' + promo.offer + '*\n\n'
+    + promo.detail + '\n\n'
+    + cpnBlock
+    + '━━━━━━━━━━━━━━━━━━━━\n'
+    + '📍 Gudivada | Hanuman Junction\n'
+    + '📞 ' + PHONE_CALL + '\n'
+    + '🕐 Mon–Sat: 9:30 AM – 7:00 PM\n'
+    + '━━━━━━━━━━━━━━━━━━━━\n\n'
+    + '👉 *' + promo.cta + '!*\n\n'
+    + '💬 https://whatsapp.com/channel/0029Va5hYKfCnA82GkcXcA2w\n'
+    + '▶️ https://www.youtube.com/@rrcomputersgdv?sub_confirmation=1';
+
+  window.open('https://api.whatsapp.com/send?phone=91' + mobile + '&text=' + encodeURIComponent(msg), '_blank');
+}
+
+// Send bulk promos to all customers
+function sendBulkPromo(promoId) {
+  if (!confirm('Send this offer to all customers?')) return;
+  var customers = {};
+  SVC.forEach(function(s){ customers[s.mobile] = { name:s.name, mobile:s.mobile }; });
+  var list = Object.values(customers);
+  toast('Sending offer to ' + list.length + ' customers...', 'success');
+  list.forEach(function(c, i){
+    setTimeout(function(){ sendPromoWA(promoId, c.mobile, c.name); }, i * 2500);
+  });
+}
+
+// ════════════════════════════════════════════════════════════════════
+// COUPON DASHBOARD RENDER
+// ════════════════════════════════════════════════════════════════════
+
+function renderCpnDash() {
+  var wrap = document.getElementById('cpn-dash-wrap');
+  if (!wrap) return;
+
+  var now     = new Date();
+  var allCpns = Object.values(COUPONS);
+  var active  = allCpns.filter(function(c){ return !c.used && new Date(c.validUntil)>now; });
+  var expired = allCpns.filter(function(c){ return !c.used && new Date(c.validUntil)<=now; });
+  var used    = allCpns.filter(function(c){ return c.used; });
+  var expiring3 = active.filter(function(c){ return couponDaysLeft(c)<=3; });
+
+  // KPIs
+  var totalSavings = used.reduce(function(a,c){ return a+c.discount; }, 0);
+  var kpiHtml = '<div class="kpi-grid">'
+    + mkKpi(active.length,   'Active',    'var(--gn)')
+    + mkKpi(expiring3.length,'Expiring',  'var(--or)')
+    + mkKpi(used.length,     'Used',      'var(--bl)')
+    + mkKpi('₹'+totalSavings,'Given Out', 'var(--gd)')
+    + '</div>';
+
+  // Active coupons table
+  var activeHtml = '<div style="margin-top:16px"><div style="font-size:9px;font-weight:700;letter-spacing:1.5px;color:var(--sv);margin-bottom:10px">ACTIVE COUPONS</div>';
+  if (!active.length) {
+    activeHtml += '<div style="color:var(--sv);text-align:center;padding:16px">No active coupons yet</div>';
+  } else {
+    activeHtml += '<table class="tbl" style="font-size:11px"><thead><tr><th>Code</th><th>Customer</th><th>Type</th><th>₹</th><th>Expires</th><th>Action</th></tr></thead><tbody>';
+    active.sort(function(a,b){ return new Date(a.validUntil)-new Date(b.validUntil); })
+      .forEach(function(c){
+        var dL = couponDaysLeft(c);
+        var urgColor = dL <= 1 ? 'var(--rd)' : dL <= 3 ? 'var(--or)' : 'var(--gn)';
+        activeHtml += '<tr>'
+          + '<td style="font-family:monospace;font-size:10px;font-weight:700;color:var(--gd)">' + c.code + '</td>'
+          + '<td><div style="font-weight:600">' + esc(c.name) + '</div><div style="font-size:10px;color:var(--sv)">' + c.mobile + '</div></td>'
+          + '<td style="font-size:10px">' + cpnTypeLabel(c.type) + '</td>'
+          + '<td style="font-weight:800;color:var(--gn)">₹' + c.discount + '</td>'
+          + '<td style="color:' + urgColor + ';font-weight:700">' + dL + 'd</td>'
+          + '<td><button data-cpn-code="' + c.code + '" data-cpn-act="remind" style="background:linear-gradient(135deg,#25D366,#128C7E);color:#fff;border:none;border-radius:5px;padding:4px 8px;font-size:10px;cursor:pointer">📱 Remind</button></td>'
+          + '</tr>';
+      });
+    activeHtml += '</tbody></table>';
+  }
+  activeHtml += '</div>';
+
+  // Promo offers section
+  var promoHtml = '<div style="margin-top:20px"><div style="font-size:9px;font-weight:700;letter-spacing:1.5px;color:var(--sv);margin-bottom:10px">SEND OFFERS TO CUSTOMERS</div>'
+    + '<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:8px">';
+  PROMO_OFFERS.forEach(function(p){
+    promoHtml += '<div style="background:rgba(201,168,76,.06);border:1px solid rgba(201,168,76,.2);border-radius:10px;padding:12px">'
+      + '<div style="font-size:22px;margin-bottom:6px">' + p.emoji + '</div>'
+      + '<div style="font-size:12px;font-weight:700;color:var(--gd);margin-bottom:3px">' + p.service + '</div>'
+      + '<div style="font-size:10px;color:var(--or);margin-bottom:4px;font-weight:600">' + p.offer + '</div>'
+      + '<div style="font-size:10px;color:var(--sv);margin-bottom:8px">' + p.detail + '</div>'
+      + '<button data-promo-id="' + p.id + '" style="width:100%;background:linear-gradient(135deg,#25D366,#128C7E);color:#fff;border:none;border-radius:6px;padding:6px;font-size:11px;font-weight:700;cursor:pointer;font-family:inherit">📲 Send to All</button>'
+      + '</div>';
+  });
+  promoHtml += '</div></div>';
+
+  wrap.innerHTML = kpiHtml + activeHtml + promoHtml;
+
+  // Event delegation
+  wrap.onclick = function(e){
+    var btn = e.target;
+    if (btn.getAttribute('data-cpn-act') === 'remind') {
+      var code = btn.getAttribute('data-cpn-code');
+      var cpn  = COUPONS[code]; if(!cpn) return;
+      sendExpiryAlertWA(cpn, couponDaysLeft(cpn));
+      toast('Reminder sent to ' + cpn.name, 'success');
+    }
+    if (btn.getAttribute('data-promo-id')) {
+      sendBulkPromo(btn.getAttribute('data-promo-id'));
+    }
+  };
+}
+
+function mkKpi(v,l,c){ return '<div class="kpi"><div class="kv" style="color:'+c+'">'+v+'</div><div class="kl">'+l+'</div></div>'; }
+function esc(s){ return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+function fmtDate(iso){ return iso ? new Date(iso).toLocaleDateString('en-IN',{day:'2-digit',month:'short'}) : ''; }
+function cpnTypeLabel(t){
+  return t==='REF-ISSUER'?'🤝 Referrer':t==='REF-WALKIN'?'🆕 Walk-in':t==='LOYALTY'?'🌟 Loyalty':'🎁 Promo';
+}
+
+
+
+// ════════════════════════════════════════════════════════════════
+// GOOGLE REVIEW REMINDER SYSTEM
+// Sends reminder to customers who haven't reviewed after registration
+// ════════════════════════════════════════════════════════════════
+
+var REVIEW_LOG = JSON.parse(localStorage.getItem('rr-review-log') || '{}');
+// { mobile: { token, name, sentAt, reviewed, reminderSent } }
+
+function saveReviewLog() {
+  try { localStorage.setItem('rr-review-log', JSON.stringify(REVIEW_LOG)); } catch(e) {}
+}
+
+// Mark review request sent on registration (called from subSvc for ₹100+ orders)
+function trackReviewRequest(rec) {
+  if ((rec.amount || 0) < 100) return;
+  REVIEW_LOG[rec.mobile] = {
+    token:   rec.token,
+    name:    rec.name,
+    mobile:  rec.mobile,
+    sentAt:  rec.createdAt,
+    reviewed: false,
+    reminderSent: false
+  };
+  saveReviewLog();
+}
+
+// Send review reminder WA to pending customers
+function sendReviewReminder(mobile, name) {
+  var msg = '🙏 చిన్న రిమైండర్\n\n'
+    + 'నమస్కారం *' + name + '* గారూ! 😊\n\n'
+    + 'మీరు ఇంకా review ఇవ్వకపోతే, దయచేసి ఒక చిన్న review ఇవ్వండి 🙏\n'
+    + 'మీ feedback మా కోసం చాలా ముఖ్యము 🌱\n'
+    + '👉 https://g.page/r/CVD_Aqgk-swzEBE/review\n\n'
+    + '🎁 Review ఇచ్చిన తర్వాత next service లో *₹10 OFF* పొందండి!\n\n'
+    + 'ధన్యవాదాలు 🙏\n'
+    + '📞 ' + PHONE_CALL;
+  window.open('https://api.whatsapp.com/send?phone=91' + cleanMobile(mobile) + '&text=' + encodeURIComponent(msg), '_blank');
+}
+
+// Check and send pending review reminders (call daily)
+function checkReviewReminders() {
+  var now     = new Date();
+  var pending = Object.values(REVIEW_LOG).filter(function(r) {
+    if (r.reviewed || r.reminderSent) return false;
+    // Send reminder if review not given within 2 days
+    var daysSince = Math.floor((now - new Date(r.sentAt)) / 86400000);
+    return daysSince >= 2;
+  });
+
+  if (!pending.length) return;
+
+  pending.forEach(function(r, i) {
+    setTimeout(function() {
+      sendReviewReminder(r.mobile, r.name);
+      r.reminderSent = true;
+      r.reminderAt   = now.toISOString();
+      saveReviewLog();
+    }, i * 3000);
+  });
+
+  if (pending.length) toast(pending.length + ' review reminders sent 📨', 'success');
+}
+
+// Mark customer as reviewed (call when they confirm review given)
+function markReviewed(mobile) {
+  if (REVIEW_LOG[mobile]) {
+    REVIEW_LOG[mobile].reviewed   = true;
+    REVIEW_LOG[mobile].reviewedAt = new Date().toISOString();
+    saveReviewLog();
+    toast('Marked as reviewed ✅ — ₹10 coupon will be issued', 'success');
+    // Issue ₹10 discount coupon for next service
+    var r = REVIEW_LOG[mobile];
+    if (typeof issueCoupon === 'function') {
+      issueCoupon(mobile, r.name, 'REVIEW', 10, 0, 30);
+    }
+  }
+}
+
+window.onload = function() {
+  (async function init() {
+    // Immediate sync setup
+    if (sheetsURL) setSI(true);
+    var shEl=document.getElementById('sh-url'); if(shEl)shEl.value=sheetsURL;
+
+    // Render form immediately (synchronous)
+    genTok();
+    doRenderGrid();
+    doRenderStaff();
+    renderDsh();
+    updSt();
+
+    // Load data — offline-first (localStorage immediate, Supabase background)
+    await smartLoad();
+
+    // Additional renders
+    renderPipeline();
+    renderEOD();
+    renderStAdm();
+
+    // Auto-refresh every 90s
+    setInterval(function() {
+      if (isOnline && !document.hidden) {
+        loadFromSupabase().then(function() { updSt(); });
+      }
+    }, 90000);
+
+    pingSupabase();
+    setTimeout(checkCouponExpiries, 6000); // Check coupon expiries
+    setTimeout(checkReviewReminders, 8000); // Check review reminders
+
+    // Auto performance reports
+    setInterval(function() {
+      var now=new Date();var h=now.getHours();var m=now.getMinutes();
+      var key=now.toISOString().slice(0,10);
+      var last=localStorage.getItem('rr-last-report')||'';
+      if(h===13&&m===0&&last!==key+'-1pm'){localStorage.setItem('rr-last-report',key+'-1pm');sendManualReport('1pm');}
+      if(h===20&&m===30&&last!==key+'-8pm'){localStorage.setItem('rr-last-report',key+'-8pm');sendManualReport('8pm');}
+    },60000);
+
+  })();
+};
+
+</script>
+</body>
+</html>
